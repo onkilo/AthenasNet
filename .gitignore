@@ -5,7 +5,6 @@
 /.vs
 /Athenas.Data/bin/Debug
 /Athenas.Data/obj/Debug
-/AthenasNet.Api/bin
 /AthenasNet.Api/obj/Debug
 /AthenasNet.Negocio/bin/Debug
 /AthenasNet.Negocio/obj/Debug
