@@ -1,4 +1,4 @@
-CREATE PROCEDURE USP_MNT_PRODUCTO
+ALTER PROCEDURE USP_MNT_PRODUCTO
 (
 	@Opcion CHAR(1) = '',
 	@Id INT = 0,
@@ -60,15 +60,18 @@ BEGIN
 	IF @Opcion = '4'
 	BEGIN
 		SELECT 
-			Id
-			,Descripcion
+			p.Id
+			,p.Descripcion
 			,PrecioCompra
 			,PrecioVenta
 			,StockActual
 			,StockMin
 			,CategoriaId
 			,Imagen
-			,Activo
-		FROM Producto  WHERE (@Id = 0 OR Id = @Id) AND  Activo = @Activo;
+			,p.Activo
+			,c.Descripcion as Categoria
+		FROM Producto p JOIN Categoria c ON p.CategoriaId = c.Id 
+		WHERE (@Id = 0 OR p.Id = @Id) AND  p.Activo = @Activo 
+		AND p.Descripcion LIKE '%' + @Descripcion +'%';
 	END
 END
