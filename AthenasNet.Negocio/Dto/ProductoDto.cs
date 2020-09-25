@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Athenas.Data.Entidades
+namespace AthenasNet.Negocio.Dto
 {
-    public class Producto
+    public class ProductoDto
     {
-
         public int Id { get; set; }
         public string Descripcion { get; set; }
         public double PrecioCompra { get; set; }
@@ -20,6 +19,8 @@ namespace Athenas.Data.Entidades
 
         public double Descuento { get; set; }
 
-        public Categoria Categoria { get; set; }
+        public string Base64Imagen { get; set; }
+
+        public CategoriaDto Categoria { get; set; }
     }
 }

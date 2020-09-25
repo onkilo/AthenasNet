@@ -43,8 +43,11 @@
   <ItemGroup>
     <Compile Include="Dto\CategoriaDto.cs" />
     <Compile Include="Dto\Mapper\CategoriaMapper.cs" />
+    <Compile Include="Dto\Mapper\ProductoMapper.cs" />
+    <Compile Include="Dto\ProductoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicio\CategoriaServicio.cs" />
+    <Compile Include="Servicio\ProductoServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Athenas.Data\Athenas.Data.csproj">

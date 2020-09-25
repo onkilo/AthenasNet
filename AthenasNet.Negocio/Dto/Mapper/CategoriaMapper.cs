@@ -11,6 +11,9 @@ namespace AthenasNet.Negocio.Dto.Mapper
     {
         public static CategoriaDto GetCategoriaDto(Categoria categoria)
         {
+
+            if (categoria == null) return null;
+
             CategoriaDto dto = new CategoriaDto
             {
                 Id= categoria.Id,
@@ -34,6 +37,8 @@ namespace AthenasNet.Negocio.Dto.Mapper
 
         public static Categoria GetCategoria (CategoriaDto dto)
         {
+            if (dto == null) return null;
+
             Categoria categoria = new Categoria
             {
                 Id = dto.Id,
