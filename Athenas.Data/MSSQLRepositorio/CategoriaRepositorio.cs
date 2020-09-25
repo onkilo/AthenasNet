@@ -44,13 +44,15 @@ namespace Athenas.Data.MSSQLRepositorio
             }
             catch (Exception ex)
             {
-
+                throw ex;
+            }
+            finally
+            {
                 if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();
                 }
 
-                throw ex;
             }
         }
 
@@ -85,13 +87,15 @@ namespace Athenas.Data.MSSQLRepositorio
             }
             catch (Exception ex)
             {
-
+                throw ex;
+            }
+            finally
+            {
                 if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();
                 }
 
-                throw ex;
             }
 
             return categoria;
@@ -117,13 +121,15 @@ namespace Athenas.Data.MSSQLRepositorio
             }
             catch (Exception ex)
             {
-
+                throw ex;
+            }
+            finally
+            {
                 if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();
                 }
 
-                throw ex;
             }
         }
 
@@ -148,13 +154,15 @@ namespace Athenas.Data.MSSQLRepositorio
             }
             catch (Exception ex)
             {
-
+                throw ex;
+            }
+            finally
+            {
                 if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();
                 }
 
-                throw ex;
             }
         }
 
@@ -187,15 +195,17 @@ namespace Athenas.Data.MSSQLRepositorio
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
-                if(cn.State == ConnectionState.Open)
+                throw ex;
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
                 {
                     cn.Close();
                 }
 
-                throw ex;
             }
 
 
