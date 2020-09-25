@@ -45,9 +45,11 @@
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="MSSQLRepositorio\CategoriaRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\ProductoRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\ICategoriaRepositorio.cs" />
     <Compile Include="Repositorio\IGenericRepositorio.cs" />
+    <Compile Include="Repositorio\IProductoRepositorio.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

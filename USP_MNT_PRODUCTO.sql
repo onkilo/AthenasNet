@@ -70,6 +70,7 @@ BEGIN
 			,Imagen
 			,p.Activo
 			,c.Descripcion as Categoria
+			,dbo.UDF_DESC_PROD(p.Id) as Descuento
 		FROM Producto p JOIN Categoria c ON p.CategoriaId = c.Id 
 		WHERE (@Id = 0 OR p.Id = @Id) AND  p.Activo = @Activo 
 		AND p.Descripcion LIKE '%' + @Descripcion +'%';

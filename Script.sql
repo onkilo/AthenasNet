@@ -105,9 +105,43 @@ CREATE TABLE Trabajador(
 	Direccion VARCHAR(100) NOT NULL,
 	Email VARCHAR(100),
 	Usuario VARCHAR(50) NOT NULL, 
-	Contrasenia VARCHAR(255) NOT NULL, -- "2a%............" -- "bcrypt"  (hash, "123") true o false | excepcion
+	Contrasenia VARCHAR(255) NOT NULL,
 	Sexo CHAR(1) NOT NULL,
-	Rol VARCHAR(20) NOT NULL -- 
+	Activo CHAR(1) NOT NULL 
+)
+GO
+
+--alter table Trabajador drop column Rol
+--alter table Trabajador add Activo CHAR(1) NOT NULL
+
+/*
+	TABLA PARA ROLES
+*/
+IF OBJECT_ID('Rol') IS NOT NULL
+	DROP TABLE Rol
+GO
+
+CREATE TABLE Rol(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Nombre VARCHAR(100) NOT NULL,
+	Activo CHAR(1) NOT NULL
+)
+GO
+
+/*
+	TABLA PARA LA RALACION DE USUARIO Y ROLES
+*/
+IF OBJECT_ID('RolUsuario') IS NOT NULL
+	DROP TABLE RolUsuario
+GO
+
+CREATE TABLE RolUsuario(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	RolId INT NOT NULL,
+	UsuarioId INT NOT NULL,
+	Activo CHAR(1) NOT NULL,
+	CONSTRAINT FK_RolUsuario_Rol FOREIGN KEY (RolId) REFERENCES Rol(Id),
+	CONSTRAINT FK_RolUsuario_Usuario FOREIGN KEY (UsuarioId) REFERENCES Trabajador(Id)
 )
 GO
 
@@ -208,18 +242,4 @@ CREATE TABLE Promocion(
 	CONSTRAINT FK_Promo_Producto FOREIGN KEY (ProductoId) REFERENCES Producto(Id) 
 )
 GO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
