@@ -243,3 +243,17 @@ CREATE TABLE Promocion(
 )
 GO
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
