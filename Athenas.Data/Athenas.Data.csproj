@@ -43,13 +43,34 @@
   <ItemGroup>
     <Compile Include="Conexion\DBConexion.cs" />
     <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\Compra.cs" />
+    <Compile Include="Entidades\DetalleCompra.cs" />
+    <Compile Include="Entidades\DetalleVenta.cs" />
     <Compile Include="Entidades\Producto.cs" />
+    <Compile Include="Entidades\Promocion.cs" />
+    <Compile Include="Entidades\Proveedor.cs" />
+    <Compile Include="Entidades\Rol.cs" />
+    <Compile Include="Entidades\RolUsuario.cs" />
+    <Compile Include="Entidades\Trabajador.cs" />
+    <Compile Include="Entidades\Venta.cs" />
     <Compile Include="MSSQLRepositorio\CategoriaRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\CompraRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\ProductoRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\RolRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\TrabajadorRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\VentaRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\ICategoriaRepositorio.cs" />
+    <Compile Include="Repositorio\IClienteRepositorio.cs" />
+    <Compile Include="Repositorio\ICompraRepositorio.cs" />
     <Compile Include="Repositorio\IGenericRepositorio.cs" />
     <Compile Include="Repositorio\IProductoRepositorio.cs" />
+    <Compile Include="Repositorio\IPromocionRepositorio.cs" />
+    <Compile Include="Repositorio\IProveedorRepositorio.cs" />
+    <Compile Include="Repositorio\IRolRepositorio.cs" />
+    <Compile Include="Repositorio\ITrabajadorRepositorio.cs" />
+    <Compile Include="Repositorio\IVentaRepositorio.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

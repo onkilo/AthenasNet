@@ -1,4 +1,4 @@
-ALTER PROCEDURE USP_MNT_PRODUCTO
+CREATE OR ALTER PROCEDURE USP_MNT_PRODUCTO
 (
 	@Opcion CHAR(1) = '',
 	@Id INT = 0,
@@ -70,9 +70,16 @@ BEGIN
 			,Imagen
 			,p.Activo
 			,c.Descripcion as Categoria
-			,dbo.UDF_DESC_PROD(p.Id) as Descuento
 		FROM Producto p JOIN Categoria c ON p.CategoriaId = c.Id 
 		WHERE (@Id = 0 OR p.Id = @Id) AND  p.Activo = @Activo 
 		AND p.Descripcion LIKE '%' + @Descripcion +'%';
+	END
+
+	IF @Opcion = '5'
+	BEGIN
+		UPDATE Producto 
+		SET 
+			StockActual = StockActual + @StockActual
+		WHERE Id = @Id AND Activo = '1';
 	END
 END
