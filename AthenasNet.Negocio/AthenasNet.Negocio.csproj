@@ -44,10 +44,16 @@
     <Compile Include="Dto\CategoriaDto.cs" />
     <Compile Include="Dto\Mapper\CategoriaMapper.cs" />
     <Compile Include="Dto\Mapper\ProductoMapper.cs" />
+    <Compile Include="Dto\Mapper\RolMapper.cs" />
+    <Compile Include="Dto\Mapper\TrabajadorMapper.cs" />
     <Compile Include="Dto\ProductoDto.cs" />
+    <Compile Include="Dto\RolDto.cs" />
+    <Compile Include="Dto\TrabajadorDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicio\CategoriaServicio.cs" />
+    <Compile Include="Servicio\Class1.cs" />
     <Compile Include="Servicio\ProductoServicio.cs" />
+    <Compile Include="Servicio\TrabajadorServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Athenas.Data\Athenas.Data.csproj">
