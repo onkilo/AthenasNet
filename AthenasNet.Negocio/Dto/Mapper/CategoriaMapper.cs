@@ -26,6 +26,8 @@ namespace AthenasNet.Negocio.Dto.Mapper
 
         public static IEnumerable<CategoriaDto> GetCategoriasDto(List<Categoria> categorias)
         {
+            if (categorias == null) return null;
+
             List<CategoriaDto> dtos = new List<CategoriaDto>();
 
             categorias.ForEach(c =>{

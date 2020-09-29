@@ -42,18 +42,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\CategoriaDto.cs" />
+    <Compile Include="Dto\ClienteDto.cs" />
+    <Compile Include="Dto\CompraDto.cs" />
+    <Compile Include="Dto\DetalleCompraDto.cs" />
+    <Compile Include="Dto\DetalleVentaDto.cs" />
     <Compile Include="Dto\Mapper\CategoriaMapper.cs" />
+    <Compile Include="Dto\Mapper\ClienteMapper.cs" />
+    <Compile Include="Dto\Mapper\CompraMapper.cs" />
     <Compile Include="Dto\Mapper\ProductoMapper.cs" />
+    <Compile Include="Dto\Mapper\PromocionMapper.cs" />
+    <Compile Include="Dto\Mapper\ProveedorMapper.cs" />
     <Compile Include="Dto\Mapper\RolMapper.cs" />
     <Compile Include="Dto\Mapper\TrabajadorMapper.cs" />
+    <Compile Include="Dto\Mapper\VentaMapper.cs" />
     <Compile Include="Dto\ProductoDto.cs" />
+    <Compile Include="Dto\PromocionDto.cs" />
+    <Compile Include="Dto\ProveedorDto.cs" />
     <Compile Include="Dto\RolDto.cs" />
     <Compile Include="Dto\TrabajadorDto.cs" />
+    <Compile Include="Dto\VentaDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicio\CategoriaServicio.cs" />
-    <Compile Include="Servicio\Class1.cs" />
+    <Compile Include="Servicio\ClienteServicio.cs" />
+    <Compile Include="Servicio\CompraServicio.cs" />
     <Compile Include="Servicio\ProductoServicio.cs" />
+    <Compile Include="Servicio\PromocionServicio.cs" />
+    <Compile Include="Servicio\ProveedorServicio.cs" />
     <Compile Include="Servicio\TrabajadorServicio.cs" />
+    <Compile Include="Servicio\VentaServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Athenas.Data\Athenas.Data.csproj">
