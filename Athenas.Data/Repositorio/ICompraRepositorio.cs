@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Athenas.Data.Repositorio
 {
-    interface ICompraRepositorio : IGenericRepositorio<Compra>
+    public interface ICompraRepositorio : IGenericRepositorio<Compra>
     {
 
     }

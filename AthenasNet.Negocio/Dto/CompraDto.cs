@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Athenas.Data.Entidades
+namespace AthenasNet.Negocio.Dto
 {
-    public class Compra
+    public class CompraDto
     {
         public int Id { get; set; }
 
-        public Trabajador Trabajador { get; set; }
+        public TrabajadorDto Trabajador { get; set; }
 
-        public Proveedor Proveedor { get; set; }
+        public ProveedorDto Proveedor { get; set; }
 
         public DateTime Fecha { get; set; }
 
@@ -20,7 +20,6 @@ namespace Athenas.Data.Entidades
 
         public string Activo { get; set; }
 
-        public IEnumerable<DetalleCompra> Detalles { get; set; } 
-
+        public IEnumerable<DetalleCompraDto> Detalles { get; set; }
     }
 }

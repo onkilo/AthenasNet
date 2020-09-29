@@ -55,8 +55,11 @@
     <Compile Include="Entidades\Trabajador.cs" />
     <Compile Include="Entidades\Venta.cs" />
     <Compile Include="MSSQLRepositorio\CategoriaRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\ClienteRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\CompraRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\ProductoRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\PromocionRepositorio.cs" />
+    <Compile Include="MSSQLRepositorio\ProveedorRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\RolRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\TrabajadorRepositorio.cs" />
     <Compile Include="MSSQLRepositorio\VentaRepositorio.cs" />
