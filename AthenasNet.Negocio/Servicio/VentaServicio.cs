@@ -35,9 +35,9 @@ namespace AthenasNet.Negocio.Servicio
 
         }
 
-        public IEnumerable<VentaDto> Listar(string cliente)
+        public IEnumerable<VentaDto> Listar(string cliente, int UsuarioId)
         {
-            return VentaMapper.ToVentasDto(repositorio.Listar(cliente));
+            return VentaMapper.ToVentasDto(repositorio.Listar(cliente, UsuarioId));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AthenasNet.Api.Models;
+﻿using AthenasNet.Api.Filters;
+using AthenasNet.Api.Models;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Negocio.Servicio;
 using System;
@@ -16,6 +17,7 @@ namespace AthenasNet.Api.Controllers
 
 
         // GET: api/Trabajador
+        [CustomAutorizacionFilter("Administrador,Vendedor")]
         public IEnumerable<TrabajadorDto> Get()
         {
             return servicio.Listar("");
