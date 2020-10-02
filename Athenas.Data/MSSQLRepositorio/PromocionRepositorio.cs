@@ -91,7 +91,8 @@ namespace Athenas.Data.MSSQLRepositorio
                         Producto = new Producto
                         {
                             Id = Convert.ToInt32(dr["ProductoId"]),
-                            Descripcion = dr["Producto"].ToString()
+                            Descripcion = dr["Producto"].ToString(),
+                            PrecioVenta = Convert.ToDouble(dr["PrecioVenta"])
                         },
 
                     };
@@ -210,7 +211,8 @@ namespace Athenas.Data.MSSQLRepositorio
                         Producto = new Producto
                         {
                             Id = Convert.ToInt32(dr["ProductoId"]),
-                            Descripcion = dr["Producto"].ToString()
+                            Descripcion = dr["Producto"].ToString(),
+                            PrecioVenta = Convert.ToDouble(dr["PrecioVenta"])
                         }
                     });
                 }

@@ -1,4 +1,5 @@
-﻿using Athenas.Data.MSSQLRepositorio;
+﻿using Athenas.Data.Entidades;
+using Athenas.Data.MSSQLRepositorio;
 using Athenas.Data.Repositorio;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Negocio.Dto.Mapper;
@@ -21,11 +22,27 @@ namespace AthenasNet.Negocio.Servicio
 
         public void Crear(TrabajadorDto trabajador)
         {
+
+            string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
+            trabajador.Contrasenia = hash;
             repositorio.Crear(TrabajadorMapper.ToTrabajador(trabajador));
         }
 
         public void Actualizar(TrabajadorDto trabajador)
         {
+            if(trabajador.Contrasenia != null || trabajador.Contrasenia.Trim() != "")
+            {
+                string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
+                trabajador.Contrasenia = hash;
+            }
+            else
+            {
+                TrabajadorDto trabActual = BuscarPorId(trabajador.Id);
+
+                trabajador.Contrasenia = trabActual.Contrasenia;
+                //trabajador.Nombre = (trabajador.Nombre == null || trabajador.Nombre == "") ? trabActual.Nombre : trabajador.Nombre;
+            }
+
             repositorio.Actualizar(TrabajadorMapper.ToTrabajador(trabajador));
         }
 
@@ -42,9 +59,18 @@ namespace AthenasNet.Negocio.Servicio
         public TrabajadorDto Login(TrabajadorDto usuario)
         {
             // Chequeo contraseña
+            Trabajador trabajador = repositorio.Login(usuario.Usuario);
 
+            if (trabajador == null) return null;
 
-            return TrabajadorMapper.ToTrabajadorDto(repositorio.Login(usuario.Usuario));
+            bool contraseniaOk = BCrypt.Net.BCrypt.Verify(usuario.Contrasenia, trabajador.Contrasenia);
+
+            if (!contraseniaOk)
+            {
+                return null;
+            }
+
+            return TrabajadorMapper.ToTrabajadorDto(trabajador);
         }
     }
 }

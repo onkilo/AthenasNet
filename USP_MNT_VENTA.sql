@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE USP_MNT_VENTA
+CREATE OR ALTER PROCEDURE USP_MNT_VENTA 
 (
 	@Opcion CHAR(1) = '',
 	@Id INT = 0,
@@ -32,6 +32,7 @@ BEGIN
 			c.Nombre as NomCliente,
 			c.Apellido as ApeCliente,
 			c.DNI as DNICliente,
+			v.TrabajadorId,
 			t.Nombre as NomTrabajador,
 			t.Apellido as ApeTrabajador,
 			v.Fecha,
@@ -41,6 +42,7 @@ BEGIN
 		JOIN Cliente c ON v.ClienteId = c.Id 
 		WHERE (@Id = 0 OR v.Id = @Id) 
 		AND (@NomCliente = '' OR (c.Nombre + ' ' + c.Apellido) LIKE ('%' + @NomCliente +  '%'))
+		AND (@TrabajadorId = 0 OR t.Id = @TrabajadorId)
 		AND v.Activo = '1'
 	END 
 END

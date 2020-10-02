@@ -9,6 +9,6 @@ namespace Athenas.Data.Repositorio
 {
     public interface IVentaRepositorio : IGenericRepositorio<Venta>
     {
-
+        IEnumerable<Venta> Listar(string Criterio, int UsuarioId);
     }
 }

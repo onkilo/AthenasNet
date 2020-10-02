@@ -1,5 +1,6 @@
 ﻿using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Response;
+using AthenasNet.Api.Utilitarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,33 +17,26 @@ namespace AthenasNet.Api.Filters
         {
             base.OnException(actionExecutedContext);
 
+            HttpResponseMessage response;
+
             if( actionExecutedContext.Exception is CustomResponseException)
             {
 
                 CustomResponseException exception = (CustomResponseException)actionExecutedContext.Exception;
-                GenericResponse<String> responseData = new GenericResponse<string>();
-                responseData.Codigo = exception.HttpCode;
-                responseData.Mensaje = exception.Message;
-                responseData.Error = true;
-                responseData.Data = "Ocurrió un error";
-
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateResponse<GenericResponse<String>>(
+                response = actionExecutedContext.Request.CreateResponse<GenericResponse<String>>(
                         (HttpStatusCode)exception.HttpCode,
-                        responseData
+                        ResponseUtil.CreaRespuestaError(exception.HttpCode, exception.Message)
                     );
             }
             else
             {
-                GenericResponse<String> responseData = new GenericResponse<string>();
-                responseData.Codigo = 500;
-                responseData.Mensaje = actionExecutedContext.Exception.Message;
-                responseData.Error = true;
-                responseData.Data = "Ocurrió un error";
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateResponse<GenericResponse<String>>(
+                response = actionExecutedContext.Request.CreateResponse<GenericResponse<String>>(
                         HttpStatusCode.InternalServerError,
-                        responseData
+                        ResponseUtil.CreaRespuestaError(500, actionExecutedContext.Exception.Message)
                     );
             }
+
+            actionExecutedContext.Response = response;
 
         }
     }
