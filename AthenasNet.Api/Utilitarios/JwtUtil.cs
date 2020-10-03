@@ -4,6 +4,7 @@ using JWT.Algorithms;
 using JWT.Builder;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -12,10 +13,6 @@ namespace AthenasNet.Api.Utilitarios
 {
     public class JwtUtil
     {
-        /**
-         * Firmar => Crearlo
-         * Verificarlo => JwtDecodeModel
-         * */
 
         public static string CrearToken(int id, string username, IEnumerable<RolDto> roles)
         {
@@ -30,7 +27,7 @@ namespace AthenasNet.Api.Utilitarios
 
             token = new JwtBuilder()
                 .WithAlgorithm(new HMACSHA256Algorithm())
-                .WithSecret("secret")
+                .WithSecret(ConfigurationManager.AppSettings["JWT_SECRET"])
                 .AddClaims(datos)
                 .Encode();
 
@@ -48,7 +45,7 @@ namespace AthenasNet.Api.Utilitarios
             {
                 datos = new JwtBuilder()
                     .WithAlgorithm(new HMACSHA256Algorithm())
-                    .WithSecret("secret")
+                    .WithSecret(ConfigurationManager.AppSettings["JWT_SECRET"])
                     .MustVerifySignature()
                     .Decode<Dictionary<String, Object>>(token);
 
