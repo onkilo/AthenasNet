@@ -7,6 +7,8 @@ using System.Web.Http;
 using AthenasNet.Negocio.Servicio;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Api.Response;
+using AthenasNet.Api.Utilitarios;
+using AthenasNet.Api.Filters;
 
 namespace AthenasNet.Api.Controllers
 {
@@ -15,17 +17,16 @@ namespace AthenasNet.Api.Controllers
         private readonly CategoriaServicio servicio = new CategoriaServicio();
 
         // GET: api/Categoria
-        public GenericResponse<IEnumerable<CategoriaDto>> Get()
+        //[CustomAutenticacionFilter]
+        //[CustomAutorizacionFilter("Administrador, Supervisor")]
+        public GenericResponse<IEnumerable<CategoriaDto>> Get(int pagina = 1, int registros = 10, string descripcion = "")
         {
             GenericResponse<IEnumerable<CategoriaDto>> response = new GenericResponse<IEnumerable<CategoriaDto>>();
 
             try
             {
-                IEnumerable<CategoriaDto> data = servicio.Listar("");
-                response.Data = data;
-                response.Codigo = 200; // OK
-                response.Error = false;
-                response.Mensaje = "OK";
+                IEnumerable<CategoriaDto> data = servicio.Listar(descripcion);
+                response = ResponseUtil.GetListaPaginada<CategoriaDto>(data, pagina, registros);
             }
             catch(Exception ex)
             {

@@ -13,11 +13,13 @@ namespace AthenasNet.Api.Models
         public string Username { get; set; }
         public IEnumerable<RolDto> Roles { get; set; }
 
-        public IIdentity Identity => throw new NotImplementedException();
+        public IIdentity Identity => new GenericIdentity(Username);
 
         public bool IsInRole(string role)
         {
-            throw new NotImplementedException();
+            if (Roles == null) return false;
+
+            return (Roles.Count(c => c.Nombre == role)) > 0;
         }
     }
 }

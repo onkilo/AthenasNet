@@ -20,5 +20,42 @@ namespace AthenasNet.Api.Utilitarios
             return responseData;
         }
 
+        public static GenericResponse<IEnumerable<T>> GetListaPaginada<T>(IEnumerable<T> data, int pagina = 1, int registros = 10, string msj = "Ok")
+        {
+            GenericResponse<IEnumerable<T>> listado = new GenericResponse<IEnumerable<T>>();
+            List<T> dataFiltrada = new List<T>();
+            List<T> dataOriginal = data.ToList();
+
+            int filas = data.Count();
+
+            int primerRegistro, ultimoRegistro, totalPaginas;
+
+            totalPaginas = (filas % registros == 0) ? filas / registros : (filas / registros) + 1;
+
+            primerRegistro = (pagina-1)* registros;
+
+            ultimoRegistro = primerRegistro + registros;
+
+            for(int i = primerRegistro; i < ultimoRegistro; i++)
+            {
+                if (i >= filas) break;
+
+                dataFiltrada.Add(dataOriginal[i]);
+            }
+
+            listado.Pagina = pagina;
+            listado.RegistrosXPag = registros;
+            listado.TotalPaginas = totalPaginas;
+            listado.TotalRegistros = filas;
+            listado.Data = dataFiltrada;
+            listado.Codigo = 200;
+            listado.Error = false;
+            listado.Mensaje = msj;
+            listado.RegistrosRetornados = dataFiltrada.Count();
+
+
+            return listado;
+        }
+
     }
 }

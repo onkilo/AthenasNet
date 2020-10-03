@@ -1,5 +1,6 @@
 ﻿using AthenasNet.Api.Filters;
 using AthenasNet.Api.Models;
+using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Negocio.Servicio;
 using System;
@@ -51,7 +52,14 @@ namespace AthenasNet.Api.Controllers
         [Route("api/Trabajador/login")]
         public TrabajadorDto Login(LoginModel usuario)
         {
-            return servicio.Login(new TrabajadorDto { Usuario = usuario.Usuario, Contrasenia = usuario.Contrasenia});
+            TrabajadorDto trabajador = servicio.Login(new TrabajadorDto { Usuario = usuario.Usuario, Contrasenia = usuario.Contrasenia });
+
+            if (trabajador != null)
+            {
+                trabajador.Token = JwtUtil.CrearToken(trabajador.Id, trabajador.Usuario, trabajador.Roles);
+            }
+            
+            return trabajador;
         }
     }
 }

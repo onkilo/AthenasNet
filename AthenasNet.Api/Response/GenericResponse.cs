@@ -14,5 +14,16 @@ namespace AthenasNet.Api.Response
         public bool Error { get; set; }
 
         public int Codigo { get; set; }
+
+        //Paginado
+        public int Pagina { get; set; }
+
+        public int TotalPaginas { get; set; }
+
+        public int RegistrosXPag { get; set; }
+
+        public int TotalRegistros { get; set; }
+
+        public int RegistrosRetornados { get; set; }
     }
 }

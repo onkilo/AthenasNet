@@ -33,5 +33,7 @@ namespace AthenasNet.Negocio.Dto
         public IEnumerable<RolDto> Roles { get; set; }
 
         public string SexoDescripcion { get; set; }
+
+        public string Token { get; set; }
     }
 }
