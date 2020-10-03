@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AthenasNet.Negocio", "Athen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AthenasNet.Api", "AthenasNet.Api\AthenasNet.Api.csproj", "{7E40074E-5FE2-411C-849A-6593A14B8140}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Athenas.MVCUI", "Athenas.MVCUI\Athenas.MVCUI.csproj", "{4C4F2CCB-1C1C-461E-BBB7-C483A1337AC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7E40074E-5FE2-411C-849A-6593A14B8140}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E40074E-5FE2-411C-849A-6593A14B8140}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E40074E-5FE2-411C-849A-6593A14B8140}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C4F2CCB-1C1C-461E-BBB7-C483A1337AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C4F2CCB-1C1C-461E-BBB7-C483A1337AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C4F2CCB-1C1C-461E-BBB7-C483A1337AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C4F2CCB-1C1C-461E-BBB7-C483A1337AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
