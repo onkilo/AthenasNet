@@ -18,7 +18,7 @@ namespace AthenasNet.Api.Controllers
 
 
         // GET: api/Trabajador
-        [CustomAutorizacionFilter("Administrador,Vendedor")]
+        //[CustomAutorizacionFilter("Administrador,Vendedor")]
         public IEnumerable<TrabajadorDto> Get()
         {
             return servicio.Listar("");
