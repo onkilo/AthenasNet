@@ -14,6 +14,7 @@ namespace Athenas.MVCUI.ClienteHttp
 
         public static void Configurar()
         {
+            Cliente = new HttpClient();
             Cliente.BaseAddress = new Uri(ConfigurationManager.AppSettings["BASE_API_URL"]);
             Cliente.DefaultRequestHeaders.Accept.Clear();
             Cliente.DefaultRequestHeaders.Accept.Add(
