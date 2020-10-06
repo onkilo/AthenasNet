@@ -162,7 +162,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@Opcion", "5");
                         cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
-                        cmd.Parameters.AddWithValue("@StockActual", d.Cantidad * -1);
+                        cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
 
                         cmd.ExecuteNonQuery();
                     });
