@@ -18,7 +18,7 @@ namespace Athenas.Data.Entidades
         public string Imagen { get; set; }
         public string Activo { get; set; }
 
-        public double Descuento { get; set; }
+        //public double Descuento { get; set; }
 
         public Categoria Categoria { get; set; }
     }

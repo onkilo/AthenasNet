@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AthenasNet.Negocio.Dto;
+using AthenasNet.Negocio.Servicio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,21 +11,23 @@ namespace AthenasNet.Api.Controllers
 {
     public class CompraController : ApiController
     {
+        private readonly CompraServicio servicio = new CompraServicio();
         // GET: api/Compra
-        public IEnumerable<string> Get()
+        public IEnumerable<CompraDto> Get(string Proveedor = "")
         {
-            return new string[] { "value1", "value2" };
+            return servicio.Listar(Proveedor, 0);
         }
 
         // GET: api/Compra/5
-        public string Get(int id)
+        public CompraDto Get(int id)
         {
-            return "value";
+            return servicio.BuscarPorId(id);
         }
 
         // POST: api/Compra
-        public void Post([FromBody]string value)
+        public void Post([FromBody]CompraDto compra)
         {
+            servicio.Crear(compra);
         }
 
         // PUT: api/Compra/5
@@ -34,6 +38,7 @@ namespace AthenasNet.Api.Controllers
         // DELETE: api/Compra/5
         public void Delete(int id)
         {
+            servicio.Eliminar(id);
         }
     }
 }
