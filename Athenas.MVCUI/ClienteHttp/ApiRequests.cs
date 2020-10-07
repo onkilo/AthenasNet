@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Athenas.MVCUI.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,6 +23,111 @@ namespace Athenas.MVCUI.ClienteHttp
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        // POST GET PUT DELETE
+        public static T Get<T,K>(string url, out K errorResponse)
+        {
+
+            errorResponse = default(K); // null
+
+            var response = ApiRequests.Cliente.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorData = response.Content.ReadAsAsync<K>();
+
+                errorResponse = errorData.Result;
+
+                return default(T);//null
+            }
+
+            var responseData = response.Content.ReadAsAsync<T>();
+
+            return responseData.Result;
+        }
+
+        public static T Post<T,E, K>(string url, E entidad, out K errorResponse)
+        {
+
+            errorResponse = default(K); // null
+
+            var response = ApiRequests.Cliente.PostAsJsonAsync(url, entidad).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorData = response.Content.ReadAsAsync<K>();
+
+                errorResponse = errorData.Result;
+
+                return default(T);//null
+            }
+
+            var responseData = response.Content.ReadAsAsync<T>();
+
+            return responseData.Result;
+        }
+
+        public static T Put<T, E, K>(string url, E entidad, out K errorResponse)
+        {
+
+            errorResponse = default(K); // null
+
+            var response = ApiRequests.Cliente.PutAsJsonAsync(url, entidad).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorData = response.Content.ReadAsAsync<K>();
+
+                errorResponse = errorData.Result;
+
+                return default(T);//null
+            }
+
+            var responseData = response.Content.ReadAsAsync<T>();
+
+            return responseData.Result;
+        }
+
+        public static T Delete<T, K>(string url, out K errorResponse)
+        {
+
+            errorResponse = default(K); // null
+
+            var response = ApiRequests.Cliente.DeleteAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorData = response.Content.ReadAsAsync<K>();
+
+                errorResponse = errorData.Result;
+
+                return default(T);//null
+            }
+
+            var responseData = response.Content.ReadAsAsync<T>();
+
+            return responseData.Result;
+        }
+
+        //public static GenericResponseModel<IEnumerable<T>> Get<T, K>(string url, out K errorResponse)
+        //{
+
+        //    errorResponse = default(K); // null
+
+        //    var response = ApiRequests.Cliente.GetAsync(url).Result;
+
+        //    if (!response.IsSuccessStatusCode)
+        //    {
+        //        var errorData = response.Content.ReadAsAsync<K>();
+
+        //        errorResponse = errorData.Result;
+
+        //        return default(T);//null
+        //    }
+
+        //    var responseData = response.Content.ReadAsAsync<T>();
+
+        //    return responseData.Result;
+        //}
 
     }
 }

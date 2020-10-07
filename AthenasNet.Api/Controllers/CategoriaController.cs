@@ -9,9 +9,11 @@ using AthenasNet.Negocio.Dto;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Api.Filters;
+using AthenasNet.Api.Excepciones;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
     public class CategoriaController : ApiController
     {
         private readonly CategoriaServicio servicio = new CategoriaServicio();
@@ -30,38 +32,110 @@ namespace AthenasNet.Api.Controllers
             }
             catch(Exception ex)
             {
-                response.Data = null;
-                response.Codigo = 500; // OK
-                response.Error = true;
-                response.Mensaje = ex.Message;
+                throw new CustomResponseException(ex.Message, 500);
             }
             
             return response;
         }
 
         // GET: api/Categoria/5
-        public CategoriaDto Get(int id)
+        public GenericResponse<CategoriaDto> Get(int id)
         {
-            return servicio.BuscarPorId(id);
+            GenericResponse<CategoriaDto> response = new GenericResponse<CategoriaDto>();
+            
+            try
+            {
+                response.Data = servicio.BuscarPorId(id);
+                if(response.Data == null)
+                {
+                    throw new CustomResponseException("No se encontró la categoría", 404);
+                }
+                response.Error = false;
+                response.Mensaje = "Ok";
+                response.Codigo = 200;
+            }
+            catch(CustomResponseException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+
+            return response;
         }
 
         // POST: api/Categoria
-        public void Post([FromBody]CategoriaDto categoria)
+        public GenericResponse<String> Post([FromBody]CategoriaDto categoria)
         {
-            servicio.Crear(categoria);
+            GenericResponse<String> response = new GenericResponse<String>();
+
+            try
+            {
+                servicio.Crear(categoria);
+                response = ResponseUtil.CrearRespuestaOk();
+            }
+            catch (CustomResponseException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+
+            return response;
         }
 
         // PUT: api/Categoria/5
-        public void Put(int id, [FromBody]CategoriaDto categoria)
+        public GenericResponse<String> Put(int id, [FromBody]CategoriaDto categoria)
         {
-            categoria.Id = id;
-            servicio.Actualizar(categoria);
+            
+            GenericResponse<String> response = new GenericResponse<String>();
+
+            try
+            {
+                categoria.Id = id;
+                servicio.Actualizar(categoria);
+                response = ResponseUtil.CrearRespuestaOk();
+            }
+            catch (CustomResponseException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+
+            return response;
         }
 
         // DELETE: api/Categoria/5
-        public void Delete(int id)
+        public GenericResponse<String> Delete(int id)
         {
-            servicio.Eliminar(id);
+            GenericResponse<String> response = new GenericResponse<String>();
+
+            try
+            {
+                servicio.Eliminar(id);
+                response = ResponseUtil.CrearRespuestaOk();
+            }
+            catch (CustomResponseException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+
+            return response;
         }
     }
 }
