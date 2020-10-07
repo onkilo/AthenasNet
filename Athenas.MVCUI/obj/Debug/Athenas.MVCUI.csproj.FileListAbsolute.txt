@@ -81,3 +81,5 @@ E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Ath
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.csproj.CopyComplete
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.pdb
+E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.dll
+E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.xml
