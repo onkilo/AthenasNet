@@ -12,27 +12,47 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm layout-footer-fixed">
+    
+    @*<div class="spinner-container">
+        <div class="loader">Loading...</div>
+    </div>*@
+
     <div class="wrapper">
         @Html.Partial("_Navbar")
         @Html.Partial("_Sidebar")
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            
+
             <!-- Main content -->
             <div class="content">
-                @RenderBody()
+                <div class="container-fluid" style="position: relative;">
+                    <div class="toast mt-2 hide" id="general-toast"
+                         style="position: absolute; top: 0; right: 0; z-index: 10;min-width: 300px"
+                         data-delay="3000">
+                        <div class="toast-header">
+                            <strong class="mr-auto"><i class="fas fa-check-double"></i> Éxito</strong>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                        </div>
+                        <div class="toast-body">
+                            <span id="toast-msj"></span>
+                        </div>
+                    </div>
+
+                    @RenderBody()
+                </div>
             </div>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
         @Html.Partial("_Footer")
-        
+
     </div>
     <!-- ./wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
     @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
+    @Scripts.Render("~/Scripts/polyfill.min.js")
     @Scripts.Render("~/Scripts/es5/athenasNet.js")
     @RenderSection("scripts", required: false)
 </body>
