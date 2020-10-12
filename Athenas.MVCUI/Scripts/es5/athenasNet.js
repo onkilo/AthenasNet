@@ -23,7 +23,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               opcionsDefecto = {
-                beforeSend: function beforeSend() {//manejaSpinner(ACCION_MOSTRAR_SPINNER);
+                beforeSend: function beforeSend() {
+                  manejaSpinner(ACCION_MOSTRAR_SPINNER);
                 },
                 contentType: 'application/json',
                 data: {},
@@ -55,14 +56,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 13:
               _context.prev = 13;
+              //ocultar spinner
+              manejaSpinner(ACCION_OCULTAR_SPINNER);
               return _context.finish(13);
 
-            case 15:
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 10, 13, 15]]);
+      }, _callee, null, [[1, 10, 13, 16]]);
     }));
 
     return function llamadaApi(_x) {

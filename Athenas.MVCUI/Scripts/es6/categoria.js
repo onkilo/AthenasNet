@@ -1,5 +1,3 @@
-﻿
-
 const crearCategoria = async (categoria) => {
     try {
 

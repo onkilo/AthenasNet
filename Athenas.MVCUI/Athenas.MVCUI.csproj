@@ -161,9 +161,9 @@
     <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Imagenes\fondo.jpg" />
     <Content Include="Imagenes\logo.png" />
     <Content Include="Imagenes\minilogo.png" />

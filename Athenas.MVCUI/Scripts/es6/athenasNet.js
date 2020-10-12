@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
 
     const MVC_URL_BASE = 'http://localhost:62622/';
     const ACCION_MOSTRAR_SPINNER = 'mostrar';
@@ -8,7 +8,7 @@
 
         const opcionsDefecto = {
             beforeSend: function () {
-                //manejaSpinner(ACCION_MOSTRAR_SPINNER);
+                manejaSpinner(ACCION_MOSTRAR_SPINNER);
             },
             contentType: 'application/json',
             data: {},
@@ -33,7 +33,7 @@
         }
         finally {
             //ocultar spinner
-            //manejaSpinner(ACCION_OCULTAR_SPINNER);
+            manejaSpinner(ACCION_OCULTAR_SPINNER);
         }
 
     }

@@ -51,6 +51,7 @@ E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\Antlr3.Ru
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\Microsoft.Web.Infrastructure.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\Newtonsoft.Json.dll
+E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Helpers.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Mvc.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Optimization.dll
@@ -60,6 +61,7 @@ E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.We
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.WebPages.Razor.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\WebGrease.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\Newtonsoft.Json.xml
+E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.xml
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Helpers.xml
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Mvc.xml
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Web.Optimization.xml
@@ -81,5 +83,3 @@ E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Ath
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.csproj.CopyComplete
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.dll
 E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\obj\Debug\Athenas.MVCUI.pdb
-E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.dll
-E:\Programming\Projects\dotnet\AthenasNet\AthenasNet\Athenas.MVCUI\bin\System.Net.Http.Formatting.xml
