@@ -2,7 +2,7 @@
 
     const MVC_URL_BASE = 'http://localhost:62622/';
     const ACCION_MOSTRAR_SPINNER = 'mostrar';
-    const ACCION_OCULTAR_SPINNER = 'mostrar';
+    const ACCION_OCULTAR_SPINNER = 'ocultar';
 
     const llamadaApi = async (opciones) => {
 

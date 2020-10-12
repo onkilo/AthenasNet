@@ -13,7 +13,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 (function () {
   var MVC_URL_BASE = 'http://localhost:62622/';
   var ACCION_MOSTRAR_SPINNER = 'mostrar';
-  var ACCION_OCULTAR_SPINNER = 'mostrar';
+  var ACCION_OCULTAR_SPINNER = 'ocultar';
 
   var llamadaApi = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(opciones) {

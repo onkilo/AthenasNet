@@ -220,9 +220,11 @@ var eliminarCategoria = /*#__PURE__*/function () {
 window.addEventListener('load', function () {
   document.querySelector('#form-categoria').addEventListener('submit', function (evt) {
     evt.preventDefault();
+    var formCategoria = document.getElementById('form-categoria');
+    var formElementos = formCategoria.elements;
     var categoria = {
-      Descripcion: txtDescripcion.value,
-      Id: parseInt(document.querySelector('#hdn-id').value)
+      Descripcion: formElementos['txt-descripcion'].value,
+      Id: parseInt(formElementos('hdn-id').value)
     };
     buscarCategoria(3005);
   });

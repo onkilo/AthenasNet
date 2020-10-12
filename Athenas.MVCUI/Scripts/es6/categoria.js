@@ -87,9 +87,14 @@ window.addEventListener('load', () => {
 
     document.querySelector('#form-categoria').addEventListener('submit', (evt) => {
         evt.preventDefault();
+
+        const formCategoria = document.getElementById('form-categoria');
+
+        const formElementos = formCategoria.elements;
+
         const categoria = {
-            Descripcion: txtDescripcion.value,
-            Id: parseInt(document.querySelector('#hdn-id').value),
+            Descripcion: formElementos['txt-descripcion'].value,
+            Id: parseInt(formElementos('hdn-id').value),
         };
 
         buscarCategoria(3005)
