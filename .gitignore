@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -10,3 +10,13 @@
 /AthenasNet.Negocio/obj/Debug
 /packages
 /Athenas.MVCUI/node_modules
+/Athenas.MVCUI/bin/
+/Athenas.MVCUI/obj/
+/Athenas.Data/bin/Release
+/Athenas.Data/obj/Release
+/AthenasNet.Negocio/bin/Release
+/AthenasNet.Api/bin/Release/Publish
+/AthenasNet.Api/obj/Release/Package/PackageTmp/bin
+/AthenasNet.Api/obj/Release/Package/PackageTmp
+/AthenasNet.Api/obj/Release/TransformWebConfig
+/AthenasNet.Api/Properties/PublishProfiles
