@@ -31,8 +31,10 @@ namespace AthenasNet.Api.Controllers
         }
 
         // PUT: api/Compra/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]CompraDto compra)
         {
+            compra.Id = id;
+            servicio.Actualizar(compra);
         }
 
         // DELETE: api/Compra/5
