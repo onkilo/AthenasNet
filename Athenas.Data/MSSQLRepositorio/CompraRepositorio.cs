@@ -27,66 +27,7 @@ namespace Athenas.Data.MSSQLRepositorio
         }
         public void Actualizar(Compra entidad)
         {
-                       try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = cn;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = USP_MNT_COMPRA;
-
-                cmd.Parameters.AddWithValue("@Opcion", "2");
-                cmd.Parameters.AddWithValue("@Id", entidad.Id);
-                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
-                cmd.Parameters.AddWithValue("@Activo", "1");
-                cn.Open();
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    int id = Convert.ToInt32(dr["Id"]);
-
-                    dr.Close();
-
-                    entidad.Detalles.ToList().ForEach(d =>
-                    {
-
-                        cmd.CommandText = USP_MNT_DETALLECOMPRA;
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@Opcion", "4");
-                        cmd.Parameters.AddWithValue("@CompraId", id);
-                        //cmd.Parameters.AddWithValue("@ProductoId", d.Producto.Id);
-                        //cmd.Parameters.AddWithValue("@Cantidad", d.Cantidad);
-                        //cmd.Parameters.AddWithValue("@Precio", d.Precio);
-                        //cmd.Parameters.AddWithValue("@DesctUni", d.DesctUni);
-
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = USP_MNT_PRODUCTO;
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@Opcion", "5");
-                        cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
-                        cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
-
-                        cmd.ExecuteNonQuery();
-                    });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (cn.State == ConnectionState.Open)
-                {
-                    cn.Close();
-                }
-
-
-        }
-
+                
         }
 
         public Compra BuscarPorId(int Id)
@@ -97,16 +38,16 @@ namespace Athenas.Data.MSSQLRepositorio
             {
                 cn.Open();
 
-                SqlCommand cmdVenta = new SqlCommand(USP_MNT_COMPRA, cn);
+                SqlCommand cmdCompra = new SqlCommand(USP_MNT_COMPRA, cn);
 
 
-                cmdVenta.Parameters.AddWithValue("@Opcion", "4");
-                cmdVenta.CommandType = CommandType.StoredProcedure;
-                cmdVenta.Parameters.AddWithValue("@Id", Id);
+                cmdCompra.Parameters.AddWithValue("@Opcion", "4");
+                cmdCompra.CommandType = CommandType.StoredProcedure;
+                cmdCompra.Parameters.AddWithValue("@Id", Id);
 
 
 
-                SqlDataReader drCompra = cmdVenta.ExecuteReader();
+                SqlDataReader drCompra = cmdCompra.ExecuteReader();
 
                 if (drCompra.Read())
                 {
@@ -179,6 +120,7 @@ namespace Athenas.Data.MSSQLRepositorio
 
         public void Crear(Compra entidad)
         {
+
             cn.Open();
             SqlTransaction tn = cn.BeginTransaction();
             try
