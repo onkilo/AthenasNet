@@ -1,4 +1,4 @@
-﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
@@ -24,17 +24,14 @@ namespace AthenasNet.Api.Controllers
 
         // GET: api/Producto
         [CustomExceptionFilter]
-        public GenericResponse<IEnumerable<ProductoDto>> Get()
+        public GenericResponse<IEnumerable<ProductoDto>> Get(int pagina = 1, int registros = 10, string descripcion = "")
         {
             GenericResponse<IEnumerable<ProductoDto>> response = new GenericResponse<IEnumerable<ProductoDto>>();
 
             try
             {
-                IEnumerable<ProductoDto> data = servicio.Listar("");
-                response.Data = data;
-                response.Codigo = 200; // OK
-                response.Error = false;
-                response.Mensaje = "OK";
+                IEnumerable<ProductoDto> data = servicio.Listar(descripcion);
+                response = ResponseUtil.GetListaPaginada<ProductoDto>(data, pagina, registros);
             }
             catch (Exception ex)
             {
@@ -75,10 +72,7 @@ namespace AthenasNet.Api.Controllers
                 producto.Imagen = cloudinaryUtil.SubeImagen(producto.Base64Imagen, producto.Descripcion);
 
                 servicio.Crear(producto);
-                response.Data = "Se creó correctamente";
-                response.Codigo = 200; // OK
-                response.Error = false;
-                response.Mensaje = "OK";
+                response = ResponseUtil.CrearRespuestaOk(dataMsg: "El producto se creó satisfactoriamente");
             }
             catch (Exception ex)
             {
@@ -109,10 +103,8 @@ namespace AthenasNet.Api.Controllers
 
                 producto.Id = id;
                 servicio.Actualizar(producto);
-                response.Data = "Se actualizó correctamente";
-                response.Codigo = 200; // OK
-                response.Error = false;
-                response.Mensaje = "OK";
+
+                response = ResponseUtil.CrearRespuestaOk(dataMsg: "El producto se actualizó satisfactoriamente");
             }
             catch (Exception ex)
             {
@@ -130,10 +122,7 @@ namespace AthenasNet.Api.Controllers
             try
             {
                 servicio.Eliminar(id);
-                response.Data = "Se eliminó correctamente";
-                response.Codigo = 200; // OK
-                response.Error = false;
-                response.Mensaje = "OK";
+                response = ResponseUtil.CrearRespuestaOk(dataMsg: "El producto fue eliminado satisfactoriamente");
             }
             catch (Exception ex)
             {
