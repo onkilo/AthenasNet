@@ -16,8 +16,6 @@ namespace Athenas.Data.Conexion
         {
             string cnBackUp = ConfigurationManager.AppSettings["AthenasDbMSSQL"];
 
-
-
             //Cn = new SqlConnection(Environment.GetEnvironmentVariable("AthenasDbMSSQL"));
             Cn = new SqlConnection(cnBackUp);
         }
