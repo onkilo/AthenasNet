@@ -22,6 +22,18 @@ namespace AthenasNet.Api.Utilitarios
 
         public static GenericResponse<IEnumerable<T>> GetListaPaginada<T>(IEnumerable<T> data, int pagina = 1, int registros = 10, string msj = "Ok")
         {
+
+            if(registros == 0)
+            {
+                return new GenericResponse<IEnumerable<T>>
+                {
+                    Data = data,
+                    Codigo = 200,
+                    Error = false,
+                    Mensaje = msj
+                };
+            }
+
             GenericResponse<IEnumerable<T>> listado = new GenericResponse<IEnumerable<T>>();
             List<T> dataFiltrada = new List<T>();
             List<T> dataOriginal = data.ToList();
@@ -57,5 +69,15 @@ namespace AthenasNet.Api.Utilitarios
             return listado;
         }
 
+        public static GenericResponse<String> CrearRespuestaOk(int code = 200,  string dataMsg = "Ok")
+        {
+            GenericResponse<String> responseData = new GenericResponse<string>();
+            responseData.Codigo = code;
+            responseData.Mensaje = null;
+            responseData.Error = false;
+            responseData.Data = dataMsg;
+
+            return responseData;
+        }
     }
 }

@@ -1,7 +1,8 @@
-﻿using CloudinaryDotNet;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,8 @@ namespace AthenasNet.Api.Utilitarios
         {
             string url = "";
 
-            Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+            //Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+            Cloudinary cloudinary = new Cloudinary(ConfigurationManager.AppSettings["CLOUDINARY_URL"]);
 
             string[] arrBase64 = imgenBase64.Split(',');
             string strBase64 = (arrBase64.Count() > 1) ? arrBase64[1] : arrBase64[0];

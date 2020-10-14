@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Entidades;
+using Athenas.Data.Entidades;
 using Athenas.Data.MSSQLRepositorio;
 using Athenas.Data.Repositorio;
 using AthenasNet.Negocio.Dto;
@@ -71,6 +71,11 @@ namespace AthenasNet.Negocio.Servicio
             }
 
             return TrabajadorMapper.ToTrabajadorDto(trabajador);
+        }
+
+        public void Eliminar (int Id)
+        {
+            repositorio.Eliminar(Id);
         }
     }
 }
