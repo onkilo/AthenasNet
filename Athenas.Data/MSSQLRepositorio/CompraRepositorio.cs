@@ -27,7 +27,80 @@ namespace Athenas.Data.MSSQLRepositorio
         }
         public void Actualizar(Compra entidad)
         {
-            throw new NotImplementedException();
+            cn.Open();
+            SqlTransaction tn = cn.BeginTransaction();
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.Transaction = tn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = USP_MNT_COMPRA;
+
+                cmd.Parameters.AddWithValue("@Opcion", "2");
+                cmd.Parameters.AddWithValue("@Id", entidad.Id);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
+                cmd.Parameters.AddWithValue("@Activo", "1");
+                
+                cn.Open();
+
+
+                int filas = cmd.ExecuteNonQuery();
+
+                List<DetalleCompra> detalles = new List<DetalleCompra>();
+
+                SqlCommand cmdDetalle = new SqlCommand(USP_MNT_DETALLECOMPRA, cn);
+                cmdDetalle.CommandType = CommandType.StoredProcedure;
+                cmdDetalle.Transaction = tn;
+                cmdDetalle.Parameters.AddWithValue("@Opcion", "4");
+                cmdDetalle.Parameters.AddWithValue("@CompraId", entidad.Id);
+
+                SqlDataReader drDetalle = cmdDetalle.ExecuteReader();
+
+                detalles.Clear();
+
+                while (drDetalle.Read())
+                {
+                    DetalleCompra det = new DetalleCompra();
+                    det.Producto = new Producto
+                    {
+                        Id = Convert.ToInt32(drDetalle["ProductoId"]),
+                        Descripcion = drDetalle["Producto"].ToString(),
+                    };
+                    det.Cantidad = Convert.ToInt32(drDetalle["Cantidad"]);
+                    det.Precio = Convert.ToDouble(drDetalle["Precio"]);
+                    det.Activo = drDetalle["Activo"].ToString();
+                    detalles.Add(det);
+                }
+                
+                drDetalle.Close();
+
+                detalles.ForEach(d =>
+                {
+                    
+                    cmd.CommandText = USP_MNT_PRODUCTO;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@Opcion", "5");
+                    cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
+                    cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
+
+                    cmd.ExecuteNonQuery();
+                });
+                tn.Commit();
+            }
+            catch (Exception ex)
+            {
+                tn.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+
+            }
         }
 
         public Compra BuscarPorId(int Id)
@@ -38,16 +111,16 @@ namespace Athenas.Data.MSSQLRepositorio
             {
                 cn.Open();
 
-                SqlCommand cmdVenta = new SqlCommand(USP_MNT_COMPRA, cn);
+                SqlCommand cmdCompra = new SqlCommand(USP_MNT_COMPRA, cn);
 
 
-                cmdVenta.Parameters.AddWithValue("@Opcion", "4");
-                cmdVenta.CommandType = CommandType.StoredProcedure;
-                cmdVenta.Parameters.AddWithValue("@Id", Id);
+                cmdCompra.Parameters.AddWithValue("@Opcion", "4");
+                cmdCompra.CommandType = CommandType.StoredProcedure;
+                cmdCompra.Parameters.AddWithValue("@Id", Id);
 
 
 
-                SqlDataReader drCompra = cmdVenta.ExecuteReader();
+                SqlDataReader drCompra = cmdCompra.ExecuteReader();
 
                 if (drCompra.Read())
                 {
@@ -104,6 +177,7 @@ namespace Athenas.Data.MSSQLRepositorio
             }
             catch (Exception ex)
             {
+                //tn.Rollback();
                 throw ex;
             }
             finally
@@ -120,6 +194,7 @@ namespace Athenas.Data.MSSQLRepositorio
 
         public void Crear(Compra entidad)
         {
+
             cn.Open();
             SqlTransaction tn = cn.BeginTransaction();
             try
@@ -162,7 +237,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@Opcion", "5");
                         cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
-                        cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
+                        //cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
 
                         cmd.ExecuteNonQuery();
                     });
@@ -192,50 +267,66 @@ namespace Athenas.Data.MSSQLRepositorio
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.Transaction = tn;
                 cmd.Connection = cn;
+                cmd.Transaction = tn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = USP_MNT_COMPRA;
 
                 cmd.Parameters.AddWithValue("@Opcion", "3");
                 cmd.Parameters.AddWithValue("@Id", Id);
 
-                int filas = cmd.ExecuteNonQuery();
+                SqlDataReader drCompra = cmd.ExecuteReader();
+                string Estado = "";
 
-                List<DetalleCompra> detalles = new List<DetalleCompra>();
-
-                cmd.CommandText = USP_MNT_DETALLECOMPRA;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@Opcion", "4");
-                cmd.Parameters.AddWithValue("@CompraId", Id);
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
+                if (drCompra.Read())
                 {
-                    detalles.Add(new DetalleCompra
-                    {
-                        Producto = new Producto
-                        {
-                            Id = Convert.ToInt32(dr["ProductoId"])
-                        },
-                        Cantidad = Convert.ToInt32(dr["Cantidad"])
-                    });
+                    Estado = drCompra["Estado"].ToString();
                 }
 
-                dr.Close();
+                drCompra.Close();
 
-                detalles.ForEach(d =>
+                if(Estado == "1")
                 {
-                    cmd.CommandText = USP_MNT_PRODUCTO;
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Opcion", "5");
-                    cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
-                    cmd.Parameters.AddWithValue("@StockActual", d.Cantidad);
+                    List<DetalleCompra> detalles = new List<DetalleCompra>();
 
-                    cmd.ExecuteNonQuery();
-                });
+                    SqlCommand cmdDetalle = new SqlCommand(USP_MNT_DETALLECOMPRA, cn);
+                    cmdDetalle.CommandType = CommandType.StoredProcedure;
+                    cmdDetalle.Transaction = tn;
+                    cmdDetalle.Parameters.AddWithValue("@Opcion", "4");
+                    cmdDetalle.Parameters.AddWithValue("@CompraId", Id);
 
+                    SqlDataReader drDetalle = cmdDetalle.ExecuteReader();
+
+                    detalles.Clear();
+
+                    while (drDetalle.Read())
+                    {
+                        DetalleCompra det = new DetalleCompra();
+                        det.Producto = new Producto
+                        {
+                            Id = Convert.ToInt32(drDetalle["ProductoId"]),
+                            Descripcion = drDetalle["Producto"].ToString(),
+                        };
+                        det.Cantidad = Convert.ToInt32(drDetalle["Cantidad"]);
+                        det.Precio = Convert.ToDouble(drDetalle["Precio"]);
+                        det.Activo = drDetalle["Activo"].ToString();
+                        detalles.Add(det);
+                    }
+
+                    drDetalle.Close();
+
+                    detalles.ForEach(d =>
+                    {
+
+                        cmd.CommandText = USP_MNT_PRODUCTO;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@Opcion", "5");
+                        cmd.Parameters.AddWithValue("@Id", d.Producto.Id);
+                        cmd.Parameters.AddWithValue("@StockActual", d.Cantidad * -1);
+
+                        cmd.ExecuteNonQuery();
+                    });
+                }
                 tn.Commit();
             }
             catch (Exception ex)
