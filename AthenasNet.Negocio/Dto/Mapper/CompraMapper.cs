@@ -20,7 +20,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 Cantidad = detalle.Cantidad,
                 Precio = detalle.Precio,
                 Producto = ProductoMapper.ToProductoDto(detalle.Producto),
-                Compra = new CompraDto { Id = detalle.Compra.Id}
+                //Compra = new CompraDto { Id = detalle.Compra.Id}
             };
 
             return dto;
@@ -37,7 +37,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 Cantidad = dto.Cantidad,
                 Precio = dto.Precio,
                 Producto = ProductoMapper.ToProducto(dto.Producto),
-                Compra = new Compra { Id = dto.Compra.Id }
+               // Compra = new Compra { Id = dto.Compra.Id }
             };
 
             return detalle;

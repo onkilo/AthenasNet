@@ -93,7 +93,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         StockActual = Convert.ToInt32(dr["StockActual"]),
                         StockMin = Convert.ToInt32(dr["StockMin"]),
                         Imagen = dr["Imagen"].ToString(),
-                        Descuento = Convert.ToDouble(dr["Descuento"]),
+                        //Descuento = Convert.ToDouble(dr["Descuento"]),
                         Activo = dr["Activo"].ToString(),
                         Categoria = new Categoria
                         {
@@ -222,7 +222,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         StockActual = Convert.ToInt32(dr["StockActual"]),
                         StockMin = Convert.ToInt32(dr["StockMin"]),
                         Imagen = dr["Imagen"].ToString(),
-                        Descuento = Convert.ToDouble(dr["Descuento"]),
+                        //Descuento = Convert.ToDouble(dr["Descuento"]),
                         Activo = dr["Activo"].ToString(),
                         Categoria = new Categoria
                         {
