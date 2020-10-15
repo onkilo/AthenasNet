@@ -39,9 +39,9 @@ namespace AthenasNet.Negocio.Servicio
             return CompraMapper.ToCompraDto(repositorio.BuscarPorId(id));
         }
 
-        public IEnumerable<CompraDto> Listar(string proveedor)
+        public IEnumerable<CompraDto> Listar(string proveedor, int UsuarioId)
         {
-            return CompraMapper.ToComprasDto(repositorio.Listar(proveedor));
+            return CompraMapper.ToComprasDto(repositorio.Listar(proveedor, UsuarioId));
         }
     }
 }
