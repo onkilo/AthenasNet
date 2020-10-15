@@ -99,7 +99,6 @@ namespace AthenasNet.Api.Controllers
         // DELETE: api/Venta/5
         public GenericResponse<String> Delete(int id)
         {
-            //servicio.Eliminar(id);
             GenericResponse<String> response = new GenericResponse<String>();
 
             try
