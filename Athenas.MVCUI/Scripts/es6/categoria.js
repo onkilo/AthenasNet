@@ -1,5 +1,224 @@
 let categorias = [];
 
+const CategoriaService = () => {
+
+    const crearCategoria = async (categoria) => {
+       const respuesta = await AthenasNet.llamadaApi({
+                type: 'POST',
+                data: JSON.stringify(categoria),
+                url: 'Categoria/Crear'
+        })
+
+        return respuesta;
+    }
+
+    const actualizarCategoria = async (categoria) => {
+        const respuesta = await AthenasNet.llamadaApi({
+            type: 'POST',
+            data: JSON.stringify(categoria),
+            url: 'Categoria/Actualizar'
+        })
+        return respuesta;
+          
+    }
+
+    const listarCategoria = async (filtros) => {
+        const filtrosDefecto = {
+            Descripcion: '',
+            ...filtros
+        }
+
+        const respuesta = await AthenasNet.llamadaApi({
+            data: filtrosDefecto,
+            url: 'Categoria/Listar'
+        })
+        return respuesta.Data;
+    }
+
+    const buscarCategoria = async (id) => {
+   
+        const respuesta = await AthenasNet.llamadaApi({
+            data: { Id: id },
+            url: 'Categoria/Obtener'
+        })
+
+        return respuesta.Data;
+    }
+
+    const eliminarCategoria = async (id) => {
+
+        const respuesta = await AthenasNet.llamadaApi({
+            data: { Id: id },
+            url: 'Categoria/Eliminar'
+        })
+        return respuesta;
+    }
+
+    return {
+        crearCategoria,
+        actualizarCategoria,
+        listarCategoria,
+        buscarCategoria,
+        eliminarCategoria
+    }
+}
+
+const CategoriaUI = () => {
+
+    const IDFORMCATEGORIA = 'form-categoria';
+    const IDFORMCONFIRMACION = 'form-confirmar';
+    const TBLBODYSELECTOR = '#tb-categoria tbody';
+    const BTNNUEVOSELECTOR = '#btn-nuevo';
+    const TBLCATESELECTOR = '#tb-categoria';
+    const MODALCATEGORIA = $('#modal-categoria');
+
+    const formCategoria = () => {
+        return document.getElementById(IDFORMCATEGORIA)
+    }
+
+    const formConfirmacion = () => {
+        return document.getElementById(IDFORMCONFIRMACION)
+    }
+
+    const formCategoriaElements = () => formCategoria().elements;
+
+    const getFormElement = (ele) => formCategoriaElements()[ele].value;
+
+    const setFormElement = (ele, value) => formCategoriaElements()[ele].value = value;
+
+    const getTablaCate = () => document.querySelector(TBLCATESELECTOR);
+
+    const generarFila = (categoria) => {
+        let template = `
+            <tr>
+                <td>${categoria.Id}</td>
+                <td>${categoria.Descripcion}</td>
+                <td>
+                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="editar">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="eliminar">
+                        <i class="fas fa-trash-alt" data-del-action="true"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+
+        return template;
+    }
+
+    const generarTabla = (categorias) => {
+        const tBody = document.querySelector(TBLBODYSELECTOR);
+
+        let tableBody = "";
+
+        lstCategorias.forEach((cat) => {
+            tableBody += generarFila(cat);
+        });
+
+        tBody.innerHTML = tableBody;
+    }
+
+    const getCategoria = () => {
+        const categoria = {
+            Descripcion: getFormElement('txt-descripcion'),
+            Id: getFormElement('hdn-id'),
+            accion: getFormElement('accion'),
+        }
+
+        return categoria;
+    }
+
+    const limpiaFormulario = () => {
+        setFormElement('txt-descripcion', '');
+        setFormElement('hdn-id', 0);
+        setFormElement('accion', 'registrar');
+    }
+
+    const escondeModal = () => {
+        MODALCATEGORIA.modal('hide');
+    }
+
+    const muestraModal = (categoria) => {
+        if (categoria) {
+            setFormElement('txt-descripcion', categoria.Descripcion);
+            setFormElement('hdn-id', categoria.Id);
+            setFormElement('accion', 'editar');
+        }
+        else {
+            limpiaFormulario();
+        }
+
+        MODALCATEGORIA.modal('show');
+    }
+
+
+    return {
+        formCategoria,
+        generarTabla,
+        getCategoria,
+        limpiaFormulario,
+        formConfirmacion
+    }
+}
+
+const CategoriaController = (service, ui) => {
+    let categoriaSeleccionada = {};
+    let lstCategoria = [];
+
+    const mostrarCategorias = async () => {
+        try {
+            lstCategorias = await service.listarCategoria({});
+
+            ui.generarTabla(lstCategoria);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    const manejaSubmitCate = () => {
+        ui.formCategoria.addEventListener('submit', async (evt) => {
+            evt.preventDefault();
+            categoriaSeleccionada = ui.getCategoria();
+            try {
+                if (categoriaSeleccionada.accion === 'registrar') {
+                    categoriaSeleccionada.Id = 0;
+                    await service.crearCategoria(categoriaSeleccionada);
+                }
+                else if (categoriaSeleccionada.accion === 'editar') {
+                    await service.actualizarCategoria(categoriaSeleccionada);
+                    
+                }
+                ui.escondeModal();
+                ui.limpiaFormulario();
+            }
+            catch (err) {
+                console.error(err);
+            }
+        });
+    }
+
+    const manejaSubmitConf = () => {
+        ui.formConfirmar().addEventListener('submit', async (evt) => {
+            evt.preventDefault();
+            await service.eliminarCategoria(categoriaSeleccionada.Id);
+        }) 
+    }
+
+    const manejaClickTabla = () => {
+        
+    }
+
+    const init = () => {
+        mostrarCategorias();
+        manejaSubmitCate();
+        manejaSubmitConf();
+    }
+
+    return { init };
+
+}
 const crearCategoria = async (categoria) => {
     try {
 
