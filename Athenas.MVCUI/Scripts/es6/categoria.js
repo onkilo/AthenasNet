@@ -126,9 +126,17 @@ window.addEventListener('load', () => {
     const tablaCategoria = document.querySelector('#tb-categoria');
     const btnNuevo = document.querySelector('#btn-nuevo');
     const formCategoria = document.getElementById('form-categoria');
+    const formConfirmar = document.getElementById('form-confirmar');
     const formElementos = formCategoria.elements;
 
     btnNuevo.addEventListener('click', () => { formElementos['accion'].value = 'registrar'; });
+
+    $('#modal-categoria').on('show.bs.modal', (e) => {
+        if (formElementos['accion'].value === 'registrar') {
+            formElementos['descripcion'].value = '';
+            formElementos['hdn-id'].value = 0;
+        }
+    } )
 
     tablaCategoria.addEventListener('click', (evt) => {
 
@@ -146,6 +154,7 @@ window.addEventListener('load', () => {
             }
             else if (accion === 'eliminar') {
                 console.log('eliminar')
+                $('#modal-confirmar').modal('show');
             }
         }
 
@@ -171,7 +180,7 @@ window.addEventListener('load', () => {
         }
        
         $('#modal-categoria').modal('hide');
-
+        await listarCategoria({});
     })
 
 

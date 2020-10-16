@@ -240,9 +240,16 @@ window.addEventListener('load', function () {
   var tablaCategoria = document.querySelector('#tb-categoria');
   var btnNuevo = document.querySelector('#btn-nuevo');
   var formCategoria = document.getElementById('form-categoria');
+  var formConfirmar = document.getElementById('form-confirmar');
   var formElementos = formCategoria.elements;
   btnNuevo.addEventListener('click', function () {
     formElementos['accion'].value = 'registrar';
+  });
+  $('#modal-categoria').on('show.bs.modal', function (e) {
+    if (formElementos['accion'].value === 'registrar') {
+      formElementos['descripcion'].value = '';
+      formElementos['hdn-id'].value = 0;
+    }
   });
   tablaCategoria.addEventListener('click', function (evt) {
     if (evt.target.dataset.id) {
@@ -261,6 +268,7 @@ window.addEventListener('load', function () {
         $('#modal-categoria').modal('show');
       } else if (accion === 'eliminar') {
         console.log('eliminar');
+        $('#modal-confirmar').modal('show');
       }
     }
   });
@@ -301,8 +309,10 @@ window.addEventListener('load', function () {
 
             case 11:
               $('#modal-categoria').modal('hide');
+              _context6.next = 14;
+              return listarCategoria({});
 
-            case 12:
+            case 14:
             case "end":
               return _context6.stop();
           }
