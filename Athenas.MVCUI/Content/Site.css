@@ -63,3 +63,7 @@
     z-index: 10000;
     align-items: center
 }
+
+.btn-sin-click > * {
+    pointer-events: none;
+}

@@ -1,7 +1,3 @@
-################################################################################
-# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
-################################################################################
-
 /.vs
 /packages
 /Athenas.Data/bin/Debug
