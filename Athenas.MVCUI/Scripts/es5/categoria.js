@@ -10,6 +10,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var categorias = [];
+
 var crearCategoria = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(categoria) {
     var respuesta;
@@ -90,6 +92,20 @@ var actualizarCategoria = /*#__PURE__*/function () {
   };
 }();
 
+var generarTempCategoria = function generarTempCategoria(categoria) {
+  var template = "\n    <tr>\n        <td>".concat(categoria.Id, "</td>\n        <td>").concat(categoria.Descripcion, "</td>\n        <td>\n            <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"editar\">\n                <i class=\"fas fa-edit\"></i>\n            </button>\n            <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"eliminar\">\n                <i class=\"fas fa-trash-alt\" data-del-action=\"true\"></i>\n            </button>\n        </td>\n    </tr>\n");
+  return template;
+};
+
+var generarTabla = function generarTabla(lstCategorias) {
+  var tBody = document.querySelector('#tb-categoria tbody');
+  var tableBody = "";
+  lstCategorias.forEach(function (cat) {
+    tableBody += generarTempCategoria(cat);
+  });
+  tBody.innerHTML = tableBody;
+};
+
 var listarCategoria = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(filtros) {
     var filtrosDefecto, respuesta;
@@ -111,20 +127,22 @@ var listarCategoria = /*#__PURE__*/function () {
             respuesta = _context3.sent;
             //activar el toast
             console.log(respuesta);
-            _context3.next = 11;
+            categorias = respuesta.Data;
+            generarTabla(categorias);
+            _context3.next = 13;
             break;
 
-          case 8:
-            _context3.prev = 8;
+          case 10:
+            _context3.prev = 10;
             _context3.t0 = _context3["catch"](0);
             console.error(_context3.t0);
 
-          case 11:
+          case 13:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 8]]);
+    }, _callee3, null, [[0, 10]]);
   }));
 
   return function listarCategoria(_x3) {
@@ -218,15 +236,93 @@ var eliminarCategoria = /*#__PURE__*/function () {
 }();
 
 window.addEventListener('load', function () {
-  document.querySelector('#form-categoria').addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    var formCategoria = document.getElementById('form-categoria');
-    var formElementos = formCategoria.elements;
-    var categoria = {
-      Descripcion: formElementos['txt-descripcion'].value,
-      Id: parseInt(formElementos('hdn-id').value)
-    };
-    buscarCategoria(3005);
+  listarCategoria({});
+  var tablaCategoria = document.querySelector('#tb-categoria');
+  var btnNuevo = document.querySelector('#btn-nuevo');
+  var formCategoria = document.getElementById('form-categoria');
+  var formConfirmar = document.getElementById('form-confirmar');
+  var formElementos = formCategoria.elements;
+  btnNuevo.addEventListener('click', function () {
+    formElementos['accion'].value = 'registrar';
   });
+  $('#modal-categoria').on('show.bs.modal', function (e) {
+    if (formElementos['accion'].value === 'registrar') {
+      formElementos['descripcion'].value = '';
+      formElementos['hdn-id'].value = 0;
+    }
+  });
+  tablaCategoria.addEventListener('click', function (evt) {
+    if (evt.target.dataset.id) {
+      var _evt$target$dataset = evt.target.dataset,
+          id = _evt$target$dataset.id,
+          accion = _evt$target$dataset.accion;
+
+      if (accion === 'editar') {
+        console.log(formElementos);
+        var cateSeleccionada = categorias.find(function (c) {
+          return c.Id === parseInt(id);
+        });
+        formElementos['descripcion'].value = cateSeleccionada.Descripcion;
+        formElementos['hdn-id'].value = cateSeleccionada.Id;
+        formElementos['accion'].value = 'editar';
+        $('#modal-categoria').modal('show');
+      } else if (accion === 'eliminar') {
+        console.log('eliminar');
+        $('#modal-confirmar').modal('show');
+      }
+    }
+  });
+  formCategoria.addEventListener('submit', /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(evt) {
+      var accion, categoria;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              evt.preventDefault();
+              accion = formElementos['accion'].value;
+              categoria = {
+                Descripcion: formElementos['txt-descripcion'].value,
+                Id: parseInt(formElementos['hdn-id'].value)
+              };
+
+              if (!(accion === 'registrar')) {
+                _context6.next = 8;
+                break;
+              }
+
+              _context6.next = 6;
+              return crearCategoria(categoria);
+
+            case 6:
+              _context6.next = 11;
+              break;
+
+            case 8:
+              if (!(accion === 'editar')) {
+                _context6.next = 11;
+                break;
+              }
+
+              _context6.next = 11;
+              return actualizarCategoria(categoria);
+
+            case 11:
+              $('#modal-categoria').modal('hide');
+              _context6.next = 14;
+              return listarCategoria({});
+
+            case 14:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    return function (_x6) {
+      return _ref6.apply(this, arguments);
+    };
+  }());
 });
 //# sourceMappingURL=categoria.js.map
