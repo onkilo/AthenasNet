@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewBag.Title = "Index";
 }
@@ -11,7 +11,7 @@
                 @*<a href="#" class="btn btn-success d-flex justify-content-center align-items-center btn-loader">
                         <i class="fas fa-plus mr-1"></i> Nuevo
                     </a>*@
-                <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#modal-categoria">
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" data-toggle="modal" data-target="#modal-categoria">
                     <i class="fas fa-plus mr-1"></i> Nuevo
                 </button>
             </div>
@@ -69,29 +69,48 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form novalidate id="form-categoria">
-                    <input type="hidden" name="hdn-id" id="hdn-id" value="3005">
-                    <input type="hidden" name="accion" value="modificar" id="accion" />
+            <form novalidate id="form-categoria">
+                <div class="modal-body">
+
+                    <input type="hidden" name="accion" value="registrar" />
+                    <input type="hidden" name="hdn-id" id="hdn-id" value="0">
                     <div class="form-group">
                         <label for="txt-descripcion">Descripción</label>
                         <input type="text" class="form-control" name="descripcion" id="txt-descripcion" required>
                         <div class="invalid-feedback">Por favor ingrese una descripción</div>
                     </div>
+                </div>
+                <div class="modal-footer">
 
+                    <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Guardar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-                    @*<div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success col-lg-2 mr-lg-4"><i class="far fa-save mr-1"></i> Guardar</button>
-                            <a
-                               class="btn btn-success ml-lg-4 col-lg-2 mt-1 mt-lg-0 btn-loader"><i class="fas fa-arrow-left mr-1"></i>Regresar</a>
-                        </div>*@
-                </form>
+<!-- Modal -->
+<div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer">
+            <form novalidate id="form-confirmar">
+                <div class="modal-body">
 
-                <button type="button" class="btn btn-success"><i class="far fa-save mr-1"></i> Guardar</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-            </div>
+                   <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Aceptar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
