@@ -72,13 +72,9 @@ const CategoriaUI = () => {
     const TBLCATESELECTOR = '#tb-categoria';
     const MODALCATEGORIA = $('#modal-categoria');
 
-    const formCategoria = () => {
-        return document.getElementById(IDFORMCATEGORIA)
-    }
+    const formCategoria = () => document.getElementById(IDFORMCATEGORIA);
 
-    const formConfirmacion = () => {
-        return document.getElementById(IDFORMCONFIRMACION)
-    }
+    const formConfirmacion = () => document.getElementById(IDFORMCONFIRMACION);
 
     const formCategoriaElements = () => formCategoria().elements;
 
@@ -87,6 +83,8 @@ const CategoriaUI = () => {
     const setFormElement = (ele, value) => formCategoriaElements()[ele].value = value;
 
     const getTablaCate = () => document.querySelector(TBLCATESELECTOR);
+
+    const getBtnNuevo = () => document.querySelector(BTNNUEVOSELECTOR);
 
     const generarFila = (categoria) => {
         let template = `
@@ -158,7 +156,8 @@ const CategoriaUI = () => {
         generarTabla,
         getCategoria,
         limpiaFormulario,
-        formConfirmacion
+        formConfirmacion,
+        getTablaCate
     }
 }
 
@@ -203,6 +202,8 @@ const CategoriaController = (service, ui) => {
         ui.formConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();
             await service.eliminarCategoria(categoriaSeleccionada.Id);
+            
+            await mostrarCategorias();
         }) 
     }
 

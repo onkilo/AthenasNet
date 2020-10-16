@@ -213,6 +213,10 @@ var CategoriaUI = function CategoriaUI() {
     return document.querySelector(TBLCATESELECTOR);
   };
 
+  var getBtnNuevo = function getBtnNuevo() {
+    return document.querySelector(BTNNUEVOSELECTOR);
+  };
+
   var generarFila = function generarFila(categoria) {
     var template = "\n            <tr>\n                <td>".concat(categoria.Id, "</td>\n                <td>").concat(categoria.Descripcion, "</td>\n                <td>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"editar\">\n                        <i class=\"fas fa-edit\"></i>\n                    </button>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"eliminar\">\n                        <i class=\"fas fa-trash-alt\" data-del-action=\"true\"></i>\n                    </button>\n                </td>\n            </tr>\n        ");
     return template;
@@ -263,7 +267,8 @@ var CategoriaUI = function CategoriaUI() {
     generarTabla: generarTabla,
     getCategoria: getCategoria,
     limpiaFormulario: limpiaFormulario,
-    formConfirmacion: formConfirmacion
+    formConfirmacion: formConfirmacion,
+    getTablaCate: getTablaCate
   };
 };
 
@@ -375,6 +380,10 @@ var CategoriaController = function CategoriaController(service, ui) {
                 return service.eliminarCategoria(categoriaSeleccionada.Id);
 
               case 3:
+                _context8.next = 5;
+                return mostrarCategorias();
+
+              case 5:
               case "end":
                 return _context8.stop();
             }
