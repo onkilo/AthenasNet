@@ -14,7 +14,8 @@
             data: {},
             type: 'GET'
         };
-
+        
+        
         try {
             const respuesta = await $.ajax({
                 ...opcionsDefecto,
