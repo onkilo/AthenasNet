@@ -1,4 +1,4 @@
-﻿using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.ClienteHttp;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -16,24 +16,24 @@ namespace Athenas.MVCUI.Controllers
         // GET: Categoria
         public ActionResult Index()
         {
-            String url = "Categoria";
+            //String url = "Categoria";
 
-            url += "/2014";
+            //url += "/2014";
 
-            //GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-            //    .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+            ////GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
+            ////    .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
 
-            GenericResponseModel<String> responseModel = ApiRequests
-                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
+            //GenericResponseModel<String> responseModel = ApiRequests
+            //    .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
 
-            if (errorResponse == null)
-            {
-                Debug.Write(responseModel.Mensaje);
-            }
-            else
-            {
-                Debug.Write(errorResponse);
-            }
+            //if (errorResponse == null)
+            //{
+            //    Debug.Write(responseModel.Mensaje);
+            //}
+            //else
+            //{
+            //    Debug.Write(errorResponse);
+            //}
             return View();
         }
 
@@ -180,6 +180,26 @@ namespace Athenas.MVCUI.Controllers
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Put<GenericResponseModel<String>, CategoriaViewModel, GenericResponseModel<String>>(url, categoria, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult Eliminar(int Id)
+        {
+
+            String url = $"Categoria/{Id}";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
