@@ -1,4 +1,5 @@
 ﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
@@ -12,14 +13,10 @@ using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
     public class CompraController : ApiController
     {
         private readonly CompraServicio servicio = new CompraServicio();
-        // GET: api/Compra
-        //public IEnumerable<CompraDto> Get(string Proveedor = "")
-        //{
-        //    return servicio.Listar(Proveedor, 0);
-        //}
 
         public GenericResponse<IEnumerable<CompraDto>> Get(int pagina = 1, int registros = 10, string proveedor = "", int id = 0)
         {

@@ -1,4 +1,5 @@
 ﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
@@ -12,9 +13,12 @@ using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
     public class ClienteController : ApiController
     {
         private readonly ClienteServicio servicio = new ClienteServicio();
+
+        
         // GET: api/Cliente
         public GenericResponse<IEnumerable<ClienteDto>> Get(int pagina = 1, int registros = 10, string nombre = "")
         {
@@ -22,20 +26,11 @@ namespace AthenasNet.Api.Controllers
 
             try
             {
-                //IEnumerable<ClienteDto> data = servicio.Listar("");
-                //response.Data = data;
-                //response.Codigo = 200; // OK
-                //response.Error = false;
-                //response.Mensaje = "OK";
                 IEnumerable<ClienteDto> data = servicio.Listar(nombre);
                 response = ResponseUtil.GetListaPaginada<ClienteDto>(data, pagina, registros);
             }
             catch (Exception ex)
             {
-                //    response.Data = null;
-                //    response.Codigo = 500; // OK
-                //    response.Error = true;
-                //    response.Mensaje = ex.Message;
                 throw new CustomResponseException(ex.Message, 500);
             }
 
