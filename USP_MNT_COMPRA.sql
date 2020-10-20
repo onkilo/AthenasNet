@@ -21,12 +21,13 @@ BEGIN
 	
 	IF @Opcion = '2'
 	BEGIN
-		UPDATE Compra SET Estado = @Estado WHERE Id = @Id AND Activo = '1'
+		UPDATE Compra SET Estado = '1' WHERE Id = @Id AND Activo = '1'
 	END
 
 	IF @Opcion = '3'
 	BEGIN
-		UPDATE Compra SET Activo = '0' WHERE Id = @Id AND Activo = '1'
+		UPDATE Compra SET Activo = '0' WHERE Id = @Id AND Activo = '1';
+		Select Estado from Compra where Id = @Id And Activo = '0'
 	END
 
 	IF @Opcion = '4'
@@ -41,7 +42,8 @@ BEGIN
 			t.Apellido as ApeTrabajador,
 			c.Fecha,
 			c.Estado,
-			c.Activo
+			c.Activo,
+			c.TrabajadorId
 		FROM Compra c JOIN Trabajador t on c.TrabajadorId = t.Id
 		JOIN Proveedor pv ON c.ProveedorId = c.Id 
 		WHERE (@Id = 0 OR c.Id = @Id) 
