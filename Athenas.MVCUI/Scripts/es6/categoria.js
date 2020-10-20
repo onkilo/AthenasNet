@@ -1,28 +1,29 @@
-let categorias = [];
 
 const CategoriaService = () => {
 
     const crearCategoria = async (categoria) => {
-       const respuesta = await AthenasNet.llamadaApi({
-                type: 'POST',
-                data: JSON.stringify(categoria),
-                url: 'Categoria/Crear'
+        const respuesta = await AthenasNet.llamadaApi({
+            type: 'POST',
+            data: JSON.stringify(categoria),
+            url: 'Categoria/Crear'
         })
 
         return respuesta;
     }
 
     const actualizarCategoria = async (categoria) => {
+
         const respuesta = await AthenasNet.llamadaApi({
             type: 'POST',
             data: JSON.stringify(categoria),
             url: 'Categoria/Actualizar'
         })
+
         return respuesta;
-          
     }
 
     const listarCategoria = async (filtros) => {
+
         const filtrosDefecto = {
             Descripcion: '',
             ...filtros
@@ -31,15 +32,6 @@ const CategoriaService = () => {
         const respuesta = await AthenasNet.llamadaApi({
             data: filtrosDefecto,
             url: 'Categoria/Listar'
-        })
-        return respuesta.Data;
-    }
-
-    const buscarCategoria = async (id) => {
-   
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Categoria/Obtener'
         })
 
         return respuesta.Data;
@@ -51,40 +43,70 @@ const CategoriaService = () => {
             data: { Id: id },
             url: 'Categoria/Eliminar'
         })
+        return respuesta
+    }
+
+    const buscarCategoria = async (id) => {
+        const respuesta = await AthenasNet.llamadaApi({
+            data: { Id: id },
+            url: 'Categoria/Obtener'
+        })
         return respuesta;
+           
     }
 
     return {
         crearCategoria,
         actualizarCategoria,
         listarCategoria,
-        buscarCategoria,
-        eliminarCategoria
+        eliminarCategoria,
+        buscarCategoria
     }
 }
 
 const CategoriaUI = () => {
 
+    const SELTBLCATEGORIA = '#tb-categoria';
+    const SELBTNNUEVO = '#btn-nuevo';
     const IDFORMCATEGORIA = 'form-categoria';
-    const IDFORMCONFIRMACION = 'form-confirmar';
-    const TBLBODYSELECTOR = '#tb-categoria tbody';
-    const BTNNUEVOSELECTOR = '#btn-nuevo';
-    const TBLCATESELECTOR = '#tb-categoria';
-    const MODALCATEGORIA = $('#modal-categoria');
+    const IDFORMCONFIRMAR = 'form-confirmar';
+    const SELTBLBODY = '#tb-categoria tbody';
+    const SELMODALCATE = '#modal-categoria';
+    const SELMODALCONF = '#modal-confirmar';
 
-    const formCategoria = () => document.getElementById(IDFORMCATEGORIA);
+    const getTblCategoria = () => document.querySelector(SELTBLCATEGORIA);
 
-    const formConfirmacion = () => document.getElementById(IDFORMCONFIRMACION);
+    const getBtnNuevo = () => document.querySelector(SELBTNNUEVO);
 
-    const formCategoriaElements = () => formCategoria().elements;
+    const getFormCategoria = () => document.getElementById(IDFORMCATEGORIA);
 
-    const getFormElement = (ele) => formCategoriaElements()[ele].value;
+    const getFormCateElements = () => getFormCategoria().elements;
 
-    const setFormElement = (ele, value) => formCategoriaElements()[ele].value = value;
+    const getFormEleValue = (ele) => getFormCateElements()[ele].value;
 
-    const getTablaCate = () => document.querySelector(TBLCATESELECTOR);
+    const setFormEleValue = (ele, value) => { getFormCateElements()[ele].value = value; }
 
-    const getBtnNuevo = () => document.querySelector(BTNNUEVOSELECTOR);
+    const getFormConfirmar = () => document.getElementById(IDFORMCONFIRMAR);
+
+
+    const generarTabla = (lstCategorias) => {
+        const tBody = document.querySelector(SELTBLBODY);
+
+        let tableBody = "";
+
+        lstCategorias.forEach((cat) => {
+            tableBody += generarFila(cat);
+        });
+
+        tBody.innerHTML = tableBody;
+    }
+
+    const muestraCategoria = (categoria) => {
+        setFormEleValue('descripcion', categoria.Descripcion);
+        setFormEleValue('hdn-id', categoria.Id);
+        setFormEleValue('accion', categoria.accion);
+        $(SELMODALCATE).modal('show');
+    }
 
     const generarFila = (categoria) => {
         let template = `
@@ -105,235 +127,151 @@ const CategoriaUI = () => {
         return template;
     }
 
-    const generarTabla = (categorias) => {
-        const tBody = document.querySelector(TBLBODYSELECTOR);
+    const evtMostrarModCategoria = (evt) => {
+        $(SELMODALCATE).on('show.bs.modal', evt)
+    }
 
-        let tableBody = "";
+    const mostrarConfirmacion = () => {
+        $(SELMODALCONF).modal('show');
+    }
 
-        lstCategorias.forEach((cat) => {
-            tableBody += generarFila(cat);
-        });
+    const ocultarConfirmacion = () => {
+        $(SELMODALCONF).modal('hide');
+    }
 
-        tBody.innerHTML = tableBody;
+    const cerrarModCate = () => {
+        $(SELMODALCATE).modal('hide');
+    }
+
+    const limpiarModalCat = () => {
+        setFormEleValue('txt-descripcion', '');
+        setFormEleValue('hdn-id', '0');
+        setFormEleValue('accion', 'registrar');
+
     }
 
     const getCategoria = () => {
         const categoria = {
-            Descripcion: getFormElement('txt-descripcion'),
-            Id: getFormElement('hdn-id'),
-            accion: getFormElement('accion'),
-        }
+            Descripcion: getFormEleValue('txt-descripcion'),
+            Id: parseInt(getFormEleValue('hdn-id')),
+            accion: getFormEleValue('accion')
+        };
 
         return categoria;
     }
 
-    const limpiaFormulario = () => {
-        setFormElement('txt-descripcion', '');
-        setFormElement('hdn-id', 0);
-        setFormElement('accion', 'registrar');
-    }
-
-    const escondeModal = () => {
-        MODALCATEGORIA.modal('hide');
-    }
-
-    const muestraModal = (categoria) => {
-        if (categoria) {
-            setFormElement('txt-descripcion', categoria.Descripcion);
-            setFormElement('hdn-id', categoria.Id);
-            setFormElement('accion', 'editar');
-        }
-        else {
-            limpiaFormulario();
-        }
-
-        MODALCATEGORIA.modal('show');
-    }
-
-
     return {
-        formCategoria,
+        getTblCategoria,
+        getBtnNuevo,
+        getFormCategoria,
+        getFormConfirmar,
+        getFormEleValue,
+        setFormEleValue,
         generarTabla,
+        evtMostrarModCategoria,
+        muestraCategoria,
+        mostrarConfirmacion,
+        limpiarModalCat,
         getCategoria,
-        limpiaFormulario,
-        formConfirmacion,
-        getTablaCate
+        cerrarModCate,
+        ocultarConfirmacion
     }
 }
 
 const CategoriaController = (service, ui) => {
-    let categoriaSeleccionada = {};
-    let lstCategoria = [];
+    let lstCategorias = [];
+    let cateSeleccionada = {};
 
-    const mostrarCategorias = async () => {
+
+    const muestraCategorias = async () => {
         try {
             lstCategorias = await service.listarCategoria({});
-
-            ui.generarTabla(lstCategoria);
+            ui.generarTabla(lstCategorias);
         }
         catch (err) {
             console.error(err);
         }
     }
 
-    const manejaSubmitCate = () => {
-        ui.formCategoria.addEventListener('submit', async (evt) => {
-            evt.preventDefault();
-            categoriaSeleccionada = ui.getCategoria();
-            try {
-                if (categoriaSeleccionada.accion === 'registrar') {
-                    categoriaSeleccionada.Id = 0;
-                    await service.crearCategoria(categoriaSeleccionada);
-                }
-                else if (categoriaSeleccionada.accion === 'editar') {
-                    await service.actualizarCategoria(categoriaSeleccionada);
-                    
-                }
-                ui.escondeModal();
-                ui.limpiaFormulario();
-            }
-            catch (err) {
-                console.error(err);
+    const configModalCate = () => {
+        ui.evtMostrarModCategoria((e) => {
+            if (ui.getFormEleValue('accion') === 'registrar') {
+                ui.setFormEleValue('descripcion', '');
+                ui.setFormEleValue('hdn-id', 0);
             }
         });
     }
 
-    const manejaSubmitConf = () => {
-        ui.formConfirmar().addEventListener('submit', async (evt) => {
+    const manejaEvtTabla = () => {
+        ui.getTblCategoria().addEventListener('click', (evt) => {
+
+            if (evt.target.dataset.id) {
+                const { id, accion } = evt.target.dataset;
+
+                cateSeleccionada = lstCategorias.find(c => c.Id === parseInt(id));
+                cateSeleccionada.accion = accion;
+
+                if (accion === 'editar') {
+                    ui.muestraCategoria(cateSeleccionada);
+                }
+                else if (accion === 'eliminar') {
+                    console.log('eliminar')
+                    ui.mostrarConfirmacion();
+                }
+            }
+
+
+        });
+    }
+
+    const manejaEnvioCat = () => {
+
+        ui.getFormCategoria().addEventListener('submit', async (evt) => {
             evt.preventDefault();
-            await service.eliminarCategoria(categoriaSeleccionada.Id);
-            
-            await mostrarCategorias();
-        }) 
-    }
 
-    const manejaClickTabla = () => {
-        
-    }
+            const categoria = ui.getCategoria();
+            try {
+                if (categoria.accion === 'registrar') {
+                    await service.crearCategoria(categoria);
+                }
+                else if (categoria.accion === 'editar') {
+                    await service.actualizarCategoria(categoria);
 
-    const init = () => {
-        mostrarCategorias();
-        manejaSubmitCate();
-        manejaSubmitConf();
-    }
+                }
+            }
+            catch (err) {
+                console.error(err);
+                console.warn('')
+            }
+           
 
-    return { init };
+            ui.cerrarModCate();
+            await muestraCategorias();
 
-}
-const crearCategoria = async (categoria) => {
-    try {
-
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Crear'
         })
-        //activar el toast
-        console.log(respuesta);
-    }
-    catch (err) {
-        console.error(err);
-    }
-}
 
-const actualizarCategoria = async (categoria) => {
-    try {
+    }
 
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Actualizar'
+    const manejaEnvioConf = () => {
+        ui.getFormConfirmar().addEventListener('submit', async (evt) => {
+            evt.preventDefault();//evitar la accion del evento
+            await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
+            ui.ocultarConfirmacion();
+            muestraCategorias();
         })
-        //activar el toast
-        console.log(respuesta);
     }
-    catch (err) {
-        console.error(err);
+
+    const iniciar = () => {
+        muestraCategorias();
+        configModalCate();
+        manejaEvtTabla();
+        manejaEnvioCat();
+        manejaEnvioConf();
     }
-}
-
-const generarTempCategoria = (categoria) => {
-    let template = `
-    <tr>
-        <td>${categoria.Id}</td>
-        <td>${categoria.Descripcion}</td>
-        <td>
-            <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="editar">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="eliminar">
-                <i class="fas fa-trash-alt" data-del-action="true"></i>
-            </button>
-        </td>
-    </tr>
-`;
-
-    return template;
-}
 
 
-const generarTabla = (lstCategorias) => {
-    const tBody = document.querySelector('#tb-categoria tbody');
-
-    let tableBody = "";
-
-    lstCategorias.forEach((cat) => {
-        tableBody += generarTempCategoria(cat);
-    });
-
-    tBody.innerHTML = tableBody;
-}
-
-const listarCategoria = async (filtros) => {
-    try {
-
-        const filtrosDefecto = {
-            Descripcion: '',
-            ...filtros
-        }
-
-        const respuesta = await AthenasNet.llamadaApi({
-            data: filtrosDefecto,
-            url: 'Categoria/Listar'
-        })
-        //activar el toast
-        console.log(respuesta);
-        categorias = respuesta.Data;
-        generarTabla(categorias);
-    }
-    catch (err) {
-        console.error(err);
-    }
-}
-
-const buscarCategoria = async (id) => {
-    try {
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Categoria/Obtener'
-        })
-        //activar el toast
-        console.log(respuesta);
-        $('#modal-categoria').modal('hide');
-        //Limpiar campos
-    }
-    catch (err) {
-        //mensaje de error en el toast
-        console.error(err);
-    }
-}
-
-const eliminarCategoria = async (id) => {
-    try {
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Categoria/Eliminar'
-        })
-        //activar el toast
-        console.log(respuesta);
-    }
-    catch (err) {
-        console.error(err);
+    return {
+        iniciar
     }
 }
 
@@ -341,67 +279,12 @@ const eliminarCategoria = async (id) => {
 
 window.addEventListener('load', () => {
 
-    listarCategoria({});
+    const service = CategoriaService();
 
-    const tablaCategoria = document.querySelector('#tb-categoria');
-    const btnNuevo = document.querySelector('#btn-nuevo');
-    const formCategoria = document.getElementById('form-categoria');
-    const formConfirmar = document.getElementById('form-confirmar');
-    const formElementos = formCategoria.elements;
+    const ui = CategoriaUI();
 
-    btnNuevo.addEventListener('click', () => { formElementos['accion'].value = 'registrar'; });
+    const controller = CategoriaController(service, ui);
 
-    $('#modal-categoria').on('show.bs.modal', (e) => {
-        if (formElementos['accion'].value === 'registrar') {
-            formElementos['descripcion'].value = '';
-            formElementos['hdn-id'].value = 0;
-        }
-    } )
-
-    tablaCategoria.addEventListener('click', (evt) => {
-
-        if (evt.target.dataset.id) {
-            const { id, accion } = evt.target.dataset;
-            if (accion === 'editar') {
-                console.log(formElementos)
-
-                const cateSeleccionada = categorias.find(c => c.Id === parseInt(id));
-
-                formElementos['descripcion'].value = cateSeleccionada.Descripcion;
-                formElementos['hdn-id'].value = cateSeleccionada.Id;
-                formElementos['accion'].value = 'editar';
-                $('#modal-categoria').modal('show');
-            }
-            else if (accion === 'eliminar') {
-                console.log('eliminar')
-                $('#modal-confirmar').modal('show');
-            }
-        }
-
-        
-    });
-
-    formCategoria.addEventListener('submit', async (evt) => {
-        evt.preventDefault();
-
-        const accion = formElementos['accion'].value;
-
-        const categoria = {
-            Descripcion: formElementos['txt-descripcion'].value,
-            Id: parseInt(formElementos['hdn-id'].value),
-        };
-
-        if (accion === 'registrar') {
-            await crearCategoria(categoria);
-        }
-        else if (accion === 'editar') {
-            await actualizarCategoria(categoria);
-            
-        }
-       
-        $('#modal-categoria').modal('hide');
-        await listarCategoria({});
-    })
-
+    controller.iniciar();
 
 })

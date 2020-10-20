@@ -181,5 +181,25 @@ namespace Athenas.MVCUI.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult Eliminar(int Id)
+        {
+
+            String url = $"Categoria/{Id}";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
     }
 }
