@@ -68,10 +68,12 @@ const CategoriaUI = () => {
 
     const SELTBLCATEGORIA = '#tb-categoria';
     const SELBTNNUEVO = '#btn-nuevo';
-    const IDFORMCATEGORIA = 'form-categoria';
+    //const IDFORMCATEGORIA = 'form-categoria';
+    const IDFORMCATEGORIA = 'main-form';
     const IDFORMCONFIRMAR = 'form-confirmar';
     const SELTBLBODY = '#tb-categoria tbody';
-    const SELMODALCATE = '#modal-categoria';
+    const SELMODALCATE = '#modal-main-form';
+    //const SELMODALCATE = '#modal-categoria';
     const SELMODALCONF = '#modal-confirmar';
     const IDFORMFILTRAR = 'form-filtrar';
     
@@ -111,41 +113,21 @@ const CategoriaUI = () => {
     }
 
     const generarTabla = (lstCategorias) => {
-        const tBody = document.querySelector(SELTBLBODY);
-
-        let tableBody = "";
-
-        lstCategorias.forEach((cat) => {
-            tableBody += generarFila(cat);
-        });
-
-        tBody.innerHTML = tableBody;
+        const dataTemplate = {
+            filas: lstCategorias,
+            edita: true,
+            elimina: true
+        }
+        AthenasNet.compilaTemplate('temp-tbl-body', dataTemplate, SELTBLBODY);
+        $(SELTBLCATEGORIA).DataTable()
     }
 
     const muestraCategoria = (categoria) => {
-        setFormEleValue('descripcion', categoria.Descripcion);
-        setFormEleValue('hdn-id', categoria.Id);
-        setFormEleValue('accion', categoria.accion);
+        //setFormEleValue('Descripcion', categoria.Descripcion);
+        //setFormEleValue('Id', categoria.Id);
+        //setFormEleValue('accion', categoria.accion);
+        AthenasNet.setEntidad(categoria)
         $(SELMODALCATE).modal('show');
-    }
-
-    const generarFila = (categoria) => {
-        let template = `
-            <tr>
-                <td>${categoria.Id}</td>
-                <td>${categoria.Descripcion}</td>
-                <td>
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="eliminar">
-                        <i class="fas fa-trash-alt" data-del-action="true"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
-
-        return template;
     }
 
     const evtMostrarModCategoria = (evt) => {
@@ -165,19 +147,15 @@ const CategoriaUI = () => {
     }
 
     const limpiarModalCat = () => {
-        setFormEleValue('txt-descripcion', '');
-        setFormEleValue('hdn-id', '0');
+        setFormEleValue('Descripcion', '');
+        setFormEleValue('Id', '0');
         setFormEleValue('accion', 'registrar');
 
     }
 
     const getCategoria = () => {
-        const categoria = {
-            Descripcion: getFormEleValue('txt-descripcion'),
-            Id: parseInt(getFormEleValue('hdn-id')),
-            accion: getFormEleValue('accion')
-        };
-
+        const arrCampos = ['Descripcion']
+        const categoria = AthenasNet.getEntidad(arrCampos);
         return categoria;
     }
 
@@ -213,14 +191,15 @@ const CategoriaController = (service, ui) => {
         }
         catch (err) {
             console.error(err);
+            AthenasNet.muestraToast({ className: 'bg-danger', mensaje: 'Hubo un error al obtener las categorías', titulo: 'Error' })
         }
     }
 
     const configModalCate = () => {
         ui.evtMostrarModCategoria((e) => {
             if (ui.getFormEleValue('accion') === 'registrar') {
-                ui.setFormEleValue('descripcion', '');
-                ui.setFormEleValue('hdn-id', 0);
+                ui.setFormEleValue('Descripcion', '');
+                ui.setFormEleValue('Id', 0);
             }
         });
     }
@@ -256,21 +235,23 @@ const CategoriaController = (service, ui) => {
             try {
                 if (categoria.accion === 'registrar') {
                     await service.crearCategoria(categoria);
+                    AthenasNet.muestraToast({className: 'bg-success', mensaje: 'Categoría registrada exitosamente'})
                 }
                 else if (categoria.accion === 'editar') {
                     await service.actualizarCategoria(categoria);
-
+                    AthenasNet.muestraToast({ className: 'bg-success', mensaje: 'Categoría actualizada exitosamente' })
                 }
 
-                ui.limpiarModalCat();
+                //ui.limpiarModalCat();
+                //ui.cerrarModCate();
+                AthenasNet.limpiarMainForm();
+                AthenasNet.cerrarModalMainform();
+                await muestraCategorias();
             }
             catch (err) {
                 console.error(err);
+                AthenasNet.muestraToast({ className: 'bg-danger', mensaje: 'No se pudo realizar la operación', titulo: 'Error' })
             }
-           
-
-            ui.cerrarModCate();
-            await muestraCategorias();
 
         })
 
@@ -279,8 +260,15 @@ const CategoriaController = (service, ui) => {
     const manejaEnvioConf = () => {
         ui.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
-            await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
-            ui.ocultarConfirmacion();
+            try {
+                await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
+                ui.ocultarConfirmacion();
+                AthenasNet.muestraToast({ className: 'bg-success', mensaje: 'Categoría eliminada satisfactoriamente'})
+            }
+            catch (err) {
+                console.error(err);
+                AthenasNet.muestraToast({ className: 'bg-danger', mensaje: 'No se pudo eliminar la categoría', titulo: 'Error' })
+            }
             muestraCategorias();
         })
     }
@@ -289,14 +277,12 @@ const CategoriaController = (service, ui) => {
         ui.getFormFiltrar().addEventListener('submit',async (evt) => {
             evt.preventDefault();
             const filtros = ui.getFiltros();
-            //lstCategorias = await service.listarCategoria(filtros);
             await muestraCategorias(filtros)
         })
     }
 
     const iniciar = () => {
         muestraCategorias();
-        //configModalCate();
         manejaEvtTabla();
         manejaEnvioCat();
         manejaEnvioConf();
@@ -320,5 +306,6 @@ window.addEventListener('load', () => {
     const controller = CategoriaController(service, ui);
 
     controller.iniciar();
+
 
 })

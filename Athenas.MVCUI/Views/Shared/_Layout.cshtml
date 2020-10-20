@@ -26,19 +26,76 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid" style="position: relative;">
-                    <div class="toast mt-2 hide" id="general-toast"
+                    <div class="toast mt-2" id="general-toast"
                          style="position: absolute; top: 0; right: 0; z-index: 10;min-width: 300px"
                          data-delay="3000">
                         <div class="toast-header">
-                            <strong class="mr-auto"><i class="fas fa-check-double"></i> Éxito</strong>
+                            <strong class="mr-auto"><i class="fas fa-check-double"></i> <span id="toast-titulo">Éxito</span></strong>
                             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
                         </div>
                         <div class="toast-body">
-                            <span id="toast-msj"></span>
+                            <span id="toast-mensaje"></span>
                         </div>
                     </div>
 
                     @RenderBody()
+
+
+
+                    <!-- Modal de formulario principal-->
+                    <div class="modal fade" id="modal-main-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Datos de la categoría</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form novalidate id="main-form">
+                                    <div class="modal-body">
+
+                                        <input type="hidden" name="accion" value="registrar" />
+                                        <input type="hidden" name="Id" id="Id" value="0">
+                                        @RenderSection("mainFormFody", false)
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Guardar</button>
+                                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin del modal de formulario principal-->
+
+                    <!-- Modal de confirmar eliminación -->
+                    <div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form novalidate id="form-confirmar">
+                                    <div class="modal-body">
+
+                                        <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Aceptar</button>
+                                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Fin del modal de confirmación-->
+
                 </div>
             </div>
             <!-- /.content -->
@@ -51,9 +108,36 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
+    @Scripts.Render("~/Scripts/datatable/datatables.min.js")
     @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
     @Scripts.Render("~/Scripts/polyfill.min.js")
     @Scripts.Render("~/Scripts/es5/athenasNet.js")
     @RenderSection("scripts", required: false)
+
+    <script type="text/template" id="temp-tbl-body">
+        {{#each filas}}
+        <tr>
+            {{#each this}}
+            <td>
+                {{this}}
+            </td>
+            {{/each}}
+            <td>
+                {{#if ../edita}}
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                {{/if}}
+                {{#if ../elimina}}
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
+                    <i class="fas fa-trash-alt" data-del-action="true"></i>
+                </button>
+                {{/if}}
+
+
+            </td>
+        </tr>
+        {{/each}}
+    </script>
 </body>
 </html>

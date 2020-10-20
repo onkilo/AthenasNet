@@ -181,11 +181,13 @@ var CategoriaService = function CategoriaService() {
 
 var CategoriaUI = function CategoriaUI() {
   var SELTBLCATEGORIA = '#tb-categoria';
-  var SELBTNNUEVO = '#btn-nuevo';
-  var IDFORMCATEGORIA = 'form-categoria';
+  var SELBTNNUEVO = '#btn-nuevo'; //const IDFORMCATEGORIA = 'form-categoria';
+
+  var IDFORMCATEGORIA = 'main-form';
   var IDFORMCONFIRMAR = 'form-confirmar';
   var SELTBLBODY = '#tb-categoria tbody';
-  var SELMODALCATE = '#modal-categoria';
+  var SELMODALCATE = '#modal-main-form'; //const SELMODALCATE = '#modal-categoria';
+
   var SELMODALCONF = '#modal-confirmar';
   var IDFORMFILTRAR = 'form-filtrar';
 
@@ -232,24 +234,21 @@ var CategoriaUI = function CategoriaUI() {
   };
 
   var generarTabla = function generarTabla(lstCategorias) {
-    var tBody = document.querySelector(SELTBLBODY);
-    var tableBody = "";
-    lstCategorias.forEach(function (cat) {
-      tableBody += generarFila(cat);
-    });
-    tBody.innerHTML = tableBody;
+    var dataTemplate = {
+      filas: lstCategorias,
+      edita: true,
+      elimina: true
+    };
+    AthenasNet.compilaTemplate('temp-tbl-body', dataTemplate, SELTBLBODY);
+    $(SELTBLCATEGORIA).DataTable();
   };
 
   var muestraCategoria = function muestraCategoria(categoria) {
-    setFormEleValue('descripcion', categoria.Descripcion);
-    setFormEleValue('hdn-id', categoria.Id);
-    setFormEleValue('accion', categoria.accion);
+    //setFormEleValue('Descripcion', categoria.Descripcion);
+    //setFormEleValue('Id', categoria.Id);
+    //setFormEleValue('accion', categoria.accion);
+    AthenasNet.setEntidad(categoria);
     $(SELMODALCATE).modal('show');
-  };
-
-  var generarFila = function generarFila(categoria) {
-    var template = "\n            <tr>\n                <td>".concat(categoria.Id, "</td>\n                <td>").concat(categoria.Descripcion, "</td>\n                <td>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"editar\">\n                        <i class=\"fas fa-edit\"></i>\n                    </button>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"eliminar\">\n                        <i class=\"fas fa-trash-alt\" data-del-action=\"true\"></i>\n                    </button>\n                </td>\n            </tr>\n        ");
-    return template;
   };
 
   var evtMostrarModCategoria = function evtMostrarModCategoria(evt) {
@@ -269,17 +268,14 @@ var CategoriaUI = function CategoriaUI() {
   };
 
   var limpiarModalCat = function limpiarModalCat() {
-    setFormEleValue('txt-descripcion', '');
-    setFormEleValue('hdn-id', '0');
+    setFormEleValue('Descripcion', '');
+    setFormEleValue('Id', '0');
     setFormEleValue('accion', 'registrar');
   };
 
   var getCategoria = function getCategoria() {
-    var categoria = {
-      Descripcion: getFormEleValue('txt-descripcion'),
-      Id: parseInt(getFormEleValue('hdn-id')),
-      accion: getFormEleValue('accion')
-    };
+    var arrCampos = ['Descripcion'];
+    var categoria = AthenasNet.getEntidad(arrCampos);
     return categoria;
   };
 
@@ -320,15 +316,20 @@ var CategoriaController = function CategoriaController(service, ui) {
             case 3:
               lstCategorias = _context6.sent;
               ui.generarTabla(lstCategorias);
-              _context6.next = 10;
+              _context6.next = 11;
               break;
 
             case 7:
               _context6.prev = 7;
               _context6.t0 = _context6["catch"](0);
               console.error(_context6.t0);
+              AthenasNet.muestraToast({
+                className: 'bg-danger',
+                mensaje: 'Hubo un error al obtener las categorías',
+                titulo: 'Error'
+              });
 
-            case 10:
+            case 11:
             case "end":
               return _context6.stop();
           }
@@ -344,8 +345,8 @@ var CategoriaController = function CategoriaController(service, ui) {
   var configModalCate = function configModalCate() {
     ui.evtMostrarModCategoria(function (e) {
       if (ui.getFormEleValue('accion') === 'registrar') {
-        ui.setFormEleValue('descripcion', '');
-        ui.setFormEleValue('hdn-id', 0);
+        ui.setFormEleValue('Descripcion', '');
+        ui.setFormEleValue('Id', 0);
       }
     });
   };
@@ -384,7 +385,7 @@ var CategoriaController = function CategoriaController(service, ui) {
                 _context7.prev = 2;
 
                 if (!(categoria.accion === 'registrar')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
@@ -392,39 +393,56 @@ var CategoriaController = function CategoriaController(service, ui) {
                 return service.crearCategoria(categoria);
 
               case 6:
-                _context7.next = 11;
+                AthenasNet.muestraToast({
+                  className: 'bg-success',
+                  mensaje: 'Categoría registrada exitosamente'
+                });
+                _context7.next = 13;
                 break;
 
-              case 8:
+              case 9:
                 if (!(categoria.accion === 'editar')) {
-                  _context7.next = 11;
+                  _context7.next = 13;
                   break;
                 }
 
-                _context7.next = 11;
+                _context7.next = 12;
                 return service.actualizarCategoria(categoria);
 
-              case 11:
-                ui.limpiarModalCat();
+              case 12:
+                AthenasNet.muestraToast({
+                  className: 'bg-success',
+                  mensaje: 'Categoría actualizada exitosamente'
+                });
+
+              case 13:
+                //ui.limpiarModalCat();
+                //ui.cerrarModCate();
+                AthenasNet.limpiarMainForm();
+                AthenasNet.cerrarModalMainform();
                 _context7.next = 17;
-                break;
-
-              case 14:
-                _context7.prev = 14;
-                _context7.t0 = _context7["catch"](2);
-                console.error(_context7.t0);
-
-              case 17:
-                ui.cerrarModCate();
-                _context7.next = 20;
                 return muestraCategorias();
 
-              case 20:
+              case 17:
+                _context7.next = 23;
+                break;
+
+              case 19:
+                _context7.prev = 19;
+                _context7.t0 = _context7["catch"](2);
+                console.error(_context7.t0);
+                AthenasNet.muestraToast({
+                  className: 'bg-danger',
+                  mensaje: 'No se pudo realizar la operación',
+                  titulo: 'Error'
+                });
+
+              case 23:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[2, 14]]);
+        }, _callee7, null, [[2, 19]]);
       }));
 
       return function (_x7) {
@@ -442,19 +460,38 @@ var CategoriaController = function CategoriaController(service, ui) {
               case 0:
                 evt.preventDefault(); //evitar la accion del evento
 
-                _context8.next = 3;
+                _context8.prev = 1;
+                _context8.next = 4;
                 return service.eliminarCategoria(parseInt(cateSeleccionada.Id));
 
-              case 3:
+              case 4:
                 ui.ocultarConfirmacion();
+                AthenasNet.muestraToast({
+                  className: 'bg-success',
+                  mensaje: 'Categoría eliminada satisfactoriamente'
+                });
+                _context8.next = 12;
+                break;
+
+              case 8:
+                _context8.prev = 8;
+                _context8.t0 = _context8["catch"](1);
+                console.error(_context8.t0);
+                AthenasNet.muestraToast({
+                  className: 'bg-danger',
+                  mensaje: 'No se pudo eliminar la categoría',
+                  titulo: 'Error'
+                });
+
+              case 12:
                 muestraCategorias();
 
-              case 5:
+              case 13:
               case "end":
                 return _context8.stop();
             }
           }
-        }, _callee8);
+        }, _callee8, null, [[1, 8]]);
       }));
 
       return function (_x8) {
@@ -472,8 +509,7 @@ var CategoriaController = function CategoriaController(service, ui) {
             switch (_context9.prev = _context9.next) {
               case 0:
                 evt.preventDefault();
-                filtros = ui.getFiltros(); //lstCategorias = await service.listarCategoria(filtros);
-
+                filtros = ui.getFiltros();
                 _context9.next = 4;
                 return muestraCategorias(filtros);
 
@@ -492,8 +528,7 @@ var CategoriaController = function CategoriaController(service, ui) {
   };
 
   var iniciar = function iniciar() {
-    muestraCategorias(); //configModalCate();
-
+    muestraCategorias();
     manejaEvtTabla();
     manejaEnvioCat();
     manejaEnvioConf();

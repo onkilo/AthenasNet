@@ -14,6 +14,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   var MVC_URL_BASE = 'http://localhost:62622/';
   var ACCION_MOSTRAR_SPINNER = 'mostrar';
   var ACCION_OCULTAR_SPINNER = 'ocultar';
+  var ACCION_MOSTRAR_TOAST = 'mostrar';
+  var ACCION_OCULTAR_TOAST = 'ocultar';
+  var ID_MAIN_FORM = 'main-form';
 
   var llamadaApi = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(opciones) {
@@ -78,13 +81,110 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     if (estado === 'mostrar') spinner.style.display = 'flex';else spinner.style.display = 'none';
   };
 
+  var muestraToast = function muestraToast(_ref2) {
+    var _ref2$className = _ref2.className,
+        className = _ref2$className === void 0 ? 'bg-success' : _ref2$className,
+        _ref2$mensaje = _ref2.mensaje,
+        mensaje = _ref2$mensaje === void 0 ? 'Operación realizada con éxito' : _ref2$mensaje,
+        _ref2$titulo = _ref2.titulo,
+        titulo = _ref2$titulo === void 0 ? 'Éxito' : _ref2$titulo;
+    var TOAST_ID = '#general-toast';
+    var TOAST_ID_MSJ = '#toast-mensaje';
+    var TOAST_ID_TITULO = '#toast-titulo';
+    var toast = document.querySelector(TOAST_ID);
+    var toastMsjBody = document.querySelector(TOAST_ID_MSJ);
+    var toastMsjTitle = document.querySelector(TOAST_ID_TITULO);
+    toastMsjBody.innerHTML = mensaje;
+    toastMsjTitle.innerHTML = titulo;
+    var classes = ['toast', 'mt-2'];
+    classes.push(className);
+    toast.className = classes.join(' ');
+    $(TOAST_ID).toast('show');
+  };
+
+  var compilaTemplate = function compilaTemplate(idTemplate, data, idContenedor) {
+    var compilacion = Handlebars.compile(document.getElementById(idTemplate).innerHTML);
+    var compConData = compilacion(data);
+    document.querySelector(idContenedor).innerHTML = compConData;
+  };
+
+  var getMainForm = function getMainForm() {
+    return document.getElementById(ID_MAIN_FORM);
+  };
+
+  var getFormElements = function getFormElements() {
+    return getMainForm().elements;
+  };
+
+  var getFormEleValue = function getFormEleValue(ele) {
+    return getFormElements()[ele].value;
+  };
+
+  var setFormEleValue = function setFormEleValue(ele, value) {
+    getFormElements()[ele].value = value;
+  };
+
+  var getEntidad = function getEntidad() {
+    var arrCampos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var conId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var conAccion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var formElements = getFormElements();
+    var entidad = {};
+    arrCampos.forEach(function (fil) {
+      entidad = _objectSpread(_objectSpread({}, entidad), {}, _defineProperty({}, fil, formElements[fil].value));
+    });
+    if (conId) entidad.Id = formElements['Id'].value;
+    if (conAccion) entidad.accion = formElements['accion'].value;
+    return entidad;
+  };
+
+  var setEntidad = function setEntidad() {
+    var entidad = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var formElements = getFormElements();
+    Object.keys(entidad).forEach(function (key) {
+      formElements[key].value = entidad[key];
+    });
+  };
+
+  var limpiarMainForm = function limpiarMainForm() {
+    var resetId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var resetAccion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'registrar';
+    getMainForm().reset();
+    setFormEleValue('Id', resetId);
+    setFormEleValue('accion', resetAccion);
+  };
+
+  var cerrarModalMainform = function cerrarModalMainform() {
+    $('#modal-main-form').modal('hide');
+  };
+
   window.AthenasNet = {
     llamadaApi: llamadaApi,
-    manejaSpinner: manejaSpinner
+    manejaSpinner: manejaSpinner,
+    muestraToast: muestraToast,
+    compilaTemplate: compilaTemplate,
+    getEntidad: getEntidad,
+    getFormEleValue: getFormEleValue,
+    setFormEleValue: setFormEleValue,
+    limpiarMainForm: limpiarMainForm,
+    cerrarModalMainform: cerrarModalMainform,
+    setEntidad: setEntidad
   };
 })();
 
 window.addEventListener('load', function () {
+  $.extend(true, $.fn.dataTable.defaults, {
+    "searching": false,
+    "ordering": false,
+    "lengthChange": false,
+    "language": {
+      "info": "Mostrando página _PAGE_ de _PAGES_",
+      "paginate": {
+        "next": "Siguiente",
+        "previous": "Anterior"
+      }
+    }
+  });
   $('#general-toast').toast();
 });
 //# sourceMappingURL=athenasNet.js.map
