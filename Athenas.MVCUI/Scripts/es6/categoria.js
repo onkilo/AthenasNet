@@ -73,6 +73,8 @@ const CategoriaUI = () => {
     const SELTBLBODY = '#tb-categoria tbody';
     const SELMODALCATE = '#modal-categoria';
     const SELMODALCONF = '#modal-confirmar';
+    const IDFORMFILTRAR = 'form-filtrar';
+    
 
     const getTblCategoria = () => document.querySelector(SELTBLCATEGORIA);
 
@@ -88,6 +90,25 @@ const CategoriaUI = () => {
 
     const getFormConfirmar = () => document.getElementById(IDFORMCONFIRMAR);
 
+    const getFormFiltrar = () => document.getElementById(IDFORMFILTRAR);
+
+    const getFiltros = () => {
+        const ARRFILTROS = ['Descripcion'];
+
+        const formFiltro = getFormFiltrar();
+
+        let filtros = {};
+
+        ARRFILTROS.forEach(fil => {
+            filtros = {
+                ...filtros,
+                [fil]: formFiltro[fil].value
+            }
+        });
+        
+
+        return filtros;
+    }
 
     const generarTabla = (lstCategorias) => {
         const tBody = document.querySelector(SELTBLBODY);
@@ -174,7 +195,9 @@ const CategoriaUI = () => {
         limpiarModalCat,
         getCategoria,
         cerrarModCate,
-        ocultarConfirmacion
+        ocultarConfirmacion,
+        getFormFiltrar,
+        getFiltros
     }
 }
 
@@ -183,9 +206,9 @@ const CategoriaController = (service, ui) => {
     let cateSeleccionada = {};
 
 
-    const muestraCategorias = async () => {
+    const muestraCategorias = async (filtros) => {
         try {
-            lstCategorias = await service.listarCategoria({});
+            lstCategorias = await service.listarCategoria(filtros ? filtros : {});
             ui.generarTabla(lstCategorias);
         }
         catch (err) {
@@ -238,10 +261,11 @@ const CategoriaController = (service, ui) => {
                     await service.actualizarCategoria(categoria);
 
                 }
+
+                ui.limpiarModalCat();
             }
             catch (err) {
                 console.error(err);
-                console.warn('')
             }
            
 
@@ -261,12 +285,22 @@ const CategoriaController = (service, ui) => {
         })
     }
 
+    const manejaEnvioFiltro = () => {
+        ui.getFormFiltrar().addEventListener('submit',async (evt) => {
+            evt.preventDefault();
+            const filtros = ui.getFiltros();
+            //lstCategorias = await service.listarCategoria(filtros);
+            await muestraCategorias(filtros)
+        })
+    }
+
     const iniciar = () => {
         muestraCategorias();
-        configModalCate();
+        //configModalCate();
         manejaEvtTabla();
         manejaEnvioCat();
         manejaEnvioConf();
+        manejaEnvioFiltro();
     }
 
 

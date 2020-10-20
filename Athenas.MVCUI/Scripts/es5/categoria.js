@@ -187,6 +187,7 @@ var CategoriaUI = function CategoriaUI() {
   var SELTBLBODY = '#tb-categoria tbody';
   var SELMODALCATE = '#modal-categoria';
   var SELMODALCONF = '#modal-confirmar';
+  var IDFORMFILTRAR = 'form-filtrar';
 
   var getTblCategoria = function getTblCategoria() {
     return document.querySelector(SELTBLCATEGORIA);
@@ -214,6 +215,20 @@ var CategoriaUI = function CategoriaUI() {
 
   var getFormConfirmar = function getFormConfirmar() {
     return document.getElementById(IDFORMCONFIRMAR);
+  };
+
+  var getFormFiltrar = function getFormFiltrar() {
+    return document.getElementById(IDFORMFILTRAR);
+  };
+
+  var getFiltros = function getFiltros() {
+    var ARRFILTROS = ['Descripcion'];
+    var formFiltro = getFormFiltrar();
+    var filtros = {};
+    ARRFILTROS.forEach(function (fil) {
+      filtros = _objectSpread(_objectSpread({}, filtros), {}, _defineProperty({}, fil, formFiltro[fil].value));
+    });
+    return filtros;
   };
 
   var generarTabla = function generarTabla(lstCategorias) {
@@ -282,7 +297,9 @@ var CategoriaUI = function CategoriaUI() {
     limpiarModalCat: limpiarModalCat,
     getCategoria: getCategoria,
     cerrarModCate: cerrarModCate,
-    ocultarConfirmacion: ocultarConfirmacion
+    ocultarConfirmacion: ocultarConfirmacion,
+    getFormFiltrar: getFormFiltrar,
+    getFiltros: getFiltros
   };
 };
 
@@ -291,14 +308,14 @@ var CategoriaController = function CategoriaController(service, ui) {
   var cateSeleccionada = {};
 
   var muestraCategorias = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(filtros) {
       return regeneratorRuntime.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.prev = 0;
               _context6.next = 3;
-              return service.listarCategoria({});
+              return service.listarCategoria(filtros ? filtros : {});
 
             case 3:
               lstCategorias = _context6.sent;
@@ -319,7 +336,7 @@ var CategoriaController = function CategoriaController(service, ui) {
       }, _callee6, null, [[0, 7]]);
     }));
 
-    return function muestraCategorias() {
+    return function muestraCategorias(_x6) {
       return _ref6.apply(this, arguments);
     };
   }();
@@ -388,14 +405,14 @@ var CategoriaController = function CategoriaController(service, ui) {
                 return service.actualizarCategoria(categoria);
 
               case 11:
+                ui.limpiarModalCat();
                 _context7.next = 17;
                 break;
 
-              case 13:
-                _context7.prev = 13;
+              case 14:
+                _context7.prev = 14;
                 _context7.t0 = _context7["catch"](2);
                 console.error(_context7.t0);
-                console.warn('');
 
               case 17:
                 ui.cerrarModCate();
@@ -407,10 +424,10 @@ var CategoriaController = function CategoriaController(service, ui) {
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[2, 13]]);
+        }, _callee7, null, [[2, 14]]);
       }));
 
-      return function (_x6) {
+      return function (_x7) {
         return _ref7.apply(this, arguments);
       };
     }());
@@ -440,18 +457,47 @@ var CategoriaController = function CategoriaController(service, ui) {
         }, _callee8);
       }));
 
-      return function (_x7) {
+      return function (_x8) {
         return _ref8.apply(this, arguments);
       };
     }());
   };
 
+  var manejaEnvioFiltro = function manejaEnvioFiltro() {
+    ui.getFormFiltrar().addEventListener('submit', /*#__PURE__*/function () {
+      var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(evt) {
+        var filtros;
+        return regeneratorRuntime.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                evt.preventDefault();
+                filtros = ui.getFiltros(); //lstCategorias = await service.listarCategoria(filtros);
+
+                _context9.next = 4;
+                return muestraCategorias(filtros);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      return function (_x9) {
+        return _ref9.apply(this, arguments);
+      };
+    }());
+  };
+
   var iniciar = function iniciar() {
-    muestraCategorias();
-    configModalCate();
+    muestraCategorias(); //configModalCate();
+
     manejaEvtTabla();
     manejaEnvioCat();
     manejaEnvioConf();
+    manejaEnvioFiltro();
   };
 
   return {
