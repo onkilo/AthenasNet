@@ -2,6 +2,7 @@ using Athenas.MVCUI.ClienteHttp;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -16,24 +17,6 @@ namespace Athenas.MVCUI.Controllers
         // GET: Categoria
         public ActionResult Index()
         {
-            //String url = "Categoria";
-
-            //url += "/2014";
-
-            ////GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-            ////    .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
-
-            //GenericResponseModel<String> responseModel = ApiRequests
-            //    .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
-
-            //if (errorResponse == null)
-            //{
-            //    Debug.Write(responseModel.Mensaje);
-            //}
-            //else
-            //{
-            //    Debug.Write(errorResponse);
-            //}
             return View();
         }
 
@@ -117,6 +100,12 @@ namespace Athenas.MVCUI.Controllers
             String url = "Categoria";
 
             url += "?registros=0";
+            NameValueCollection query = HttpUtility.ParseQueryString(String.Empty);
+            query.Add("registros", "0");
+
+            if (Descripcion != "") query.Add("Descripcion", Descripcion);
+
+            url += query.ToString();
 
             GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
                 .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
