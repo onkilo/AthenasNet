@@ -73,6 +73,7 @@ const CategoriaUI = () => {
     const SELTBLBODY = '#tb-categoria tbody';
     const SELMODALCATE = '#modal-categoria';
     const SELMODALCONF = '#modal-confirmar';
+    const IDFORMFILTRAR = 'form-filtrar';
 
     const getTblCategoria = () => document.querySelector(SELTBLCATEGORIA);
 
@@ -88,22 +89,44 @@ const CategoriaUI = () => {
 
     const getFormConfirmar = () => document.getElementById(IDFORMCONFIRMAR);
 
+    const getFormFiltrar = () => document.getElementById(IDFORMFILTRAR);
+
+    const getFiltros = () => {
+        const elementosFormulario = getFormFiltrar().elements;
+
+        const arrFiltros = ['Descripcion'];
+
+        let filtros = {};
+
+        arrFiltros.forEach(fil => {
+            filtros = {
+                ...filtros,
+                [fil]: elementosFormulario[fil].value
+            }
+        })
+
+
+        return filtros;
+
+    }
 
     const generarTabla = (lstCategorias) => {
-        const tBody = document.querySelector(SELTBLBODY);
+        //const tBody = document.querySelector(SELTBLBODY);
 
-        let tableBody = "";
+        //let tableBody = "";
 
-        lstCategorias.forEach((cat) => {
-            tableBody += generarFila(cat);
-        });
+        //lstCategorias.forEach((cat) => {
+        //    tableBody += generarFila(cat);
+        //});
 
-        tBody.innerHTML = tableBody;
+        //tBody.innerHTML = tableBody;
+        AthenasNet.compilaTemplate('temp-tbl-body', { filas: lstCategorias }, SELTBLBODY);
+        $(SELTBLCATEGORIA).DataTable();
     }
 
     const muestraCategoria = (categoria) => {
-        setFormEleValue('descripcion', categoria.Descripcion);
-        setFormEleValue('hdn-id', categoria.Id);
+        setFormEleValue('Descripcion', categoria.Descripcion);
+        setFormEleValue('Id', categoria.Id);
         setFormEleValue('accion', categoria.accion);
         $(SELMODALCATE).modal('show');
     }
@@ -128,7 +151,9 @@ const CategoriaUI = () => {
     }
 
     const evtMostrarModCategoria = (evt) => {
-        $(SELMODALCATE).on('show.bs.modal', evt)
+        $(SELMODALCATE).on('hide.bs.modal', () => {
+            limpiarCategoria();
+        })
     }
 
     const mostrarConfirmacion = () => {
@@ -144,20 +169,34 @@ const CategoriaUI = () => {
     }
 
     const limpiarModalCat = () => {
-        setFormEleValue('txt-descripcion', '');
-        setFormEleValue('hdn-id', '0');
+        setFormEleValue('Descripcion', '');
+        setFormEleValue('Id', '0');
         setFormEleValue('accion', 'registrar');
 
     }
 
     const getCategoria = () => {
         const categoria = {
-            Descripcion: getFormEleValue('txt-descripcion'),
-            Id: parseInt(getFormEleValue('hdn-id')),
+            Descripcion: getFormEleValue('Descripcion'),
+            Id: parseInt(getFormEleValue('Id')),
             accion: getFormEleValue('accion')
         };
 
         return categoria;
+    }
+
+    const limpiarCategoria = () => {
+        const elementosFormulario = getFormCateElements();
+
+        const arrFiltros = ['Descripcion'];
+
+        arrFiltros.forEach(fil => {
+            elementosFormulario[fil].value = '';
+        })
+
+        elementosFormulario['Id'].value = '0';
+        elementosFormulario['accion'].value = 'registrar';
+        
     }
 
     return {
@@ -174,7 +213,10 @@ const CategoriaUI = () => {
         limpiarModalCat,
         getCategoria,
         cerrarModCate,
-        ocultarConfirmacion
+        ocultarConfirmacion,
+        getFormFiltrar,
+        getFiltros,
+        limpiarCategoria
     }
 }
 
@@ -183,9 +225,9 @@ const CategoriaController = (service, ui) => {
     let cateSeleccionada = {};
 
 
-    const muestraCategorias = async () => {
+    const muestraCategorias = async (filtros = {}) => {
         try {
-            lstCategorias = await service.listarCategoria({});
+            lstCategorias = await service.listarCategoria(filtros);
             ui.generarTabla(lstCategorias);
         }
         catch (err) {
@@ -193,14 +235,14 @@ const CategoriaController = (service, ui) => {
         }
     }
 
-    const configModalCate = () => {
-        ui.evtMostrarModCategoria((e) => {
-            if (ui.getFormEleValue('accion') === 'registrar') {
-                ui.setFormEleValue('descripcion', '');
-                ui.setFormEleValue('hdn-id', 0);
-            }
-        });
-    }
+    //const configModalCate = () => {
+    //    ui.evtMostrarModCategoria((e) => {
+    //        if (ui.getFormEleValue('accion') === 'registrar') {
+    //            ui.setFormEleValue('descripcion', '');
+    //            ui.setFormEleValue('hdn-id', 0);
+    //        }
+    //    });
+    //}
 
     const manejaEvtTabla = () => {
         ui.getTblCategoria().addEventListener('click', (evt) => {
@@ -233,20 +275,23 @@ const CategoriaController = (service, ui) => {
             try {
                 if (categoria.accion === 'registrar') {
                     await service.crearCategoria(categoria);
+                    ui.cerrarModCate();
+                    AthenasNet.muestraToast({mensaje: 'La categoría se registró satisfactoriamente',titulo: 'Registro exitoso'})
                 }
                 else if (categoria.accion === 'editar') {
                     await service.actualizarCategoria(categoria);
-
+                    ui.cerrarModCate();
+                    AthenasNet.muestraToast({ mensaje: 'La categoría se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
                 }
+                await muestraCategorias();
             }
             catch (err) {
                 console.error(err);
-                console.warn('')
+                const mensaje = (categoria.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                const titulo = (categoria.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
             }
-           
 
-            ui.cerrarModCate();
-            await muestraCategorias();
 
         })
 
@@ -255,18 +300,36 @@ const CategoriaController = (service, ui) => {
     const manejaEnvioConf = () => {
         ui.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
-            await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
-            ui.ocultarConfirmacion();
-            muestraCategorias();
+            try {
+                await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
+                ui.ocultarConfirmacion();
+                AthenasNet.muestraToast({ mensaje: 'La categoría fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
+                await muestraCategorias();
+            }
+            catch (err) {
+                console.error(err);
+                AthenasNet.muestraToast({ cssClass:'bg-danger', mensaje: 'Hubo un error en la eliminación', titulo: 'Eliminación errónea' })
+            }
+            
+        })
+    }
+
+    const manejaEnvioFiltro = () => {
+        ui.getFormFiltrar().addEventListener('submit', async (evt) => {
+            evt.preventDefault();//evitar la accion del evento
+            const filtros = ui.getFiltros();
+            await muestraCategorias(filtros);
         })
     }
 
     const iniciar = () => {
         muestraCategorias();
-        configModalCate();
+        //configModalCate();
+        ui.evtMostrarModCategoria();
         manejaEvtTabla();
         manejaEnvioCat();
         manejaEnvioConf();
+        manejaEnvioFiltro();
     }
 
 
