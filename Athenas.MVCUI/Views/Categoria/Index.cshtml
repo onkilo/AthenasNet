@@ -22,7 +22,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <div class="input-group">
-                                    <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Ingrese la descripcion de la categoría">
+                                    <input type="text" name="Descripcion" id="Descripcion" class="form-control" placeholder="Ingrese la descripcion de la categoría">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
                                     </div>
@@ -73,10 +73,10 @@
                 <div class="modal-body">
 
                     <input type="hidden" name="accion" value="registrar" />
-                    <input type="hidden" name="hdn-id" id="hdn-id" value="0">
+                    <input type="hidden" name="hdn-id" id="Id" value="0">
                     <div class="form-group">
                         <label for="txt-descripcion">Descripción</label>
-                        <input type="text" class="form-control" name="descripcion" id="txt-descripcion" required>
+                        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
                         <div class="invalid-feedback">Por favor ingrese una descripción</div>
                     </div>
                 </div>
@@ -90,30 +90,7 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form novalidate id="form-confirmar" >
-                <div class="modal-body">
 
-                   <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Aceptar</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 @section scripts {
     @Scripts.Render("~/Scripts/es5/categoria.js")

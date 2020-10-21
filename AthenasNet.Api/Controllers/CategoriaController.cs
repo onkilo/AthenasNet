@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,13 +21,13 @@ namespace AthenasNet.Api.Controllers
         // GET: api/Categoria
         //[CustomAutenticacionFilter]
         //[CustomAutorizacionFilter("Administrador, Supervisor")]
-        public GenericResponse<IEnumerable<CategoriaDto>> Get(int pagina = 1, int registros = 10, string descripcion = "")
+        public GenericResponse<IEnumerable<CategoriaDto>> Get(int pagina = 1, int registros = 10, string Descripcion = "")
         {
             GenericResponse<IEnumerable<CategoriaDto>> response = new GenericResponse<IEnumerable<CategoriaDto>>();
 
             try
             {
-                IEnumerable<CategoriaDto> data = servicio.Listar(descripcion);
+                IEnumerable<CategoriaDto> data = servicio.Listar(Descripcion);
                 response = ResponseUtil.GetListaPaginada<CategoriaDto>(data, pagina, registros);
             }
             catch(Exception ex)
