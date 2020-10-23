@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4 nav-legacy">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link text-lg ">
+    <a href="@Url.Action("Index", "Home")" class="brand-link text-lg ">
         <img src="@Url.Content("~/Imagenes/minilogo.png")" alt="Athenas Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-bold">Athenas</span>
@@ -38,7 +38,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link ">
+                            <a href="@Url.Action("Index", "Categoria")" class="nav-link ">
                                 <i class="fas fa-tags"></i>
                                 <p>Categorías</p>
                             </a>

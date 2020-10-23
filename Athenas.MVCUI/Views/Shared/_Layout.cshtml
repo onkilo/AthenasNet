@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm layout-footer-fixed">
-    
+
     <div class="spinner-container">
         <div class="loader">Loading...</div>
     </div>
@@ -30,11 +30,11 @@
                          style="position: absolute; top: 0; right: 0; z-index: 10;min-width: 300px"
                          data-delay="3000">
                         <div class="toast-header">
-                            <strong class="mr-auto"><i class="fas fa-check-double"></i> Éxito</strong>
+                            <strong class="mr-auto"><i class="fas fa-check-double"></i> <span id="toast-titulo"></span></strong>
                             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
                         </div>
                         <div class="toast-body">
-                            <span id="toast-msj"></span>
+                            <span id="toast-mensaje"></span>
                         </div>
                     </div>
 
@@ -51,9 +51,57 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
+    @Scripts.Render("~/Scripts/datatable/datatables.min.js")
     @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
     @Scripts.Render("~/Scripts/polyfill.min.js")
     @Scripts.Render("~/Scripts/es5/athenasNet.js")
     @RenderSection("scripts", required: false)
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate id="form-confirmar">
+                    <div class="modal-body">
+
+                        <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Aceptar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/template" id="temp-tbl-body">
+        {{#each filas}}
+        <tr>
+            <td>
+                {{Id}}
+            </td>
+            <td>
+                {{Descripcion}}
+            </td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
+                    <i class="fas fa-trash-alt" data-del-action="true"></i>
+                </button>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
 </body>
 </html>

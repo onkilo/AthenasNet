@@ -78,13 +78,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     if (estado === 'mostrar') spinner.style.display = 'flex';else spinner.style.display = 'none';
   };
 
+  var muestraToast = function muestraToast(_ref2) {
+    var _ref2$cssClass = _ref2.cssClass,
+        cssClass = _ref2$cssClass === void 0 ? 'bg-success' : _ref2$cssClass,
+        _ref2$mensaje = _ref2.mensaje,
+        mensaje = _ref2$mensaje === void 0 ? 'Operación exitosa' : _ref2$mensaje,
+        _ref2$titulo = _ref2.titulo,
+        titulo = _ref2$titulo === void 0 ? 'Éxito' : _ref2$titulo;
+    var SEL_TOAST = '#general-toast';
+    var SEL_TOAST_TITULO = '#general-toast #toast-titulo';
+    var SEL_TOAST_MENSAJE = '#general-toast #toast-mensaje';
+    var toast = document.querySelector(SEL_TOAST);
+    var clases = ['toast', 'mt-2'];
+    clases.push(cssClass);
+    toast.className = clases.join(' ');
+    document.querySelector(SEL_TOAST_TITULO).innerHTML = titulo;
+    document.querySelector(SEL_TOAST_MENSAJE).innerHTML = mensaje;
+    $(SEL_TOAST).toast('show');
+  };
+
+  var compilaTemplate = function compilaTemplate(idTemplate, data, selObjetivo) {
+    var htmlTemplate = document.getElementById(idTemplate).innerHTML;
+    var template = Handlebars.compile(htmlTemplate);
+    var compTemplate = template(data);
+    document.querySelector(selObjetivo).innerHTML = compTemplate;
+  };
+
   window.AthenasNet = {
     llamadaApi: llamadaApi,
-    manejaSpinner: manejaSpinner
+    manejaSpinner: manejaSpinner,
+    muestraToast: muestraToast,
+    compilaTemplate: compilaTemplate
   };
 })();
 
 window.addEventListener('load', function () {
+  $.extend(true, $.fn.dataTable.defaults, {
+    "searching": false,
+    "ordering": false,
+    "lengthChange": false,
+    "language": {
+      "info": "Mostrando página _PAGE_ de _PAGES_",
+      "paginate": {
+        "next": "Siguiente",
+        "previous": "Anterior"
+      }
+    }
+  });
   $('#general-toast').toast();
 });
 //# sourceMappingURL=athenasNet.js.map
