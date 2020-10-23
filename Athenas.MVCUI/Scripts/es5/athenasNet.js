@@ -14,6 +14,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   var MVC_URL_BASE = 'http://localhost:62622/';
   var ACCION_MOSTRAR_SPINNER = 'mostrar';
   var ACCION_OCULTAR_SPINNER = 'ocultar';
+  var SEL_MODAL_CONF = '#modal-confirmar';
+  var ID_FORM_CONFIRMAR = 'form-confirmar';
 
   var llamadaApi = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(opciones) {
@@ -104,11 +106,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     document.querySelector(selObjetivo).innerHTML = compTemplate;
   };
 
+  var mostrarConfirmacion = function mostrarConfirmacion() {
+    $(SEL_MODAL_CONF).modal('show');
+  };
+
+  var ocultarConfirmacion = function ocultarConfirmacion() {
+    $(SEL_MODAL_CONF).modal('hide');
+  };
+
+  var getFormConfirmar = function getFormConfirmar() {
+    return document.getElementById(ID_FORM_CONFIRMAR);
+  };
+
   window.AthenasNet = {
     llamadaApi: llamadaApi,
     manejaSpinner: manejaSpinner,
     muestraToast: muestraToast,
-    compilaTemplate: compilaTemplate
+    compilaTemplate: compilaTemplate,
+    getFormConfirmar: getFormConfirmar,
+    mostrarConfirmacion: mostrarConfirmacion,
+    ocultarConfirmacion: ocultarConfirmacion
   };
 })();
 

@@ -183,10 +183,8 @@ var CategoriaUI = function CategoriaUI() {
   var SELTBLCATEGORIA = '#tb-categoria';
   var SELBTNNUEVO = '#btn-nuevo';
   var IDFORMCATEGORIA = 'form-categoria';
-  var IDFORMCONFIRMAR = 'form-confirmar';
   var SELTBLBODY = '#tb-categoria tbody';
   var SELMODALCATE = '#modal-categoria';
-  var SELMODALCONF = '#modal-confirmar';
   var IDFORMFILTRAR = 'form-filtrar';
 
   var getTblCategoria = function getTblCategoria() {
@@ -213,10 +211,6 @@ var CategoriaUI = function CategoriaUI() {
     getFormCateElements()[ele].value = value;
   };
 
-  var getFormConfirmar = function getFormConfirmar() {
-    return document.getElementById(IDFORMCONFIRMAR);
-  };
-
   var getFormFiltrar = function getFormFiltrar() {
     return document.getElementById(IDFORMFILTRAR);
   };
@@ -232,12 +226,6 @@ var CategoriaUI = function CategoriaUI() {
   };
 
   var generarTabla = function generarTabla(lstCategorias) {
-    //const tBody = document.querySelector(SELTBLBODY);
-    //let tableBody = "";
-    //lstCategorias.forEach((cat) => {
-    //    tableBody += generarFila(cat);
-    //});
-    //tBody.innerHTML = tableBody;
     AthenasNet.compilaTemplate('temp-tbl-body', {
       filas: lstCategorias
     }, SELTBLBODY);
@@ -251,23 +239,10 @@ var CategoriaUI = function CategoriaUI() {
     $(SELMODALCATE).modal('show');
   };
 
-  var generarFila = function generarFila(categoria) {
-    var template = "\n            <tr>\n                <td>".concat(categoria.Id, "</td>\n                <td>").concat(categoria.Descripcion, "</td>\n                <td>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"editar\">\n                        <i class=\"fas fa-edit\"></i>\n                    </button>\n                    <button type=\"button\" class=\"btn btn-success btn-sm btn-sin-click\" data-id=\"").concat(categoria.Id, "\" data-accion=\"eliminar\">\n                        <i class=\"fas fa-trash-alt\" data-del-action=\"true\"></i>\n                    </button>\n                </td>\n            </tr>\n        ");
-    return template;
-  };
-
   var evtMostrarModCategoria = function evtMostrarModCategoria(evt) {
     $(SELMODALCATE).on('hide.bs.modal', function () {
       limpiarCategoria();
     });
-  };
-
-  var mostrarConfirmacion = function mostrarConfirmacion() {
-    $(SELMODALCONF).modal('show');
-  };
-
-  var ocultarConfirmacion = function ocultarConfirmacion() {
-    $(SELMODALCONF).modal('hide');
   };
 
   var cerrarModCate = function cerrarModCate() {
@@ -303,17 +278,14 @@ var CategoriaUI = function CategoriaUI() {
     getTblCategoria: getTblCategoria,
     getBtnNuevo: getBtnNuevo,
     getFormCategoria: getFormCategoria,
-    getFormConfirmar: getFormConfirmar,
     getFormEleValue: getFormEleValue,
     setFormEleValue: setFormEleValue,
     generarTabla: generarTabla,
     evtMostrarModCategoria: evtMostrarModCategoria,
     muestraCategoria: muestraCategoria,
-    mostrarConfirmacion: mostrarConfirmacion,
     limpiarModalCat: limpiarModalCat,
     getCategoria: getCategoria,
     cerrarModCate: cerrarModCate,
-    ocultarConfirmacion: ocultarConfirmacion,
     getFormFiltrar: getFormFiltrar,
     getFiltros: getFiltros,
     limpiarCategoria: limpiarCategoria
@@ -359,15 +331,7 @@ var CategoriaController = function CategoriaController(service, ui) {
     return function muestraCategorias() {
       return _ref6.apply(this, arguments);
     };
-  }(); //const configModalCate = () => {
-  //    ui.evtMostrarModCategoria((e) => {
-  //        if (ui.getFormEleValue('accion') === 'registrar') {
-  //            ui.setFormEleValue('descripcion', '');
-  //            ui.setFormEleValue('hdn-id', 0);
-  //        }
-  //    });
-  //}
-
+  }();
 
   var manejaEvtTabla = function manejaEvtTabla() {
     ui.getTblCategoria().addEventListener('click', function (evt) {
@@ -384,7 +348,7 @@ var CategoriaController = function CategoriaController(service, ui) {
           ui.muestraCategoria(cateSeleccionada);
         } else if (accion === 'eliminar') {
           console.log('eliminar');
-          ui.mostrarConfirmacion();
+          AthenasNet.mostrarConfirmacion();
         }
       }
     });
@@ -470,7 +434,7 @@ var CategoriaController = function CategoriaController(service, ui) {
   };
 
   var manejaEnvioConf = function manejaEnvioConf() {
-    ui.getFormConfirmar().addEventListener('submit', /*#__PURE__*/function () {
+    AthenasNet.getFormConfirmar().addEventListener('submit', /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(evt) {
         return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
@@ -483,7 +447,7 @@ var CategoriaController = function CategoriaController(service, ui) {
                 return service.eliminarCategoria(parseInt(cateSeleccionada.Id));
 
               case 4:
-                ui.ocultarConfirmacion();
+                AthenasNet.ocultarConfirmacion();
                 AthenasNet.muestraToast({
                   mensaje: 'La categoría fue eliminada satisfactoriamente',
                   titulo: 'Eliminación exitosa'
@@ -548,8 +512,7 @@ var CategoriaController = function CategoriaController(service, ui) {
   };
 
   var iniciar = function iniciar() {
-    muestraCategorias(); //configModalCate();
-
+    muestraCategorias();
     ui.evtMostrarModCategoria();
     manejaEvtTabla();
     manejaEnvioCat();

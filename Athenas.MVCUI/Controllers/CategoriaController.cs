@@ -35,6 +35,7 @@ namespace Athenas.MVCUI.Controllers
             //{
             //    Debug.Write(errorResponse);
             //}
+            ViewBag.Title = "Categoría";
             return View();
         }
 
@@ -124,7 +125,7 @@ namespace Athenas.MVCUI.Controllers
             url += queryString.ToString();
 
             GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+                .GetWithHeader<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -164,7 +165,7 @@ namespace Athenas.MVCUI.Controllers
             String url = "Categoria";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Post<GenericResponseModel<String>,CategoriaViewModel, GenericResponseModel<String>>(url,categoria, out errorResponse);
+                .PostWithHeader<GenericResponseModel<String>,CategoriaViewModel, GenericResponseModel<String>>(url,categoria, out errorResponse);
 
             if (errorResponse == null)
             {

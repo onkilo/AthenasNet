@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Athenas</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/fontawesome/css/all.min.css")
+    @Styles.Render("~/Content/adminlte/adminlte.min.css")
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm layout-footer-fixed">
+
+    <div class="spinner-container">
+        <div class="loader">Loading...</div>
+    </div>
+
+    <div class="wrapper">
+        @Html.Partial("_Navbar")
+        @Html.Partial("_Sidebar")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid" style="position: relative;">
+                    <div class="toast mt-2 hide" id="general-toast"
+                         style="position: absolute; top: 0; right: 0; z-index: 10;min-width: 300px"
+                         data-delay="3000">
+                        <div class="toast-header">
+                            <strong class="mr-auto"><i class="fas fa-check-double"></i> <span id="toast-titulo"></span></strong>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                        </div>
+                        <div class="toast-body">
+                            <span id="toast-mensaje"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-8 offset-lg-2">
+                            <div class="card card-outline card-primary mt-4">
+                                <div class="card-header no-after  d-flex justify-content-between align-items-center">
+                                    <h5>@RenderSection("crudNombre", false)</h5>
+                                    <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" data-toggle="modal" data-target="#modal-categoria">
+                                        <i class="fas fa-plus mr-1"></i> Nuevo
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12 mt-2">
+                                        <form class="form frm-loader" id="form-filtrar">
+                                            @RenderSection("formFiltrar", false)
+                                        </form>
+                                    </div>
+                                    <div class="col-12 table-responsive">
+                                        <table class="table" id="tb-categoria">
+                                            <thead>
+                                                @RenderSection("tblHeader", false)
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_Footer")
+
+    </div>
+    <!-- ./wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
+    @Scripts.Render("~/Scripts/datatable/datatables.min.js")
+    @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
+    @Scripts.Render("~/Scripts/polyfill.min.js")
+    @Scripts.Render("~/Scripts/es5/athenasNet.js")
+    @RenderSection("scripts", required: false)
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@RenderSection("modalTitle", false)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate id="form-categoria">
+                    <div class="modal-body">
+                       @RenderSection("modalForm", false)
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Guardar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate id="form-confirmar">
+                    <div class="modal-body">
+
+                        <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"><i class="far fa-save mr-1"></i> Aceptar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/template" id="temp-tbl-body">
+        {{#each filas}}
+        <tr>
+            <td>
+                {{Id}}
+            </td>
+            <td>
+                {{Descripcion}}
+            </td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
+                    <i class="fas fa-trash-alt" data-del-action="true"></i>
+                </button>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+</body>
+</html>

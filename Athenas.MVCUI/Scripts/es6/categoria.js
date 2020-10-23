@@ -69,10 +69,8 @@ const CategoriaUI = () => {
     const SELTBLCATEGORIA = '#tb-categoria';
     const SELBTNNUEVO = '#btn-nuevo';
     const IDFORMCATEGORIA = 'form-categoria';
-    const IDFORMCONFIRMAR = 'form-confirmar';
     const SELTBLBODY = '#tb-categoria tbody';
     const SELMODALCATE = '#modal-categoria';
-    const SELMODALCONF = '#modal-confirmar';
     const IDFORMFILTRAR = 'form-filtrar';
 
     const getTblCategoria = () => document.querySelector(SELTBLCATEGORIA);
@@ -87,7 +85,6 @@ const CategoriaUI = () => {
 
     const setFormEleValue = (ele, value) => { getFormCateElements()[ele].value = value; }
 
-    const getFormConfirmar = () => document.getElementById(IDFORMCONFIRMAR);
 
     const getFormFiltrar = () => document.getElementById(IDFORMFILTRAR);
 
@@ -111,15 +108,6 @@ const CategoriaUI = () => {
     }
 
     const generarTabla = (lstCategorias) => {
-        //const tBody = document.querySelector(SELTBLBODY);
-
-        //let tableBody = "";
-
-        //lstCategorias.forEach((cat) => {
-        //    tableBody += generarFila(cat);
-        //});
-
-        //tBody.innerHTML = tableBody;
         AthenasNet.compilaTemplate('temp-tbl-body', { filas: lstCategorias }, SELTBLBODY);
         $(SELTBLCATEGORIA).DataTable();
     }
@@ -131,37 +119,10 @@ const CategoriaUI = () => {
         $(SELMODALCATE).modal('show');
     }
 
-    const generarFila = (categoria) => {
-        let template = `
-            <tr>
-                <td>${categoria.Id}</td>
-                <td>${categoria.Descripcion}</td>
-                <td>
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="${categoria.Id}" data-accion="eliminar">
-                        <i class="fas fa-trash-alt" data-del-action="true"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
-
-        return template;
-    }
-
     const evtMostrarModCategoria = (evt) => {
         $(SELMODALCATE).on('hide.bs.modal', () => {
             limpiarCategoria();
         })
-    }
-
-    const mostrarConfirmacion = () => {
-        $(SELMODALCONF).modal('show');
-    }
-
-    const ocultarConfirmacion = () => {
-        $(SELMODALCONF).modal('hide');
     }
 
     const cerrarModCate = () => {
@@ -203,17 +164,14 @@ const CategoriaUI = () => {
         getTblCategoria,
         getBtnNuevo,
         getFormCategoria,
-        getFormConfirmar,
         getFormEleValue,
         setFormEleValue,
         generarTabla,
         evtMostrarModCategoria,
         muestraCategoria,
-        mostrarConfirmacion,
         limpiarModalCat,
         getCategoria,
         cerrarModCate,
-        ocultarConfirmacion,
         getFormFiltrar,
         getFiltros,
         limpiarCategoria
@@ -235,15 +193,6 @@ const CategoriaController = (service, ui) => {
         }
     }
 
-    //const configModalCate = () => {
-    //    ui.evtMostrarModCategoria((e) => {
-    //        if (ui.getFormEleValue('accion') === 'registrar') {
-    //            ui.setFormEleValue('descripcion', '');
-    //            ui.setFormEleValue('hdn-id', 0);
-    //        }
-    //    });
-    //}
-
     const manejaEvtTabla = () => {
         ui.getTblCategoria().addEventListener('click', (evt) => {
 
@@ -258,7 +207,7 @@ const CategoriaController = (service, ui) => {
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
-                    ui.mostrarConfirmacion();
+                    AthenasNet.mostrarConfirmacion();
                 }
             }
 
@@ -298,11 +247,11 @@ const CategoriaController = (service, ui) => {
     }
 
     const manejaEnvioConf = () => {
-        ui.getFormConfirmar().addEventListener('submit', async (evt) => {
+        AthenasNet.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             try {
                 await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
-                ui.ocultarConfirmacion();
+                AthenasNet.ocultarConfirmacion();
                 AthenasNet.muestraToast({ mensaje: 'La categoría fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
                 await muestraCategorias();
             }
@@ -324,7 +273,6 @@ const CategoriaController = (service, ui) => {
 
     const iniciar = () => {
         muestraCategorias();
-        //configModalCate();
         ui.evtMostrarModCategoria();
         manejaEvtTabla();
         manejaEnvioCat();
