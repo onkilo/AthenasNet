@@ -1,28 +1,28 @@
 
-const CategoriaService = () => {
+const ProductoService = () => {
 
-    const crearCategoria = async (categoria) => {
+    const crear = async (producto) => {
         const respuesta = await AthenasNet.llamadaApi({
             type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Crear'
+            data: JSON.stringify(producto),
+            url: 'Producto/Crear'
         })
 
         return respuesta;
     }
 
-    const actualizarCategoria = async (categoria) => {
+    const actualizar = async (producto) => {
 
         const respuesta = await AthenasNet.llamadaApi({
             type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Actualizar'
+            data: JSON.stringify(producto),
+            url: 'Producto/Actualizar'
         })
 
         return respuesta;
     }
 
-    const listarCategoria = async (filtros) => {
+    const listar = async (filtros) => {
 
         const filtrosDefecto = {
             Descripcion: '',
@@ -31,41 +31,41 @@ const CategoriaService = () => {
 
         const respuesta = await AthenasNet.llamadaApi({
             data: filtrosDefecto,
-            url: 'Categoria/Listar'
+            url: 'Producto/Listar'
         })
 
         return respuesta.Data;
     }
 
-    const eliminarCategoria = async (id) => {
+    const eliminar = async (id) => {
 
         const respuesta = await AthenasNet.llamadaApi({
             data: { Id: id },
-            url: 'Categoria/Eliminar'
+            url: 'Producto/Eliminar'
         })
         return respuesta
     }
 
-    const buscarCategoria = async (id) => {
+    const buscar = async (id) => {
         const respuesta = await AthenasNet.llamadaApi({
             data: { Id: id },
-            url: 'Categoria/Obtener'
+            url: 'Producto/Obtener'
         })
         return respuesta;
-           
+
     }
 
     return {
-        crearCategoria,
-        actualizarCategoria,
-        listarCategoria,
-        eliminarCategoria,
-        buscarCategoria
+        crear,
+        actualizar,
+        listar,
+        eliminar,
+        buscar
     }
 }
 
-const CategoriaUI = () => {
-  
+const ProductoUI = () => {
+
     const getFiltros = () => {
         const arrFiltros = ['Descripcion'];
 
@@ -73,10 +73,10 @@ const CategoriaUI = () => {
 
     }
 
-    const generarTabla = (lstCategorias) => {
+    const generarTabla = (lstProductos) => {
 
         const data = {
-            filas: lstCategorias,
+            filas: lstProductos,
             edita: true,
             elimina: true
         }
@@ -85,28 +85,41 @@ const CategoriaUI = () => {
         $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
     }
 
-    const getCategoria = () => {
-        return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion']);
+    const getProducto = () => {
+        return AthenasNet.Mant.getEntidad([
+            'Descripcion',
+            'Id',
+            'accion',
+            'PrecioCompra',
+            'PrecioVenta',
+            'StockActual',
+            'StockMin',
+            'Imagen']);
     }
 
     return {
-        getCategoria,
+        getProducto,
         generarTabla,
         getFiltros
     }
 }
 
-const CategoriaController = (service, ui) => {
-    let lstCategorias = [];
-    let cateSeleccionada = {};
+const ProductoController = (service, ui) => {
+    let lstProductos = [];
+    let prodSeleccionado = {};
     const { Mant } = AthenasNet;
 
-    const muestraCategorias = async (filtros = {}) => {
+    const muestraProductos = async (filtros = {}) => {
         try {
-            lstCategorias = await service.listarCategoria(filtros);
-            ui.generarTabla(lstCategorias.map(c => ({
-                Id: c.Id,
-                Descripcion: c.Descripcion
+            lstProductos = await service.listar(filtros);
+            ui.generarTabla(lstProductos.map(p => ({
+                Id: p.Id,
+                Descripcion: p.Descripcion,
+                PrecioCompra: p.PrecioCompra,
+                PrecioVenta: p.PrecioVenta,
+                StockActual: p.StockActual,
+                StockMin: p.StockMin,
+                Categoria: p.Categoria.Descripcion
             })));
         }
         catch (err) {
@@ -120,11 +133,11 @@ const CategoriaController = (service, ui) => {
             if (evt.target.dataset.id) {
                 const { id, accion } = evt.target.dataset;
 
-                cateSeleccionada = lstCategorias.find(c => c.Id === parseInt(id));
-                cateSeleccionada.accion = accion;
+                prodSeleccionado = lstProductos.find(c => c.Id === parseInt(id));
+                prodSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
-                    Mant.setFormMantenedor(cateSeleccionada);
+                    Mant.setFormMantenedor(prodSeleccionado);
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
@@ -136,24 +149,24 @@ const CategoriaController = (service, ui) => {
         });
     }
 
-    const manejaEnvioCat = () => {
+    const manejaEnvioProd = () => {
 
         Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const categoria = ui.getCategoria();
+            const producto = ui.getProducto();
             try {
-                if (categoria.accion === 'registrar') {
-                    await service.crearCategoria(categoria);
+                if (producto.accion === 'registrar') {
+                    await service.crear(producto);
                     Mant.cerrarModMant();
-                    AthenasNet.muestraToast({mensaje: 'La categoría se registró satisfactoriamente',titulo: 'Registro exitoso'})
+                    AthenasNet.muestraToast({ mensaje: 'El producto se registró satisfactoriamente', titulo: 'Registro exitoso' })
                 }
-                else if (categoria.accion === 'editar') {
-                    await service.actualizarCategoria(categoria);
+                else if (producto.accion === 'editar') {
+                    await service.actualizar(producto);
                     Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La categoría se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    AthenasNet.muestraToast({ mensaje: 'El producto se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
                 }
-                await muestraCategorias();
+                await muestraProductos();
             }
             catch (err) {
                 console.error(err);
@@ -171,16 +184,16 @@ const CategoriaController = (service, ui) => {
         AthenasNet.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             try {
-                await service.eliminarCategoria(parseInt(cateSeleccionada.Id));
+                await service.eliminar(parseInt(prodSeleccionado.Id));
                 AthenasNet.ocultarConfirmacion();
-                AthenasNet.muestraToast({ mensaje: 'La categoría fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
-                await muestraCategorias();
+                AthenasNet.muestraToast({ mensaje: 'El producto fue eliminado satisfactoriamente', titulo: 'Eliminación exitosa' })
+                await muestraProductos();
             }
             catch (err) {
                 console.error(err);
-                AthenasNet.muestraToast({ cssClass:'bg-danger', mensaje: 'Hubo un error en la eliminación', titulo: 'Eliminación errónea' })
+                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: 'Hubo un error en la eliminación', titulo: 'Eliminación errónea' })
             }
-            
+
         })
     }
 
@@ -188,15 +201,15 @@ const CategoriaController = (service, ui) => {
         Mant.getFormFiltrar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             const filtros = ui.getFiltros();
-            await muestraCategorias(filtros);
+            await muestraProductos(filtros);
         })
     }
 
     const iniciar = () => {
-        muestraCategorias();
+        muestraProductos();
         Mant.evtMostrarModMant();
         manejaEvtTabla();
-        manejaEnvioCat();
+        manejaEnvioProd();
         manejaEnvioConf();
         manejaEnvioFiltro();
     }
@@ -211,11 +224,11 @@ const CategoriaController = (service, ui) => {
 
 window.addEventListener('load', () => {
 
-    const service = CategoriaService();
+    const service = ProductoService();
 
-    const ui = CategoriaUI();
+    const ui = ProductoUI();
 
-    const controller = CategoriaController(service, ui);
+    const controller = ProductoController(service, ui);
 
     controller.iniciar();
 

@@ -10,9 +10,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var CategoriaService = function CategoriaService() {
-  var crearCategoria = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(categoria) {
+var ProductoService = function ProductoService() {
+  var crear = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(producto) {
       var respuesta;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -21,8 +21,8 @@ var CategoriaService = function CategoriaService() {
               _context.next = 2;
               return AthenasNet.llamadaApi({
                 type: 'POST',
-                data: JSON.stringify(categoria),
-                url: 'Categoria/Crear'
+                data: JSON.stringify(producto),
+                url: 'Producto/Crear'
               });
 
             case 2:
@@ -37,13 +37,13 @@ var CategoriaService = function CategoriaService() {
       }, _callee);
     }));
 
-    return function crearCategoria(_x) {
+    return function crear(_x) {
       return _ref.apply(this, arguments);
     };
   }();
 
-  var actualizarCategoria = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(categoria) {
+  var actualizar = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(producto) {
       var respuesta;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -52,8 +52,8 @@ var CategoriaService = function CategoriaService() {
               _context2.next = 2;
               return AthenasNet.llamadaApi({
                 type: 'POST',
-                data: JSON.stringify(categoria),
-                url: 'Categoria/Actualizar'
+                data: JSON.stringify(producto),
+                url: 'Producto/Actualizar'
               });
 
             case 2:
@@ -68,12 +68,12 @@ var CategoriaService = function CategoriaService() {
       }, _callee2);
     }));
 
-    return function actualizarCategoria(_x2) {
+    return function actualizar(_x2) {
       return _ref2.apply(this, arguments);
     };
   }();
 
-  var listarCategoria = /*#__PURE__*/function () {
+  var listar = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(filtros) {
       var filtrosDefecto, respuesta;
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -86,7 +86,7 @@ var CategoriaService = function CategoriaService() {
               _context3.next = 3;
               return AthenasNet.llamadaApi({
                 data: filtrosDefecto,
-                url: 'Categoria/Listar'
+                url: 'Producto/Listar'
               });
 
             case 3:
@@ -101,12 +101,12 @@ var CategoriaService = function CategoriaService() {
       }, _callee3);
     }));
 
-    return function listarCategoria(_x3) {
+    return function listar(_x3) {
       return _ref3.apply(this, arguments);
     };
   }();
 
-  var eliminarCategoria = /*#__PURE__*/function () {
+  var eliminar = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id) {
       var respuesta;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -118,7 +118,7 @@ var CategoriaService = function CategoriaService() {
                 data: {
                   Id: id
                 },
-                url: 'Categoria/Eliminar'
+                url: 'Producto/Eliminar'
               });
 
             case 2:
@@ -133,12 +133,12 @@ var CategoriaService = function CategoriaService() {
       }, _callee4);
     }));
 
-    return function eliminarCategoria(_x4) {
+    return function eliminar(_x4) {
       return _ref4.apply(this, arguments);
     };
   }();
 
-  var buscarCategoria = /*#__PURE__*/function () {
+  var buscar = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(id) {
       var respuesta;
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -150,7 +150,7 @@ var CategoriaService = function CategoriaService() {
                 data: {
                   Id: id
                 },
-                url: 'Categoria/Obtener'
+                url: 'Producto/Obtener'
               });
 
             case 2:
@@ -165,29 +165,29 @@ var CategoriaService = function CategoriaService() {
       }, _callee5);
     }));
 
-    return function buscarCategoria(_x5) {
+    return function buscar(_x5) {
       return _ref5.apply(this, arguments);
     };
   }();
 
   return {
-    crearCategoria: crearCategoria,
-    actualizarCategoria: actualizarCategoria,
-    listarCategoria: listarCategoria,
-    eliminarCategoria: eliminarCategoria,
-    buscarCategoria: buscarCategoria
+    crear: crear,
+    actualizar: actualizar,
+    listar: listar,
+    eliminar: eliminar,
+    buscar: buscar
   };
 };
 
-var CategoriaUI = function CategoriaUI() {
+var ProductoUI = function ProductoUI() {
   var getFiltros = function getFiltros() {
     var arrFiltros = ['Descripcion'];
     return AthenasNet.Mant.getFiltros(arrFiltros);
   };
 
-  var generarTabla = function generarTabla(lstCategorias) {
+  var generarTabla = function generarTabla(lstProductos) {
     var data = {
-      filas: lstCategorias,
+      filas: lstProductos,
       edita: true,
       elimina: true
     };
@@ -195,24 +195,24 @@ var CategoriaUI = function CategoriaUI() {
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
   };
 
-  var getCategoria = function getCategoria() {
-    return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion']);
+  var getProducto = function getProducto() {
+    return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion', 'PrecioCompra', 'PrecioVenta', 'StockActual', 'StockMin', 'Imagen']);
   };
 
   return {
-    getCategoria: getCategoria,
+    getProducto: getProducto,
     generarTabla: generarTabla,
     getFiltros: getFiltros
   };
 };
 
-var CategoriaController = function CategoriaController(service, ui) {
-  var lstCategorias = [];
-  var cateSeleccionada = {};
+var ProductoController = function ProductoController(service, ui) {
+  var lstProductos = [];
+  var prodSeleccionado = {};
   var _AthenasNet = AthenasNet,
       Mant = _AthenasNet.Mant;
 
-  var muestraCategorias = /*#__PURE__*/function () {
+  var muestraProductos = /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
       var filtros,
           _args6 = arguments;
@@ -223,14 +223,19 @@ var CategoriaController = function CategoriaController(service, ui) {
               filtros = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : {};
               _context6.prev = 1;
               _context6.next = 4;
-              return service.listarCategoria(filtros);
+              return service.listar(filtros);
 
             case 4:
-              lstCategorias = _context6.sent;
-              ui.generarTabla(lstCategorias.map(function (c) {
+              lstProductos = _context6.sent;
+              ui.generarTabla(lstProductos.map(function (p) {
                 return {
-                  Id: c.Id,
-                  Descripcion: c.Descripcion
+                  Id: p.Id,
+                  Descripcion: p.Descripcion,
+                  PrecioCompra: p.PrecioCompra,
+                  PrecioVenta: p.PrecioVenta,
+                  StockActual: p.StockActual,
+                  StockMin: p.StockMin,
+                  Categoria: p.Categoria.Descripcion
                 };
               }));
               _context6.next = 11;
@@ -249,7 +254,7 @@ var CategoriaController = function CategoriaController(service, ui) {
       }, _callee6, null, [[1, 8]]);
     }));
 
-    return function muestraCategorias() {
+    return function muestraProductos() {
       return _ref6.apply(this, arguments);
     };
   }();
@@ -260,13 +265,13 @@ var CategoriaController = function CategoriaController(service, ui) {
         var _evt$target$dataset = evt.target.dataset,
             id = _evt$target$dataset.id,
             accion = _evt$target$dataset.accion;
-        cateSeleccionada = lstCategorias.find(function (c) {
+        prodSeleccionado = lstProductos.find(function (c) {
           return c.Id === parseInt(id);
         });
-        cateSeleccionada.accion = accion;
+        prodSeleccionado.accion = accion;
 
         if (accion === 'editar') {
-          Mant.setFormMantenedor(cateSeleccionada);
+          Mant.setFormMantenedor(prodSeleccionado);
         } else if (accion === 'eliminar') {
           console.log('eliminar');
           AthenasNet.mostrarConfirmacion();
@@ -275,54 +280,54 @@ var CategoriaController = function CategoriaController(service, ui) {
     });
   };
 
-  var manejaEnvioCat = function manejaEnvioCat() {
+  var manejaEnvioProd = function manejaEnvioProd() {
     Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
       var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(evt) {
-        var categoria, mensaje, titulo;
+        var producto, mensaje, titulo;
         return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 evt.preventDefault();
-                categoria = ui.getCategoria();
+                producto = ui.getProducto();
                 _context7.prev = 2;
 
-                if (!(categoria.accion === 'registrar')) {
+                if (!(producto.accion === 'registrar')) {
                   _context7.next = 10;
                   break;
                 }
 
                 _context7.next = 6;
-                return service.crearCategoria(categoria);
+                return service.crear(producto);
 
               case 6:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
-                  mensaje: 'La categoría se registró satisfactoriamente',
+                  mensaje: 'El producto se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
                 _context7.next = 15;
                 break;
 
               case 10:
-                if (!(categoria.accion === 'editar')) {
+                if (!(producto.accion === 'editar')) {
                   _context7.next = 15;
                   break;
                 }
 
                 _context7.next = 13;
-                return service.actualizarCategoria(categoria);
+                return service.actualizar(producto);
 
               case 13:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
-                  mensaje: 'La categoría se actualizó satisfactoriamente',
+                  mensaje: 'El producto se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
               case 15:
                 _context7.next = 17;
-                return muestraCategorias();
+                return muestraProductos();
 
               case 17:
                 _context7.next = 25;
@@ -365,16 +370,16 @@ var CategoriaController = function CategoriaController(service, ui) {
 
                 _context8.prev = 1;
                 _context8.next = 4;
-                return service.eliminarCategoria(parseInt(cateSeleccionada.Id));
+                return service.eliminar(parseInt(prodSeleccionado.Id));
 
               case 4:
                 AthenasNet.ocultarConfirmacion();
                 AthenasNet.muestraToast({
-                  mensaje: 'La categoría fue eliminada satisfactoriamente',
+                  mensaje: 'El producto fue eliminado satisfactoriamente',
                   titulo: 'Eliminación exitosa'
                 });
                 _context8.next = 8;
-                return muestraCategorias();
+                return muestraProductos();
 
               case 8:
                 _context8.next = 14;
@@ -416,7 +421,7 @@ var CategoriaController = function CategoriaController(service, ui) {
 
                 filtros = ui.getFiltros();
                 _context9.next = 4;
-                return muestraCategorias(filtros);
+                return muestraProductos(filtros);
 
               case 4:
               case "end":
@@ -433,10 +438,10 @@ var CategoriaController = function CategoriaController(service, ui) {
   };
 
   var iniciar = function iniciar() {
-    muestraCategorias();
+    muestraProductos();
     Mant.evtMostrarModMant();
     manejaEvtTabla();
-    manejaEnvioCat();
+    manejaEnvioProd();
     manejaEnvioConf();
     manejaEnvioFiltro();
   };
@@ -447,9 +452,9 @@ var CategoriaController = function CategoriaController(service, ui) {
 };
 
 window.addEventListener('load', function () {
-  var service = CategoriaService();
-  var ui = CategoriaUI();
-  var controller = CategoriaController(service, ui);
+  var service = ProductoService();
+  var ui = ProductoUI();
+  var controller = ProductoController(service, ui);
   controller.iniciar();
 });
-//# sourceMappingURL=categoria.js.map
+//# sourceMappingURL=producto.js.map

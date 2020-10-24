@@ -1,0 +1,82 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+@section cardTitulo {
+    Productos Registrados
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="Descripcion" id="Descripcion" class="form-control" placeholder="Ingrese la descripcion de la categoría">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Precio de Compra</th>
+        <th>Precio de Venta</th>
+        <th>Stock Actual</th>
+        <th>Stock Mínimo</th>
+        <th>Categoría</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+@section mantenedorTitulo {
+    Datos del producto
+}
+
+@section modalMantenedorCuerpo {
+    <input type="hidden" name="accion" value="registrar" />
+    <input type="hidden" name="hdn-id" id="Id" value="0">
+    <div class="form-group">
+        <label for="txt-descripcion">Descripción</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-descripcion">Precio de compra</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-descripcion">Precio de venta</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-descripcion">Stock actual</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-descripcion">Stock mínimo</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-descripcion">Imagen</label>
+        <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+        <div class="invalid-feedback">Por favor ingrese una descripción</div>
+    </div>
+
+}
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/producto.js")
+}
+
