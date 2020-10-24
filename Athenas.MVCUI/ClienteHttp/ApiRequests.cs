@@ -1,4 +1,5 @@
-﻿using Athenas.MVCUI.Models;
+using Athenas.MVCUI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 
 namespace Athenas.MVCUI.ClienteHttp
@@ -29,7 +31,9 @@ namespace Athenas.MVCUI.ClienteHttp
 
             errorResponse = default(K); // null
 
-            var response = ApiRequests.Cliente.GetAsync(url).Result;
+            var request = CreaPeticion(HttpMethod.Get, url);
+
+            var response = ApiRequests.Cliente.SendAsync(request).Result;
 
             if (!response.IsSuccessStatusCode)
             {
@@ -50,7 +54,10 @@ namespace Athenas.MVCUI.ClienteHttp
 
             errorResponse = default(K); // null
 
-            var response = ApiRequests.Cliente.PostAsJsonAsync(url, entidad).Result;
+            var request = CreaPeticion(HttpMethod.Post, url, entidad);
+
+            var response = ApiRequests.Cliente.SendAsync(request).Result;
+
 
             if (!response.IsSuccessStatusCode)
             {
@@ -71,7 +78,9 @@ namespace Athenas.MVCUI.ClienteHttp
 
             errorResponse = default(K); // null
 
-            var response = ApiRequests.Cliente.PutAsJsonAsync(url, entidad).Result;
+            var request = CreaPeticion(HttpMethod.Put, url, entidad);
+
+            var response = ApiRequests.Cliente.SendAsync(request).Result;
 
             if (!response.IsSuccessStatusCode)
             {
@@ -92,7 +101,9 @@ namespace Athenas.MVCUI.ClienteHttp
 
             errorResponse = default(K); // null
 
-            var response = ApiRequests.Cliente.DeleteAsync(url).Result;
+            var request = CreaPeticion(HttpMethod.Delete, url);
+
+            var response = ApiRequests.Cliente.SendAsync(request).Result;
 
             if (!response.IsSuccessStatusCode)
             {
@@ -108,26 +119,25 @@ namespace Athenas.MVCUI.ClienteHttp
             return responseData.Result;
         }
 
-        //public static GenericResponseModel<IEnumerable<T>> Get<T, K>(string url, out K errorResponse)
-        //{
+        //RequestMessage => Authorization Bearer sdcsdcsdcsc
 
-        //    errorResponse = default(K); // null
+        private static HttpRequestMessage CreaPeticion(HttpMethod metodo, string url = "", Object entidad = null, string token = "")
+        {
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.Method = metodo;
+            request.RequestUri = new Uri(ConfigurationManager.AppSettings["BASE_API_URL"] + url);
 
-        //    var response = ApiRequests.Cliente.GetAsync(url).Result;
+            if(token != "")
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
 
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        var errorData = response.Content.ReadAsAsync<K>();
+            if(entidad != null)
+            {
+                request.Content = new StringContent(JsonConvert.SerializeObject(entidad), Encoding.UTF8, "application/json");
+            }
 
-        //        errorResponse = errorData.Result;
-
-        //        return default(T);//null
-        //    }
-
-        //    var responseData = response.Content.ReadAsAsync<T>();
-
-        //    return responseData.Result;
-        //}
-
+            return request;
+        }
     }
 }

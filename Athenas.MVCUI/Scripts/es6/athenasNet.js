@@ -3,6 +3,9 @@
     const MVC_URL_BASE = 'http://localhost:62622/';
     const ACCION_MOSTRAR_SPINNER = 'mostrar';
     const ACCION_OCULTAR_SPINNER = 'ocultar';
+    const SEL_MODAL_CONF = '#modal-confirmar';
+    const ID_FORM_CONFIRMAR = 'form-confirmar';
+    const ID_TEMP_TBL_BODY = 'temp-tbl-body';
 
     const llamadaApi = async (opciones) => {
 
@@ -78,11 +81,25 @@
         document.querySelector(selObjetivo).innerHTML = compTemplate;
     }
 
+    const getFormConfirmar = () => document.getElementById(ID_FORM_CONFIRMAR);
+
+    const mostrarConfirmacion = () => {
+        $(SEL_MODAL_CONF).modal('show');
+    }
+
+    const ocultarConfirmacion = () => {
+        $(SEL_MODAL_CONF).modal('hide');
+    }
+
     window.AthenasNet = {
         llamadaApi,
         manejaSpinner,
         muestraToast,
-        compilaTemplate
+        compilaTemplate,
+        getFormConfirmar,
+        mostrarConfirmacion,
+        ocultarConfirmacion,
+        ID_TEMP_TBL_BODY
     };
 })()
 
