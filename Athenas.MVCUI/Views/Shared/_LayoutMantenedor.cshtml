@@ -9,6 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/fontawesome/css/all.min.css")
     @Styles.Render("~/Content/adminlte/adminlte.min.css")
+    @RenderSection("estilosPagina", false)
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm layout-footer-fixed">
@@ -93,7 +94,7 @@
                     </button>
                 </div>
                 <form novalidate id="form-mantenedor">
-                    <div class="modal-body">
+                    <div class="modal-body" style="width: auto; height: auto">
                         @RenderSection("modalMantenedorCuerpo", false)
                     </div>
                     <div class="modal-footer">
@@ -110,20 +111,23 @@
     <script type="text/template" id="temp-tbl-body">
         {{#each filas}}
         <tr>
-            
             {{#each this}}
-                <td>{{this}}</td>    
+                {{#if (isId @@key)}}
+                    <td>{{formatCode this ../../iniFormato 4}}</td>
+                {{else}}
+                    <td>{{this}}</td>
+                {{/if}}
             {{/each}}
             <td>
                 {{#if ../edita}}
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
+                    <i class="fas fa-edit"></i>
+                </button>
                 {{/if}}
                 {{#if ../elimina}}
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
-                        <i class="fas fa-trash-alt" data-del-action="true"></i>
-                    </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
+                    <i class="fas fa-trash-alt" data-del-action="true"></i>
+                </button>
                 {{/if}}
 
             </td>

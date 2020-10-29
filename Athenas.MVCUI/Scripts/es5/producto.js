@@ -189,20 +189,48 @@ var ProductoUI = function ProductoUI() {
     var data = {
       filas: lstProductos,
       edita: true,
-      elimina: true
+      elimina: true,
+      iniFormato: 'PD'
     };
     AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
   };
 
   var getProducto = function getProducto() {
-    return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion', 'PrecioCompra', 'PrecioVenta', 'StockActual', 'StockMin', 'Imagen']);
+    return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion', 'PrecioCompra', 'PrecioVenta', 'StockActual', 'StockMin', 'Categoria']);
+  };
+
+  var leerArchivo = function leerArchivo(archivo) {
+    return new Promise(function (resolve, reject) {
+      var lector = new FileReader();
+
+      lector.onload = function (e) {
+        resolve(e.target.result);
+      };
+
+      lector.onerror = function (err) {
+        reject(err);
+      };
+
+      lector.readAsDataURL(archivo);
+    });
+  };
+
+  var getImgTag = function getImgTag() {
+    return document.getElementById('imgTag');
+  };
+
+  var getImagenInput = function getImagenInput() {
+    return document.querySelector('#modal-mantenedor #ImagenInput');
   };
 
   return {
     getProducto: getProducto,
     generarTabla: generarTabla,
-    getFiltros: getFiltros
+    getFiltros: getFiltros,
+    leerArchivo: leerArchivo,
+    getImgTag: getImgTag,
+    getImagenInput: getImagenInput
   };
 };
 
@@ -271,7 +299,10 @@ var ProductoController = function ProductoController(service, ui) {
         prodSeleccionado.accion = accion;
 
         if (accion === 'editar') {
-          Mant.setFormMantenedor(prodSeleccionado);
+          Mant.setFormMantenedor(_objectSpread(_objectSpread({}, prodSeleccionado), {}, {
+            Categoria: prodSeleccionado.Categoria.Id
+          }), ['Imagen', 'Base64Imagen']);
+          ui.getImgTag().src = prodSeleccionado.Imagen;
         } else if (accion === 'eliminar') {
           console.log('eliminar');
           AthenasNet.mostrarConfirmacion();
@@ -289,53 +320,60 @@ var ProductoController = function ProductoController(service, ui) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 evt.preventDefault();
-                producto = ui.getProducto();
-                _context7.prev = 2;
+                producto = ui.getProducto(); //producto.Imagen = ui.getImgTag().src;
+
+                producto = _objectSpread(_objectSpread({}, producto), {}, {
+                  Categoria: {
+                    Id: producto.Id
+                  }
+                });
+                console.log(producto);
+                _context7.prev = 4;
 
                 if (!(producto.accion === 'registrar')) {
-                  _context7.next = 10;
+                  _context7.next = 12;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 8;
                 return service.crear(producto);
 
-              case 6:
+              case 8:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context7.next = 15;
+                _context7.next = 17;
                 break;
 
-              case 10:
+              case 12:
                 if (!(producto.accion === 'editar')) {
-                  _context7.next = 15;
+                  _context7.next = 17;
                   break;
                 }
 
-                _context7.next = 13;
+                _context7.next = 15;
                 return service.actualizar(producto);
 
-              case 13:
+              case 15:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 15:
-                _context7.next = 17;
+              case 17:
+                _context7.next = 19;
                 return muestraProductos();
 
-              case 17:
-                _context7.next = 25;
+              case 19:
+                _context7.next = 27;
                 break;
 
-              case 19:
-                _context7.prev = 19;
-                _context7.t0 = _context7["catch"](2);
+              case 21:
+                _context7.prev = 21;
+                _context7.t0 = _context7["catch"](4);
                 console.error(_context7.t0);
                 mensaje = categoria.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = categoria.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -345,12 +383,12 @@ var ProductoController = function ProductoController(service, ui) {
                   titulo: titulo
                 });
 
-              case 25:
+              case 27:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[2, 19]]);
+        }, _callee7, null, [[4, 21]]);
       }));
 
       return function (_x6) {
@@ -437,13 +475,45 @@ var ProductoController = function ProductoController(service, ui) {
     }());
   };
 
+  var manejaSeleccionImagen = function manejaSeleccionImagen() {
+    ui.getImagenInput().addEventListener('input', /*#__PURE__*/function () {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(e) {
+        var archivo, url;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                archivo = e.target.files[0];
+                _context10.next = 3;
+                return ui.leerArchivo(archivo);
+
+              case 3:
+                url = _context10.sent;
+                ui.getImgTag().src = url;
+
+              case 5:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      return function (_x9) {
+        return _ref10.apply(this, arguments);
+      };
+    }());
+  };
+
   var iniciar = function iniciar() {
+    Mant.cambiaTamañoModal('modal-lg');
     muestraProductos();
     Mant.evtMostrarModMant();
     manejaEvtTabla();
     manejaEnvioProd();
     manejaEnvioConf();
     manejaEnvioFiltro();
+    manejaSeleccionImagen();
   };
 
   return {

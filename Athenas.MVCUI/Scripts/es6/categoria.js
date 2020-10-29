@@ -78,7 +78,8 @@ const CategoriaUI = () => {
         const data = {
             filas: lstCategorias,
             edita: true,
-            elimina: true
+            elimina: true,
+            iniFormato: 'C'
         }
 
         AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);

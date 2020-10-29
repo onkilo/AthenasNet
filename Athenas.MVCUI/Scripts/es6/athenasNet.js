@@ -91,6 +91,11 @@
         $(SEL_MODAL_CONF).modal('hide');
     }
 
+
+
+
+
+
     window.AthenasNet = {
         llamadaApi,
         manejaSpinner,
@@ -103,6 +108,24 @@
     };
 })()
 
+Handlebars.registerHelper('isId', (key) => {
+    return key === 'Id' || key === 'id';
+});
+
+Handlebars.registerHelper('formatCode', (id, inicioFormato, cantCero) => {
+    
+    let formato = inicioFormato;
+
+    const cantNum = id.toString().length;
+
+    for (let i = 0; i < (parseInt(cantCero) - cantNum); i++) {
+        formato += '0';
+    }
+
+    formato += id;
+
+    return formato;
+});
 
 window.addEventListener('load', () => {
 

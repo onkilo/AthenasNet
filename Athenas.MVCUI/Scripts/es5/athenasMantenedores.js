@@ -52,8 +52,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var setFormMantenedor = function setFormMantenedor(entidad) {
+    var arrExcepcion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
     var elementos = Object.keys(entidad);
     elementos.forEach(function (ele) {
+      if (arrExcepcion.includes(ele)) return;
       setFormEleValue(ele, entidad[ele]);
     });
     $(SEL_MODAL_CATE).modal('show');
@@ -67,6 +69,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var cerrarModMant = function cerrarModMant() {
     $(SEL_MODAL_CATE).modal('hide');
+  };
+
+  var cambiaTamañoModal = function cambiaTamañoModal(clase) {
+    $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
   };
 
   var getEntidad = function getEntidad(arrEle) {
@@ -107,7 +113,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getEntidad: getEntidad,
     getFormMantenedor: getFormMantenedor,
     SEL_TBL_BODY: SEL_TBL_BODY,
-    SEL_TBL_MANT: SEL_TBL_MANT
+    SEL_TBL_MANT: SEL_TBL_MANT,
+    cambiaTamañoModal: cambiaTamañoModal
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map

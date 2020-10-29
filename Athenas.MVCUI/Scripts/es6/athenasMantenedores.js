@@ -37,10 +37,11 @@
 
     const setFormEleValue = (ele, value) => { getFormMantElements()[ele].value = value; }
 
-    const setFormMantenedor = (entidad) => {
+    const setFormMantenedor = (entidad, arrExcepcion = []) => {
         const elementos = Object.keys(entidad);
 
         elementos.forEach(ele => {
+            if (arrExcepcion.includes(ele)) return;
             setFormEleValue(ele, entidad[ele]);
         })
 
@@ -56,6 +57,10 @@
 
     const cerrarModMant = () => {
         $(SEL_MODAL_CATE).modal('hide');
+    }
+
+    const cambiaTamañoModal = (clase) => {
+        $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
     }
 
     const getEntidad = (arrEle) => {
@@ -103,6 +108,7 @@
         getEntidad,
         getFormMantenedor,
         SEL_TBL_BODY,
-        SEL_TBL_MANT
+        SEL_TBL_MANT,
+        cambiaTamañoModal
     };
 })()

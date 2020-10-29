@@ -78,7 +78,8 @@ const ProductoUI = () => {
         const data = {
             filas: lstProductos,
             edita: true,
-            elimina: true
+            elimina: true,
+            iniFormato: 'PD'
         }
 
         AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
@@ -94,13 +95,36 @@ const ProductoUI = () => {
             'PrecioVenta',
             'StockActual',
             'StockMin',
-            'Imagen']);
+            'Categoria'
+        ]);
     }
+
+    const leerArchivo = (archivo) => {
+        return new Promise((resolve, reject) => {
+            const lector = new FileReader();
+            lector.onload = (e) => {
+                resolve(e.target.result)
+            }
+            lector.onerror = (err) => {
+                reject(err);
+            }
+
+            lector.readAsDataURL(archivo);
+        });
+
+    }
+
+    const getImgTag = () => document.getElementById('imgTag');
+
+    const getImagenInput = () => document.querySelector('#modal-mantenedor #ImagenInput');
 
     return {
         getProducto,
         generarTabla,
-        getFiltros
+        getFiltros,
+        leerArchivo,
+        getImgTag,
+        getImagenInput
     }
 }
 
@@ -137,7 +161,8 @@ const ProductoController = (service, ui) => {
                 prodSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
-                    Mant.setFormMantenedor(prodSeleccionado);
+                    Mant.setFormMantenedor({ ...prodSeleccionado, Categoria: prodSeleccionado.Categoria.Id }, ['Imagen', 'Base64Imagen']);
+                    ui.getImgTag().src = prodSeleccionado.Imagen;
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
@@ -154,7 +179,15 @@ const ProductoController = (service, ui) => {
         Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const producto = ui.getProducto();
+            let producto = ui.getProducto();
+            //producto.Imagen = ui.getImgTag().src;
+            producto = {
+                ...producto,
+                Categoria: {
+                    Id: producto.Id
+                }
+            }
+            console.log(producto);
             try {
                 if (producto.accion === 'registrar') {
                     await service.crear(producto);
@@ -205,13 +238,25 @@ const ProductoController = (service, ui) => {
         })
     }
 
+    const manejaSeleccionImagen = () => {
+        ui.getImagenInput().addEventListener('input', async (e) => {
+            const archivo = e.target.files[0];
+            const url = await ui.leerArchivo(archivo);
+
+            ui.getImgTag().src = url;
+
+        })
+    }
+
     const iniciar = () => {
+        Mant.cambiaTamañoModal('modal-lg');
         muestraProductos();
         Mant.evtMostrarModMant();
         manejaEvtTabla();
         manejaEnvioProd();
         manejaEnvioConf();
         manejaEnvioFiltro();
+        manejaSeleccionImagen();
     }
 
 
