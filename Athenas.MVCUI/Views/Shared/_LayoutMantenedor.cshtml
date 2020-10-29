@@ -112,7 +112,11 @@
         <tr>
             
             {{#each this}}
-                <td>{{this}}</td>    
+               {{#if (isId @@key)}}
+                    <td>{{formatoCodigo this ../../iniCodigo 4}}</td>
+                {{else}}
+                    <td>{{this}}</td>
+                {{/if}}
             {{/each}}
             <td>
                 {{#if ../edita}}

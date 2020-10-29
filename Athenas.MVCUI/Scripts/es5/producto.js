@@ -189,7 +189,8 @@ var ProductoUI = function ProductoUI() {
     var data = {
       filas: lstProductos,
       edita: true,
-      elimina: true
+      elimina: true,
+      iniCodigo: 'PD'
     };
     AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
@@ -199,10 +200,46 @@ var ProductoUI = function ProductoUI() {
     return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion', 'PrecioCompra', 'PrecioVenta', 'StockActual', 'StockMin', 'Imagen']);
   };
 
+  var getImgInput = function getImgInput() {
+    return document.querySelector('#form-mantenedor #Imagen');
+  };
+
+  var getImgDisplay = function getImgDisplay() {
+    return document.querySelector('#imgDisplay');
+  };
+
+  var getBase64Data = function getBase64Data(archivo) {
+    //const lector = new FileReader();
+    //lector.onload = (evt) => {
+    //    console.log(evt.target.result);
+    //    getImgDisplay().src = evt.target.result;
+    //};
+    //lector.onerror = (err) => {
+    //    console.error(err);
+    //};
+    //lector.readAsDataURL(archivo);
+    return new Promise(function (resolve, reject) {
+      var lector = new FileReader();
+
+      lector.onload = function (evt) {
+        resolve(evt.target.result);
+      };
+
+      lector.onerror = function (err) {
+        reject(err);
+      };
+
+      lector.readAsDataURL(archivo);
+    });
+  };
+
   return {
     getProducto: getProducto,
     generarTabla: generarTabla,
-    getFiltros: getFiltros
+    getFiltros: getFiltros,
+    getImgInput: getImgInput,
+    getBase64Data: getBase64Data,
+    getImgDisplay: getImgDisplay
   };
 };
 
@@ -271,7 +308,10 @@ var ProductoController = function ProductoController(service, ui) {
         prodSeleccionado.accion = accion;
 
         if (accion === 'editar') {
-          Mant.setFormMantenedor(prodSeleccionado);
+          Mant.setFormMantenedor(_objectSpread(_objectSpread({}, prodSeleccionado), {}, {
+            Categoria: prodSeleccionado.Categoria.Id
+          }), ['Imagen', 'Activo', 'Base64Imagen']);
+          ui.getImgDisplay().src = prodSeleccionado.Imagen;
         } else if (accion === 'eliminar') {
           console.log('eliminar');
           AthenasNet.mostrarConfirmacion();
@@ -290,52 +330,59 @@ var ProductoController = function ProductoController(service, ui) {
               case 0:
                 evt.preventDefault();
                 producto = ui.getProducto();
-                _context7.prev = 2;
+
+                if (ui.getImgDisplay().src.startsWith('data')) {
+                  producto.Base64Imagen = ui.getImgDisplay().src;
+                }
+
+                delete producto.Imagen;
+                console.log(producto);
+                _context7.prev = 5;
 
                 if (!(producto.accion === 'registrar')) {
-                  _context7.next = 10;
+                  _context7.next = 13;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 9;
                 return service.crear(producto);
 
-              case 6:
+              case 9:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context7.next = 15;
+                _context7.next = 18;
                 break;
 
-              case 10:
+              case 13:
                 if (!(producto.accion === 'editar')) {
-                  _context7.next = 15;
+                  _context7.next = 18;
                   break;
                 }
 
-                _context7.next = 13;
+                _context7.next = 16;
                 return service.actualizar(producto);
 
-              case 13:
+              case 16:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 15:
-                _context7.next = 17;
+              case 18:
+                _context7.next = 20;
                 return muestraProductos();
 
-              case 17:
-                _context7.next = 25;
+              case 20:
+                _context7.next = 28;
                 break;
 
-              case 19:
-                _context7.prev = 19;
-                _context7.t0 = _context7["catch"](2);
+              case 22:
+                _context7.prev = 22;
+                _context7.t0 = _context7["catch"](5);
                 console.error(_context7.t0);
                 mensaje = categoria.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = categoria.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -345,12 +392,12 @@ var ProductoController = function ProductoController(service, ui) {
                   titulo: titulo
                 });
 
-              case 25:
+              case 28:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[2, 19]]);
+        }, _callee7, null, [[5, 22]]);
       }));
 
       return function (_x6) {
@@ -437,13 +484,53 @@ var ProductoController = function ProductoController(service, ui) {
     }());
   };
 
+  var manejaImgInput = function manejaImgInput() {
+    ui.getImgInput().addEventListener('input', /*#__PURE__*/function () {
+      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(evt) {
+        var url;
+        return regeneratorRuntime.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                console.dir(evt.target);
+                _context10.prev = 1;
+                _context10.next = 4;
+                return ui.getBase64Data(evt.target.files[0]);
+
+              case 4:
+                url = _context10.sent;
+                ui.getImgDisplay().src = url;
+                _context10.next = 11;
+                break;
+
+              case 8:
+                _context10.prev = 8;
+                _context10.t0 = _context10["catch"](1);
+                console.error(_context10.t0);
+
+              case 11:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, null, [[1, 8]]);
+      }));
+
+      return function (_x9) {
+        return _ref10.apply(this, arguments);
+      };
+    }());
+  };
+
   var iniciar = function iniciar() {
+    Mant.configuraTamModal('modal-lg');
     muestraProductos();
     Mant.evtMostrarModMant();
     manejaEvtTabla();
     manejaEnvioProd();
     manejaEnvioConf();
     manejaEnvioFiltro();
+    manejaImgInput();
   };
 
   return {
