@@ -78,7 +78,8 @@ const ProductoUI = () => {
         const data = {
             filas: lstProductos,
             edita: true,
-            elimina: true
+            elimina: true,
+            iniCodigo: 'PD'
         }
 
         AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
@@ -97,10 +98,43 @@ const ProductoUI = () => {
             'Imagen']);
     }
 
+    const getImgInput = () => document.querySelector('#form-mantenedor #Imagen');
+
+    const getImgDisplay = () => document.querySelector('#imgDisplay');
+
+    const getBase64Data = (archivo) => {
+        //const lector = new FileReader();
+        //lector.onload = (evt) => {
+        //    console.log(evt.target.result);
+        //    getImgDisplay().src = evt.target.result;
+        //};
+        //lector.onerror = (err) => {
+        //    console.error(err);
+        //};
+
+
+        //lector.readAsDataURL(archivo);
+
+        return new Promise((resolve, reject) => {
+            const lector = new FileReader();
+            lector.onload = (evt) => {
+                resolve(evt.target.result);
+            };
+            lector.onerror = (err) => {
+                reject(err);
+            };
+
+            lector.readAsDataURL(archivo);
+        });
+    }
+
     return {
         getProducto,
         generarTabla,
-        getFiltros
+        getFiltros,
+        getImgInput,
+        getBase64Data,
+        getImgDisplay
     }
 }
 
@@ -137,7 +171,8 @@ const ProductoController = (service, ui) => {
                 prodSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
-                    Mant.setFormMantenedor(prodSeleccionado);
+                    Mant.setFormMantenedor({ ...prodSeleccionado, Categoria: prodSeleccionado.Categoria.Id }, ['Imagen', 'Activo', 'Base64Imagen']);
+                    ui.getImgDisplay().src = prodSeleccionado.Imagen;
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
@@ -155,6 +190,12 @@ const ProductoController = (service, ui) => {
             evt.preventDefault();
 
             const producto = ui.getProducto();
+            if (ui.getImgDisplay().src.startsWith('data')) {
+                producto.Base64Imagen = ui.getImgDisplay().src;
+            } 
+            
+            delete producto.Imagen;
+            console.log(producto);
             try {
                 if (producto.accion === 'registrar') {
                     await service.crear(producto);
@@ -205,13 +246,30 @@ const ProductoController = (service, ui) => {
         })
     }
 
+    const manejaImgInput = () => {
+        ui.getImgInput().addEventListener('input', async (evt) => {
+            console.dir(evt.target);
+            try {
+                const url = await ui.getBase64Data(evt.target.files[0]);
+                ui.getImgDisplay().src = url;
+
+            }
+            catch (err) {
+                console.error(err);
+            }
+            
+        });
+    }
+
     const iniciar = () => {
+        Mant.configuraTamModal('modal-lg');
         muestraProductos();
         Mant.evtMostrarModMant();
         manejaEvtTabla();
         manejaEnvioProd();
         manejaEnvioConf();
         manejaEnvioFiltro();
+        manejaImgInput();
     }
 
 

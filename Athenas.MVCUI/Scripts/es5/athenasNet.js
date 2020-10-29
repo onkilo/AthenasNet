@@ -131,6 +131,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   };
 })();
 
+Handlebars.registerHelper('isId', function (key) {
+  return key === 'Id' || key === 'id';
+});
+Handlebars.registerHelper('formatoCodigo', function (id, iniFormato, cantNum) {
+  var formato = iniFormato;
+  debugger;
+  var cantCeros = cantNum - id.toString().length;
+
+  for (var i = 0; i < cantCeros; i++) {
+    formato += '0';
+  }
+
+  formato += id.toString();
+  return formato;
+});
 window.addEventListener('load', function () {
   $.extend(true, $.fn.dataTable.defaults, {
     "searching": false,

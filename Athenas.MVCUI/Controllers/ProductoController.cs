@@ -1,5 +1,8 @@
+using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +11,8 @@ namespace Athenas.MVCUI.Controllers
 {
     public class ProductoController : Controller
     {
+        GenericResponseModel<String> errorResponse;
+
         // GET: Producto
         public ActionResult Index()
         {
@@ -15,76 +20,110 @@ namespace Athenas.MVCUI.Controllers
             return View();
         }
 
-        // GET: Producto/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public ActionResult Listar(string Descripcion = "")
         {
-            return View();
+
+            String url = "Producto?";
+
+            NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
+            queryString.Add("registros", "0");
+            if (Descripcion != "") queryString.Add("Descripcion", Descripcion);
+
+            url += queryString.ToString();
+
+            GenericResponseModel<IEnumerable<ProductoViewModel>> responseModel = ApiRequests
+                .Get<GenericResponseModel<IEnumerable<ProductoViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
-        // GET: Producto/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Obtener(int Id)
         {
-            return View();
+
+            String url = $"Producto/{Id}";
+
+            GenericResponseModel<ProductoViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<ProductoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
-        // POST: Producto/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Crear(ProductoViewModel producto)
         {
-            try
-            {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            String url = "Producto";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Post<GenericResponseModel<String>, ProductoViewModel, GenericResponseModel<String>>(url, producto, out errorResponse);
+
+            if (errorResponse == null)
             {
-                return View();
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
             }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
-        // GET: Producto/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Producto/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Actualizar(ProductoViewModel producto)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            String url = $"Producto/{producto.Id}";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Put<GenericResponseModel<String>, ProductoViewModel, GenericResponseModel<String>>(url, producto, out errorResponse);
+
+            if (errorResponse == null)
             {
-                return View();
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
             }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
-        // GET: Producto/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult Eliminar(int Id)
         {
-            return View();
-        }
 
-        // POST: Producto/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+            String url = $"Producto/{Id}";
 
-                return RedirectToAction("Index");
-            }
-            catch
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
             {
-                return View();
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
             }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }
