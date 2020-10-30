@@ -1,102 +1,3 @@
-
-const CategoriaService = () => {
-
-    const crearCategoria = async (categoria) => {
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Crear'
-        })
-
-        return respuesta;
-    }
-
-    const actualizarCategoria = async (categoria) => {
-
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(categoria),
-            url: 'Categoria/Actualizar'
-        })
-
-        return respuesta;
-    }
-
-    const listarCategoria = async (filtros) => {
-
-        const filtrosDefecto = {
-            Descripcion: '',
-            ...filtros
-        }
-
-        const respuesta = await AthenasNet.llamadaApi({
-            data: filtrosDefecto,
-            url: 'Categoria/Listar'
-        })
-
-        return respuesta.Data;
-    }
-
-    const eliminarCategoria = async (id) => {
-
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Categoria/Eliminar'
-        })
-        return respuesta
-    }
-
-    const buscarCategoria = async (id) => {
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Categoria/Obtener'
-        })
-        return respuesta;
-           
-    }
-
-    return {
-        crearCategoria,
-        actualizarCategoria,
-        listarCategoria,
-        eliminarCategoria,
-        buscarCategoria
-    }
-}
-
-const CategoriaUI = () => {
-  
-    const getFiltros = () => {
-        const arrFiltros = ['Descripcion'];
-
-        return AthenasNet.Mant.getFiltros(arrFiltros);
-
-    }
-
-    const generarTabla = (lstCategorias) => {
-
-        const data = {
-            filas: lstCategorias,//=> item
-            edita: true,
-            elimina: true,
-            iniCodigo: 'CT'
-        }
-
-        AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
-        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
-    }
-
-    const getCategoria = () => {
-        return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion']);
-    }
-
-    return {
-        getCategoria,
-        generarTabla,
-        getFiltros
-    }
-}
-
 const CategoriaController = (service, ui) => {
     let lstCategorias = [];
     let cateSeleccionada = {};
@@ -147,7 +48,7 @@ const CategoriaController = (service, ui) => {
                 if (categoria.accion === 'registrar') {
                     await service.crearCategoria(categoria);
                     Mant.cerrarModMant();
-                    AthenasNet.muestraToast({mensaje: 'La categoría se registró satisfactoriamente',titulo: 'Registro exitoso'})
+                    AthenasNet.muestraToast({ mensaje: 'La categoría se registró satisfactoriamente', titulo: 'Registro exitoso' })
                 }
                 else if (categoria.accion === 'editar') {
                     await service.actualizarCategoria(categoria);
@@ -179,9 +80,9 @@ const CategoriaController = (service, ui) => {
             }
             catch (err) {
                 console.error(err);
-                AthenasNet.muestraToast({ cssClass:'bg-danger', mensaje: 'Hubo un error en la eliminación', titulo: 'Eliminación errónea' })
+                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: 'Hubo un error en la eliminación', titulo: 'Eliminación errónea' })
             }
-            
+
         })
     }
 
@@ -207,17 +108,3 @@ const CategoriaController = (service, ui) => {
         iniciar
     }
 }
-
-
-
-window.addEventListener('load', () => {
-
-    const service = CategoriaService();
-
-    const ui = CategoriaUI();
-
-    const controller = CategoriaController(service, ui);
-
-    controller.iniciar();
-
-})
