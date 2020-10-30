@@ -1,144 +1,5 @@
 
-const ProductoService = () => {
-
-    const crear = async (producto) => {
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(producto),
-            url: 'Producto/Crear'
-        })
-
-        return respuesta;
-    }
-
-    const actualizar = async (producto) => {
-
-        const respuesta = await AthenasNet.llamadaApi({
-            type: 'POST',
-            data: JSON.stringify(producto),
-            url: 'Producto/Actualizar'
-        })
-
-        return respuesta;
-    }
-
-    const listar = async (filtros) => {
-
-        const filtrosDefecto = {
-            Descripcion: '',
-            ...filtros
-        }
-
-        const respuesta = await AthenasNet.llamadaApi({
-            data: filtrosDefecto,
-            url: 'Producto/Listar'
-        })
-
-        return respuesta.Data;
-    }
-
-    const eliminar = async (id) => {
-
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Producto/Eliminar'
-        })
-        return respuesta
-    }
-
-    const buscar = async (id) => {
-        const respuesta = await AthenasNet.llamadaApi({
-            data: { Id: id },
-            url: 'Producto/Obtener'
-        })
-        return respuesta;
-
-    }
-
-    return {
-        crear,
-        actualizar,
-        listar,
-        eliminar,
-        buscar
-    }
-}
-
-const ProductoUI = () => {
-
-    const getFiltros = () => {
-        const arrFiltros = ['Descripcion'];
-
-        return AthenasNet.Mant.getFiltros(arrFiltros);
-
-    }
-
-    const generarTabla = (lstProductos) => {
-
-        const data = {
-            filas: lstProductos,
-            edita: true,
-            elimina: true,
-            iniCodigo: 'PD'
-        }
-
-        AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
-        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
-    }
-
-    const getProducto = () => {
-        return AthenasNet.Mant.getEntidad([
-            'Descripcion',
-            'Id',
-            'accion',
-            'PrecioCompra',
-            'PrecioVenta',
-            'StockActual',
-            'StockMin',
-            'Imagen']);
-    }
-
-    const getImgInput = () => document.querySelector('#form-mantenedor #Imagen');
-
-    const getImgDisplay = () => document.querySelector('#imgDisplay');
-
-    const getBase64Data = (archivo) => {
-        //const lector = new FileReader();
-        //lector.onload = (evt) => {
-        //    console.log(evt.target.result);
-        //    getImgDisplay().src = evt.target.result;
-        //};
-        //lector.onerror = (err) => {
-        //    console.error(err);
-        //};
-
-
-        //lector.readAsDataURL(archivo);
-
-        return new Promise((resolve, reject) => {
-            const lector = new FileReader();
-            lector.onload = (evt) => {
-                resolve(evt.target.result);
-            };
-            lector.onerror = (err) => {
-                reject(err);
-            };
-
-            lector.readAsDataURL(archivo);
-        });
-    }
-
-    return {
-        getProducto,
-        generarTabla,
-        getFiltros,
-        getImgInput,
-        getBase64Data,
-        getImgDisplay
-    }
-}
-
-const ProductoController = (service, ui) => {
+const ProductoController = (service, ui, categoriaService) => {
     let lstProductos = [];
     let prodSeleccionado = {};
     const { Mant } = AthenasNet;
@@ -162,7 +23,7 @@ const ProductoController = (service, ui) => {
     }
 
     const manejaEvtTabla = () => {
-        Mant.getTblMantenedor().addEventListener('click', (evt) => {
+        Mant.getTblMantenedor().addEventListener('click', async (evt) => {
 
             if (evt.target.dataset.id) {
                 const { id, accion } = evt.target.dataset;
@@ -171,6 +32,7 @@ const ProductoController = (service, ui) => {
                 prodSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
+                    await muestraCategorias();
                     Mant.setFormMantenedor({ ...prodSeleccionado, Categoria: prodSeleccionado.Categoria.Id }, ['Imagen', 'Activo', 'Base64Imagen']);
                     ui.getImgDisplay().src = prodSeleccionado.Imagen;
                 }
@@ -189,12 +51,18 @@ const ProductoController = (service, ui) => {
         Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const producto = ui.getProducto();
+            let producto = ui.getProducto();
             if (ui.getImgDisplay().src.startsWith('data')) {
                 producto.Base64Imagen = ui.getImgDisplay().src;
-            } 
-            
+            }
+
             delete producto.Imagen;
+            producto = {
+                ...producto,
+                Categoria: {
+                    Id: parseInt(producto.Categoria)
+                }
+            }
             console.log(producto);
             try {
                 if (producto.accion === 'registrar') {
@@ -211,8 +79,8 @@ const ProductoController = (service, ui) => {
             }
             catch (err) {
                 console.error(err);
-                const mensaje = (categoria.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (categoria.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                const mensaje = (producto.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
                 AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
             }
 
@@ -257,8 +125,23 @@ const ProductoController = (service, ui) => {
             catch (err) {
                 console.error(err);
             }
-            
+
         });
+    }
+
+    const muestraCategorias = async () => {
+        const lstCategorias = await categoriaService.listarCategoria({});
+        const tempCatData = {
+            filas: lstCategorias
+        }
+        console.log(lstCategorias);
+        AthenasNet.compilaTemplate(ui.ID_TEMP_CAT, tempCatData, ui.SEL_CBO_CAT);
+    }
+
+    const manejaAbreModal = async () => {
+        Mant.getBtnNuevo().addEventListener('click', () => {
+            await muestraCategorias();
+        })
     }
 
     const iniciar = () => {
@@ -270,6 +153,7 @@ const ProductoController = (service, ui) => {
         manejaEnvioConf();
         manejaEnvioFiltro();
         manejaImgInput();
+        manejaAbreModal();
     }
 
 
@@ -277,17 +161,3 @@ const ProductoController = (service, ui) => {
         iniciar
     }
 }
-
-
-
-window.addEventListener('load', () => {
-
-    const service = ProductoService();
-
-    const ui = ProductoUI();
-
-    const controller = ProductoController(service, ui);
-
-    controller.iniciar();
-
-})

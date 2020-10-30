@@ -186,8 +186,14 @@
     <Content Include="Scripts\datatable\datatables.min.js" />
     <Content Include="Scripts\es6\athenasMantenedores.js" />
     <Content Include="Scripts\es6\athenasNet.js" />
-    <Content Include="Scripts\es6\categoria.js" />
-    <Content Include="Scripts\es6\producto.js" />
+    <Content Include="Scripts\es6\categoria\categoria.js" />
+    <Content Include="Scripts\es6\categoria\categoriaController.js" />
+    <Content Include="Scripts\es6\categoria\categoriaService.js" />
+    <Content Include="Scripts\es6\categoria\categoriaUI.js" />
+    <Content Include="Scripts\es6\producto\producto.js" />
+    <Content Include="Scripts\es6\producto\productoController.js" />
+    <Content Include="Scripts\es6\producto\productoService.js" />
+    <Content Include="Scripts\es6\producto\productoUI.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />

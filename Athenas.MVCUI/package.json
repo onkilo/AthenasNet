@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-dev": "./node_modules/.bin/babel Scripts/es6 --out-dir Scripts/es5 --presets=@babel/env --source-maps",
+    "babel-dev": "./node_modules/.bin/babel Scripts/es6/* --out-dir Scripts/es5 --presets=@babel/env --source-maps",
     "watch": "npm-watch"
   },
   "watch": {
-    "babel-dev": "Scripts/es6/*.js"
+    "babel-dev": "Scripts/es6/*"
   },
   "keywords": [],
   "author": "",
