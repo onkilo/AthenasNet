@@ -138,8 +138,8 @@ const ProductoController = (service, ui, categoriaService) => {
         AthenasNet.compilaTemplate(ui.ID_TEMP_CAT, tempCatData, ui.SEL_CBO_CAT);
     }
 
-    const manejaAbreModal = async () => {
-        Mant.getBtnNuevo().addEventListener('click', () => {
+    const manejaAbreModal = () => {
+        Mant.getBtnNuevo().addEventListener('click', async () => {
             await muestraCategorias();
         })
     }
