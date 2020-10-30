@@ -94,9 +94,9 @@
     }
 
     const configuraTamModal = (clase) => {
-        //#modal-mantenedor .modal-dialog
+
         $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
-        //document.querySelector(SEL_MODAL_CATE + " .modal-dialog").classList.add(clase);
+       
     }
 
     window.AthenasNet.Mant = {

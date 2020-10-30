@@ -98,8 +98,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var configuraTamModal = function configuraTamModal(clase) {
-    //#modal-mantenedor .modal-dialog
-    $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase); //document.querySelector(SEL_MODAL_CATE + " .modal-dialog").classList.add(clase);
+    $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
   };
 
   window.AthenasNet.Mant = {
