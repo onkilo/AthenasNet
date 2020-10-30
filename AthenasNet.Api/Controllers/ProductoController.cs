@@ -24,13 +24,13 @@ namespace AthenasNet.Api.Controllers
 
         // GET: api/Producto
         [CustomExceptionFilter]
-        public GenericResponse<IEnumerable<ProductoDto>> Get(int pagina = 1, int registros = 10, string descripcion = "")
+        public GenericResponse<IEnumerable<ProductoDto>> Get(int pagina = 1, int registros = 10, string Descripcion = "")
         {
             GenericResponse<IEnumerable<ProductoDto>> response = new GenericResponse<IEnumerable<ProductoDto>>();
 
             try
             {
-                IEnumerable<ProductoDto> data = servicio.Listar(descripcion);
+                IEnumerable<ProductoDto> data = servicio.Listar(Descripcion);
                 response = ResponseUtil.GetListaPaginada<ProductoDto>(data, pagina, registros);
             }
             catch (Exception ex)

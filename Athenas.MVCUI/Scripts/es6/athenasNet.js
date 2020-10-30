@@ -103,6 +103,23 @@
     };
 })()
 
+Handlebars.registerHelper('isId', (key) => {
+    return key === 'Id' || key === 'id';
+});
+
+Handlebars.registerHelper('formatoCodigo', (id, iniFormato, cantNum) => {
+    let formato = iniFormato;
+    debugger
+    const cantCeros = cantNum - id.toString().length;
+
+    for (let i = 0; i < cantCeros; i++) {
+        formato += '0';
+    }
+
+    formato += id.toString();
+
+    return formato;
+});
 
 window.addEventListener('load', () => {
 

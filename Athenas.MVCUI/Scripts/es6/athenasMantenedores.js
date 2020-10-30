@@ -37,10 +37,12 @@
 
     const setFormEleValue = (ele, value) => { getFormMantElements()[ele].value = value; }
 
-    const setFormMantenedor = (entidad) => {
+    const setFormMantenedor = (entidad, arrExcepciones = []) => {
         const elementos = Object.keys(entidad);
 
         elementos.forEach(ele => {
+            if (arrExcepciones.includes(ele)) return; 
+
             setFormEleValue(ele, entidad[ele]);
         })
 
@@ -91,6 +93,12 @@
 
     }
 
+    const configuraTamModal = (clase) => {
+        //#modal-mantenedor .modal-dialog
+        $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
+        //document.querySelector(SEL_MODAL_CATE + " .modal-dialog").classList.add(clase);
+    }
+
     window.AthenasNet.Mant = {
         getFormFiltrar,
         getFiltros,
@@ -103,6 +111,7 @@
         getEntidad,
         getFormMantenedor,
         SEL_TBL_BODY,
-        SEL_TBL_MANT
+        SEL_TBL_MANT,
+        configuraTamModal
     };
 })()

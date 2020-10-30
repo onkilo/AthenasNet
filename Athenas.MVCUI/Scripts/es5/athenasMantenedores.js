@@ -52,8 +52,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var setFormMantenedor = function setFormMantenedor(entidad) {
+    var arrExcepciones = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
     var elementos = Object.keys(entidad);
     elementos.forEach(function (ele) {
+      if (arrExcepciones.includes(ele)) return;
       setFormEleValue(ele, entidad[ele]);
     });
     $(SEL_MODAL_CATE).modal('show');
@@ -95,6 +97,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   };
 
+  var configuraTamModal = function configuraTamModal(clase) {
+    //#modal-mantenedor .modal-dialog
+    $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase); //document.querySelector(SEL_MODAL_CATE + " .modal-dialog").classList.add(clase);
+  };
+
   window.AthenasNet.Mant = {
     getFormFiltrar: getFormFiltrar,
     getFiltros: getFiltros,
@@ -107,7 +114,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getEntidad: getEntidad,
     getFormMantenedor: getFormMantenedor,
     SEL_TBL_BODY: SEL_TBL_BODY,
-    SEL_TBL_MANT: SEL_TBL_MANT
+    SEL_TBL_MANT: SEL_TBL_MANT,
+    configuraTamModal: configuraTamModal
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map
