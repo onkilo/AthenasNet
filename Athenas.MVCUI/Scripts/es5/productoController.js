@@ -358,9 +358,21 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
   }();
 
   var manejaAbreModal = function manejaAbreModal() {
-    Mant.getBtnNuevo().addEventListener('click', function () {
-      muestraCategorias();
-    });
+    Mant.getBtnNuevo().addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
+              return muestraCategorias();
+
+            case 2:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    })));
   };
 
   var iniciar = function iniciar() {
