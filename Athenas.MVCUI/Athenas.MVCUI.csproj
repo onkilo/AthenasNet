@@ -133,6 +133,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -140,6 +141,7 @@
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
+    <Compile Include="Models\PromocionViewModel.cs" />
     <Compile Include="Models\ProveedorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -194,6 +196,10 @@
     <Content Include="Scripts\es6\producto\productoController.js" />
     <Content Include="Scripts\es6\producto\productoService.js" />
     <Content Include="Scripts\es6\producto\productoUI.js" />
+    <Content Include="Scripts\es6\promocion\promocion.js" />
+    <Content Include="Scripts\es6\promocion\promocionController.js" />
+    <Content Include="Scripts\es6\promocion\promocionService.js" />
+    <Content Include="Scripts\es6\promocion\promocionUI.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -349,6 +355,7 @@
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Shared\_Toast.cshtml" />
     <Content Include="Views\Shared\_ModalConfirmacion.cshtml" />
+    <Content Include="Views\Promocion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
