@@ -129,11 +129,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ocultarConfirmacion: ocultarConfirmacion,
     ID_TEMP_TBL_BODY: ID_TEMP_TBL_BODY
   };
-})();
+})(); //Handlebars helpers personalizados
+//Determina si la propiedad de un objeto es un Id
+
 
 Handlebars.registerHelper('isId', function (key) {
   return key === 'Id' || key === 'id';
-});
+}); //Formatea el código de los diferentes mantenedores
+
 Handlebars.registerHelper('formatoCodigo', function (id, iniFormato, cantNum) {
   var formato = iniFormato;
   debugger;
@@ -145,7 +148,12 @@ Handlebars.registerHelper('formatoCodigo', function (id, iniFormato, cantNum) {
 
   formato += id.toString();
   return formato;
-});
+}); //Da formato de precio a un número
+
+Handlebars.registerHelper('formatoPrecio', function (precio) {
+  return "S/. ".concat(precio.toFixed(2));
+}); //Fin de los helpers
+
 window.addEventListener('load', function () {
   $.extend(true, $.fn.dataTable.defaults, {
     "searching": false,

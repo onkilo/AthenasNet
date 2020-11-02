@@ -103,10 +103,13 @@
     };
 })()
 
+//Handlebars helpers personalizados
+//Determina si la propiedad de un objeto es un Id
 Handlebars.registerHelper('isId', (key) => {
     return key === 'Id' || key === 'id';
 });
 
+//Formatea el código de los diferentes mantenedores
 Handlebars.registerHelper('formatoCodigo', (id, iniFormato, cantNum) => {
     let formato = iniFormato;
     debugger
@@ -120,6 +123,14 @@ Handlebars.registerHelper('formatoCodigo', (id, iniFormato, cantNum) => {
 
     return formato;
 });
+
+//Da formato de precio a un número
+Handlebars.registerHelper('formatoPrecio', ( precio) => {
+    return `S/. ${precio.toFixed(2)}`;
+})
+
+
+//Fin de los helpers
 
 window.addEventListener('load', () => {
 
