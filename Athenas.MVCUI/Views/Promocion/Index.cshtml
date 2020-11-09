@@ -1,0 +1,96 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+@section cardTitulo {
+    Promociones Registradas
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="Producto" id="Producto" class="form-control" placeholder="Ingrese la descripcion del producto">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Producto</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+@section mantenedorTitulo {
+    Datos del producto
+}
+
+@section modalMantenedorCuerpo {
+    <input type="hidden" name="Id" id="Id" value="0" />
+    <input type="hidden" name="accion" id="accion" value="registrar" />
+
+    <div class="form-group">
+        <label for="Producto">Producto</label>
+        <select name="Producto" id="Producto" class="form-control">
+            
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Tipo">Tipo de descuento</label>
+        <select name="Tipo" id="Tipo" class="form-control" >
+            <option value="0">Fijo</option>
+            <option value="1">Porcentual</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Valor">Valor</label>
+        <input type="number" class="form-control" name="Valor" id="Valor" required min="0.1" step=".1" max="80">
+        <div class="invalid-feedback">Por favor ingrese un valor para el descuento de la promoción, el valor máximo es 80 para cualquiera de los tipos</div>
+    </div>
+    <div class="form-group">
+        <label for="FechaInicio">Fecha de inicio</label>
+        <input type="date" class="form-control" name="FechaInicio" id="FechaInicio"  required>
+        <div class="invalid-feedback">Por favor ingrese una fecha de inicio</div>
+    </div>
+    <div class="form-group">
+        <label for="FechaFin">Fecha final</label>
+        <input type="date" class="form-control" name="FechaFin" id="FechaFin" required>
+        <div class="invalid-feedback">Por favor ingrese una fecha final</div>
+    </div>
+
+}
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/productoService.js")
+    @Scripts.Render("~/Scripts/es5/promocionService.js")
+    @Scripts.Render("~/Scripts/es5/promocionUI.js")
+    @Scripts.Render("~/Scripts/es5/promocionController.js")
+    @Scripts.Render("~/Scripts/es5/promocion.js")
+}
+
+<script id="temp-lst-productos" type="text/template">
+    <option value="0">Seleccione</option>
+    {{#each filas}}
+    {{#if selected}}
+    <option value="{{Id}}" selected>{{Descripcion}} - {{PrecioVenta}}</option>
+    {{else}}
+    <option value="{{Id}}">{{Descripcion}} - {{formatoPrecio PrecioVenta}}</option>
+    {{/if}}
+    {{/each}}
+</script>
+
+
