@@ -47,7 +47,7 @@ namespace Athenas.MVCUI.Controllers
 
             NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
             queryString.Add("registros", "0");
-            if (Nombre != "") queryString.Add("Descripcion", Nombre);
+            if (Nombre != "") queryString.Add("Nombre", Nombre);
 
             url += queryString.ToString();
 

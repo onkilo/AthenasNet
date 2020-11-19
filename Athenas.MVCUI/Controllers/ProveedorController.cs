@@ -44,11 +44,11 @@ namespace Athenas.MVCUI.Controllers
         public ActionResult Listar(string RzSocial = "")
         {
 
-            String url = "Categoria?";
+            String url = "Proveedor?";
             
             NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
             queryString.Add("registros", "0");
-            if (RzSocial != "") queryString.Add("Descripcion", RzSocial);
+            if (RzSocial != "") queryString.Add("RzSocial", RzSocial);
 
             url += queryString.ToString();
 

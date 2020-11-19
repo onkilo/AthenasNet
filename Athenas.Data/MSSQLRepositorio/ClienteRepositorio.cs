@@ -168,7 +168,7 @@ namespace Athenas.Data.MSSQLRepositorio
             }
         }
 
-        public IEnumerable<Cliente> Listar(string Criterio)
+        public IEnumerable<Cliente> Listar(string Nombre)
         {
             List<Cliente> clientes = new List<Cliente>();
 
@@ -181,6 +181,7 @@ namespace Athenas.Data.MSSQLRepositorio
 
                 cmd.Parameters.AddWithValue("@Opcion", "4");
                 cmd.Parameters.AddWithValue("@Id", 0);
+                cmd.Parameters.AddWithValue("@Nombre", Nombre);
                 cmd.Parameters.AddWithValue("@Activo", "1");
 
                 cn.Open();
