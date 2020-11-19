@@ -21,6 +21,10 @@ namespace Athenas.MVCUI.Models
         public string Activo { get; set; }
 
         public ProductoViewModel Producto { get; set; }
+
+        public string FFechaInicio { get => FechaInicio.ToString("yyyy-MM-dd"); }
+
+        public string FFechaFin { get => FechaFin.ToString("yyyy-MM-dd"); }
     }
 
 }

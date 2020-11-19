@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Conexion;
+using Athenas.Data.Conexion;
 using Athenas.Data.Entidades;
 using Athenas.Data.Repositorio;
 using System;
@@ -193,6 +193,7 @@ namespace Athenas.Data.MSSQLRepositorio
 
                 cmd.Parameters.AddWithValue("@Opcion", "4");
                 cmd.Parameters.AddWithValue("@Id", 0);
+                cmd.Parameters.AddWithValue("@ProductoDesc", Criterio);
                 cmd.Parameters.AddWithValue("@Activo", "1");
 
                 cn.Open();

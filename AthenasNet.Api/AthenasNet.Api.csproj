@@ -172,6 +172,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\TrabajadorController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VentaController.cs" />

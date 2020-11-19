@@ -10,13 +10,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var ProductoController = function ProductoController(service, ui, productoService) {
-  var lstPromociones = [];
-  var promSeleccionado = {};
+var UsuarioController = function UsuarioController(service, ui, rolService) {
+  var lstUsuarios = [];
+  var usuSeleccionado = {};
+  var lstRoles = {};
   var _AthenasNet = AthenasNet,
       Mant = _AthenasNet.Mant;
 
-  var muestraPromociones = /*#__PURE__*/function () {
+  var muestraUsuarios = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var filtros,
           _args = arguments;
@@ -30,8 +31,8 @@ var ProductoController = function ProductoController(service, ui, productoServic
               return service.listar(filtros);
 
             case 4:
-              lstPromociones = _context.sent;
-              ui.generarTabla(lstPromociones.map(function (p) {
+              lstUsuarios = _context.sent;
+              ui.generarTabla(lstUsuarios.map(function (p) {
                 return {
                   Id: p.Id,
                   Producto: p.Producto.Descripcion,
@@ -57,7 +58,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
       }, _callee, null, [[1, 8]]);
     }));
 
-    return function muestraPromociones() {
+    return function muestraUsuarios() {
       return _ref.apply(this, arguments);
     };
   }();
@@ -77,11 +78,11 @@ var ProductoController = function ProductoController(service, ui, productoServic
                 }
 
                 _evt$target$dataset = evt.target.dataset, id = _evt$target$dataset.id, accion = _evt$target$dataset.accion;
-                promSeleccionado = lstPromociones.find(function (c) {
+                usuSeleccionado = lstUsuarios.find(function (c) {
                   return c.Id === parseInt(id);
                 });
-                promSeleccionado.accion = accion;
-                console.log(new Date(promSeleccionado.FFechaInicio + ' 00:00:00'));
+                usuSeleccionado.accion = accion;
+                console.log(new Date(usuSeleccionado.FFechaInicio + ' 00:00:00'));
 
                 if (!(accion === 'editar')) {
                   _context2.next = 11;
@@ -92,11 +93,11 @@ var ProductoController = function ProductoController(service, ui, productoServic
                 return muestraPoductos();
 
               case 8:
-                Mant.setFormMantenedor(_objectSpread(_objectSpread({}, promSeleccionado), {}, {
-                  Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
-                  Producto: promSeleccionado.Producto.Id,
-                  FechaFin: promSeleccionado.FFechaFin,
-                  FechaInicio: promSeleccionado.FFechaInicio
+                Mant.setFormMantenedor(_objectSpread(_objectSpread({}, usuSeleccionado), {}, {
+                  Valor: parseFloat(usuSeleccionado.Valor).toFixed(2),
+                  Producto: usuSeleccionado.Producto.Id,
+                  FechaFin: usuSeleccionado.FFechaFin,
+                  FechaInicio: usuSeleccionado.FFechaInicio
                 }), ['Activo', 'FFechaInicio', 'FFechaFin']);
                 _context2.next = 12;
                 break;
@@ -181,7 +182,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
               case 17:
                 _context3.next = 19;
-                return muestraPromociones();
+                return muestraUsuarios();
 
               case 19:
                 _context3.next = 27;
@@ -224,7 +225,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
                 _context4.prev = 1;
                 _context4.next = 4;
-                return service.eliminar(parseInt(promSeleccionado.Id));
+                return service.eliminar(parseInt(usuSeleccionado.Id));
 
               case 4:
                 AthenasNet.ocultarConfirmacion();
@@ -233,7 +234,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   titulo: 'Eliminación exitosa'
                 });
                 _context4.next = 8;
-                return muestraPromociones();
+                return muestraUsuarios();
 
               case 8:
                 _context4.next = 14;
@@ -275,7 +276,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
                 filtros = ui.getFiltros();
                 _context5.next = 4;
-                return muestraPromociones(filtros);
+                return muestraUsuarios(filtros);
 
               case 4:
               case "end":
@@ -299,7 +300,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return productoService.listar({});
+              return rolService.listar({});
 
             case 2:
               lstProductos = _context6.sent;
@@ -342,7 +343,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
   var iniciar = function iniciar() {
     Mant.configuraTamModal('modal-lg');
-    muestraPromociones();
+    muestraUsuarios();
     Mant.evtMostrarModMant();
     manejaEvtTabla();
     manejaEnvioProm();
@@ -355,4 +356,4 @@ var ProductoController = function ProductoController(service, ui, productoServic
     iniciar: iniciar
   };
 };
-//# sourceMappingURL=promocionController.js.map
+//# sourceMappingURL=usuarioController.js.map

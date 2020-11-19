@@ -1,13 +1,14 @@
 
-const ProductoController = (service, ui, productoService) => {
-    let lstPromociones = [];
-    let promSeleccionado = {};
+const UsuarioController = (service, ui, rolService) => {
+    let lstUsuarios = [];
+    let usuSeleccionado = {};
+    let lstRoles = {};
     const { Mant } = AthenasNet;
 
-    const muestraPromociones = async (filtros = {}) => {
+    const muestraUsuarios = async (filtros = {}) => {
         try {
-            lstPromociones = await service.listar(filtros);
-            ui.generarTabla(lstPromociones.map(p => ({
+            lstUsuarios = await service.listar(filtros);
+            ui.generarTabla(lstUsuarios.map(p => ({
                 Id: p.Id,
                 Producto: p.Producto.Descripcion,
                 Tipo: (p.Tipo === 0) ? 'Fijo' : 'Porcentual',
@@ -27,18 +28,18 @@ const ProductoController = (service, ui, productoService) => {
             if (evt.target.dataset.id) {
                 const { id, accion } = evt.target.dataset;
 
-                promSeleccionado = lstPromociones.find(c => c.Id === parseInt(id));
-                promSeleccionado.accion = accion;
-                console.log(new Date(promSeleccionado.FFechaInicio + ' 00:00:00' ))
+                usuSeleccionado = lstUsuarios.find(c => c.Id === parseInt(id));
+                usuSeleccionado.accion = accion;
+                console.log(new Date(usuSeleccionado.FFechaInicio + ' 00:00:00'))
                 if (accion === 'editar') {
                     await muestraPoductos();
                     Mant.setFormMantenedor(
                         {
-                            ...promSeleccionado,
-                            Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
-                            Producto: promSeleccionado.Producto.Id,
-                            FechaFin: promSeleccionado.FFechaFin,
-                            FechaInicio: promSeleccionado.FFechaInicio
+                            ...usuSeleccionado,
+                            Valor: parseFloat(usuSeleccionado.Valor).toFixed(2),
+                            Producto: usuSeleccionado.Producto.Id,
+                            FechaFin: usuSeleccionado.FFechaFin,
+                            FechaInicio: usuSeleccionado.FFechaInicio
                         }, ['Activo', 'FFechaInicio', 'FFechaFin']);
                 }
                 else if (accion === 'eliminar') {
@@ -83,7 +84,7 @@ const ProductoController = (service, ui, productoService) => {
                     Mant.cerrarModMant();
                     AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
                 }
-                await muestraPromociones();
+                await muestraUsuarios();
             }
             catch (err) {
                 console.error(err);
@@ -101,10 +102,10 @@ const ProductoController = (service, ui, productoService) => {
         AthenasNet.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             try {
-                await service.eliminar(parseInt(promSeleccionado.Id));
+                await service.eliminar(parseInt(usuSeleccionado.Id));
                 AthenasNet.ocultarConfirmacion();
                 AthenasNet.muestraToast({ mensaje: 'La promoción fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
-                await muestraPromociones();
+                await muestraUsuarios();
             }
             catch (err) {
                 console.error(err);
@@ -118,13 +119,13 @@ const ProductoController = (service, ui, productoService) => {
         Mant.getFormFiltrar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             const filtros = ui.getFiltros();
-            await muestraPromociones(filtros);
+            await muestraUsuarios(filtros);
         })
     }
 
 
     const muestraPoductos = async () => {
-        const lstProductos = await productoService.listar({});
+        const lstProductos = await rolService.listar({});
         const tempCatData = {
             filas: lstProductos
         }
@@ -140,7 +141,7 @@ const ProductoController = (service, ui, productoService) => {
 
     const iniciar = () => {
         Mant.configuraTamModal('modal-lg');
-        muestraPromociones();
+        muestraUsuarios();
         Mant.evtMostrarModMant();
         manejaEvtTabla();
         manejaEnvioProm();
