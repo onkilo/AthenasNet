@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ClienteHttp\ApiRequests.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PromocionController.cs" />
@@ -139,6 +140,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoriaViewModel.cs" />
+    <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Models\PromocionViewModel.cs" />
@@ -186,12 +188,38 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatable\datatables.min.js" />
+    <Content Include="Scripts\es5\athenasMantenedores.js" />
+    <Content Include="Scripts\es5\athenasNet.js" />
+    <Content Include="Scripts\es5\categoria.js" />
+    <Content Include="Scripts\es5\categoriaController.js" />
+    <Content Include="Scripts\es5\categoriaService.js" />
+    <Content Include="Scripts\es5\categoriaUI.js" />
+    <Content Include="Scripts\es5\cliente.js" />
+    <Content Include="Scripts\es5\clienteController.js" />
+    <Content Include="Scripts\es5\clienteService.js" />
+    <Content Include="Scripts\es5\clienteUI.js" />
+    <Content Include="Scripts\es5\producto.js" />
+    <Content Include="Scripts\es5\productoController.js" />
+    <Content Include="Scripts\es5\productoService.js" />
+    <Content Include="Scripts\es5\productoUI.js" />
+    <Content Include="Scripts\es5\promocion.js" />
+    <Content Include="Scripts\es5\promocionController.js" />
+    <Content Include="Scripts\es5\promocionService.js" />
+    <Content Include="Scripts\es5\promocionUI.js" />
+    <Content Include="Scripts\es5\proveedor.js" />
+    <Content Include="Scripts\es5\proveedorController.js" />
+    <Content Include="Scripts\es5\proveedorService.js" />
+    <Content Include="Scripts\es5\proveedorUI.js" />
     <Content Include="Scripts\es6\athenasMantenedores.js" />
     <Content Include="Scripts\es6\athenasNet.js" />
     <Content Include="Scripts\es6\categoria\categoria.js" />
     <Content Include="Scripts\es6\categoria\categoriaController.js" />
     <Content Include="Scripts\es6\categoria\categoriaService.js" />
     <Content Include="Scripts\es6\categoria\categoriaUI.js" />
+    <Content Include="Scripts\es6\cliente\cliente.js" />
+    <Content Include="Scripts\es6\cliente\clienteController.js" />
+    <Content Include="Scripts\es6\cliente\clienteService.js" />
+    <Content Include="Scripts\es6\cliente\clienteUI.js" />
     <Content Include="Scripts\es6\producto\producto.js" />
     <Content Include="Scripts\es6\producto\productoController.js" />
     <Content Include="Scripts\es6\producto\productoService.js" />
@@ -200,6 +228,10 @@
     <Content Include="Scripts\es6\promocion\promocionController.js" />
     <Content Include="Scripts\es6\promocion\promocionService.js" />
     <Content Include="Scripts\es6\promocion\promocionUI.js" />
+    <Content Include="Scripts\es6\proveedor\proveedor.js" />
+    <Content Include="Scripts\es6\proveedor\proveedorController.js" />
+    <Content Include="Scripts\es6\proveedor\proveedorService.js" />
+    <Content Include="Scripts\es6\proveedor\proveedorUI.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -236,6 +268,29 @@
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.woff2" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\es5\athenasMantenedores.js.map" />
+    <Content Include="Scripts\es5\athenasNet.js.map" />
+    <Content Include="Scripts\es5\categoria.js.map" />
+    <Content Include="Scripts\es5\categoriaController.js.map" />
+    <Content Include="Scripts\es5\categoriaService.js.map" />
+    <Content Include="Scripts\es5\categoriaUI.js.map" />
+    <Content Include="Scripts\es5\producto.js.map" />
+    <Content Include="Scripts\es5\productoController.js.map" />
+    <Content Include="Scripts\es5\productoService.js.map" />
+    <Content Include="Scripts\es5\productoUI.js.map" />
+    <Content Include="Scripts\es5\promocion.js.map" />
+    <Content Include="Scripts\es5\promocionController.js.map" />
+    <Content Include="Scripts\es5\promocionService.js.map" />
+    <Content Include="Scripts\es5\promocionUI.js.map" />
+    <Content Include="Scripts\es5\proveedor.js.map" />
+    <Content Include="Scripts\es5\proveedorController.js.map" />
+    <Content Include="Scripts\es5\proveedorService.js.map" />
+    <Content Include="Scripts\es5\proveedorUI.js.map" />
+    <Content Include="Scripts\es5\cliente.js.map" />
+    <Content Include="Scripts\es5\clienteController.js.map" />
+    <Content Include="Scripts\es5\clienteService.js.map" />
+    <Content Include="Scripts\es5\clienteUI.js.map" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -356,11 +411,11 @@
     <Content Include="Views\Shared\_Toast.cshtml" />
     <Content Include="Views\Shared\_ModalConfirmacion.cshtml" />
     <Content Include="Views\Promocion\Index.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Cliente\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\es5\" />
-    <Folder Include="Views\Proveedor\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
