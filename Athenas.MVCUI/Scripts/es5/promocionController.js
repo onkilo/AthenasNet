@@ -37,8 +37,8 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   Producto: p.Producto.Descripcion,
                   Tipo: p.Tipo === 0 ? 'Fijo' : 'Porcentual',
                   Valor: p.Tipo === 0 ? "S/. ".concat(p.Valor.toFixed(2)) : "% ".concat(p.Valor.toFixed(2)),
-                  FechaInicio: p.FechaFin,
-                  FechaFin: p.FechaFin
+                  FechaInicio: AthenasNet.formatFecha(p.FFechaInicio),
+                  FechaFin: AthenasNet.formatFecha(p.FFechaFin)
                 };
               }));
               _context.next = 11;
@@ -92,8 +92,10 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
               case 7:
                 Mant.setFormMantenedor(_objectSpread(_objectSpread({}, promSeleccionado), {}, {
-                  Producto: promSeleccionado.Producto.Id
-                }), ['Activo']);
+                  Producto: promSeleccionado.Producto.Id,
+                  FechaFin: promSeleccionado.FFechaFin,
+                  FechaInicio: promSeleccionado.FFechaInicio
+                }), ['Activo', 'FFechaInicio', 'FFechaFin']);
                 _context2.next = 11;
                 break;
 

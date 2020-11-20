@@ -35,8 +35,8 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
                 return {
                   Id: p.Id,
                   Descripcion: p.Descripcion,
-                  PrecioCompra: p.PrecioCompra,
-                  PrecioVenta: p.PrecioVenta,
+                  PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
+                  PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
                   StockActual: p.StockActual,
                   StockMin: p.StockMin,
                   Categoria: p.Categoria.Descripcion

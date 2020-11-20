@@ -91,6 +91,18 @@
         $(SEL_MODAL_CONF).modal('hide');
     }
 
+    const formatFecha = (fecha) => {
+
+        const arrElementos = fecha.split('-');
+        const newFecha = arrElementos.reverse().join('/');
+        return newFecha;
+    }
+
+    const formatPrecio = (precio) => {
+        return `S/. ${precio.toFixed(2)}`;
+    }
+
+
     window.AthenasNet = {
         llamadaApi,
         manejaSpinner,
@@ -99,7 +111,9 @@
         getFormConfirmar,
         mostrarConfirmacion,
         ocultarConfirmacion,
-        ID_TEMP_TBL_BODY
+        ID_TEMP_TBL_BODY,
+        formatFecha,
+        formatPrecio
     };
 })()
 
