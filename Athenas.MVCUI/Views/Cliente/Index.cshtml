@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+@section cardTitulo {
+    Clientes Registrados
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Ingrese el nombre del cliente">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Telefono</th>
+        <th>DNI</th>
+        <th>Sexo</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+@section mantenedorTitulo {
+    Datos del Cliente
+}
+
+@section modalMantenedorCuerpo {
+    <input type="hidden" name="Id" id="Id" value="0" />
+    <input type="hidden" name="accion" id="accion" value="registrar" />
+    <div class="form-group">
+        <label for="txt-nombre">Nombre</label>
+        <input type="text" class="form-control" name="Nombre" id="txt-nombre" required>
+        <div class="invalid-feedback">Por favor ingrese un nombre</div>
+    </div>
+    <div class="form-group">
+        <label>Apellido</label>
+        <input type="text" class="form-control" name="Apellido" id="txt-apellido" required>
+        <div class="invalid-feedback">Por favor ingrese un apellido</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-telefono">Teléfono</label>
+        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9">
+        <div class="invalid-feedback">Por favor ingrese un número de teléfono entre 7 y 9 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-dni">DNI</label>
+        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8">
+        <div class="invalid-feedback">Por favor ingrese un número de dni, debe tener 8 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="cbo-sexo">Sexo</label>
+        <select name="Sexo" class="form-control" id="cbo-sexo">
+            <option value="M" selected="selected">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+
+    </div>
+
+}
+
+
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/clienteService.js")
+    @Scripts.Render("~/Scripts/es5/clienteUI.js")
+    @Scripts.Render("~/Scripts/es5/clienteController.js")
+    @Scripts.Render("~/Scripts/es5/cliente.js")
+}

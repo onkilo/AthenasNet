@@ -1,27 +1,26 @@
-using Athenas.MVCUI.ClienteHttp;
+﻿using Athenas.MVCUI.ClienteHttp;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Athenas.MVCUI.Controllers
 {
-    public class CategoriaController : Controller
+    public class ClienteController : Controller
     {
         GenericResponseModel<String> errorResponse;
 
         // GET: Categoria
         public ActionResult Index()
         {
-            ViewBag.Title = "Categoría";
+            ViewBag.Title = "Cliente";
             return View();
         }
 
-  
+
 
         // POST: Categoria/Delete/5
         [HttpPost]
@@ -39,21 +38,21 @@ namespace Athenas.MVCUI.Controllers
             }
         }
 
-        
+
         [HttpGet]
-        public ActionResult Listar(string Descripcion = "")
+        public ActionResult Listar(string Nombre = "")
         {
 
-            String url = "Categoria?";
+            String url = "Cliente?";
 
             NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
-            queryString.Add("registros","0");
-            if(Descripcion != "") queryString.Add("Descripcion", Descripcion);
+            queryString.Add("registros", "0");
+            if (Nombre != "") queryString.Add("Nombre", Nombre);
 
             url += queryString.ToString();
 
-            GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+            GenericResponseModel<IEnumerable<ClienteViewModel>> responseModel = ApiRequests
+                .Get<GenericResponseModel<IEnumerable<ClienteViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -70,30 +69,10 @@ namespace Athenas.MVCUI.Controllers
         public ActionResult Obtener(int Id)
         {
 
-            String url = $"Categoria/{Id}";
+            String url = $"Cliente/{Id}";
 
-            GenericResponseModel<CategoriaViewModel> responseModel = ApiRequests
-                .Get<GenericResponseModel<CategoriaViewModel>, GenericResponseModel<String>>(url, out errorResponse);
-
-            if (errorResponse == null)
-            {
-                return Json(responseModel, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(errorResponse, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-
-        [HttpPost]
-        public ActionResult Crear(CategoriaViewModel categoria)
-        {
-
-            String url = "Categoria";
-
-            GenericResponseModel<String> responseModel = ApiRequests
-                .Post<GenericResponseModel<String>,CategoriaViewModel, GenericResponseModel<String>>(url,categoria, out errorResponse);
+            GenericResponseModel<ClienteViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<ClienteViewModel>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -107,13 +86,33 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Actualizar(CategoriaViewModel categoria)
+        public ActionResult Crear(ClienteViewModel cliente)
         {
 
-            String url = $"Categoria/{categoria.Id}";
+            String url = "Cliente";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Put<GenericResponseModel<String>, CategoriaViewModel, GenericResponseModel<String>>(url, categoria, out errorResponse);
+                .Post<GenericResponseModel<String>, ClienteViewModel, GenericResponseModel<String>>(url, cliente, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Actualizar(ClienteViewModel cliente)
+        {
+
+            String url = $"Cliente/{cliente.Id}";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Put<GenericResponseModel<String>, ClienteViewModel, GenericResponseModel<String>>(url, cliente, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -130,7 +129,7 @@ namespace Athenas.MVCUI.Controllers
         public ActionResult Eliminar(int Id)
         {
 
-            String url = $"Categoria/{Id}";
+            String url = $"Cliente/{Id}";
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);

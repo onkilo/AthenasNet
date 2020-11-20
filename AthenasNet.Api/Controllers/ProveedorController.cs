@@ -19,13 +19,13 @@ namespace AthenasNet.Api.Controllers
         private readonly ProveedorServicio servicio = new ProveedorServicio();
 
         // GET: api/Proveedor
-        public GenericResponse<IEnumerable<ProveedorDto>> Get(int pagina = 1, int registros = 10, string rzSocial = "")
+        public GenericResponse<IEnumerable<ProveedorDto>> Get(int pagina = 1, int registros = 10, string RzSocial = "")
         {
              GenericResponse<IEnumerable<ProveedorDto>> response = new GenericResponse<IEnumerable<ProveedorDto>>();
 
             try
             {
-                IEnumerable<ProveedorDto> data = servicio.Listar(rzSocial);
+                IEnumerable<ProveedorDto> data = servicio.Listar(RzSocial);
                 response = ResponseUtil.GetListaPaginada<ProveedorDto>(data, pagina, registros);
             }
             catch(Exception ex)

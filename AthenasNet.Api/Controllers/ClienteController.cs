@@ -20,13 +20,13 @@ namespace AthenasNet.Api.Controllers
 
         
         // GET: api/Cliente
-        public GenericResponse<IEnumerable<ClienteDto>> Get(int pagina = 1, int registros = 10, string nombre = "")
+        public GenericResponse<IEnumerable<ClienteDto>> Get(int pagina = 1, int registros = 10, string Nombre = "")
         {
             GenericResponse<IEnumerable<ClienteDto>> response = new GenericResponse<IEnumerable<ClienteDto>>();
 
             try
             {
-                IEnumerable<ClienteDto> data = servicio.Listar(nombre);
+                IEnumerable<ClienteDto> data = servicio.Listar(Nombre);
                 response = ResponseUtil.GetListaPaginada<ClienteDto>(data, pagina, registros);
             }
             catch (Exception ex)

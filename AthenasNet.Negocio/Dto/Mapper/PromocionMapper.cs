@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Entidades;
+using Athenas.Data.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
             PromocionDto dto = new PromocionDto
             {
                 Id = promocion.Id,
-                FechaFin = promocion.FechaInicio,
+                FechaFin = promocion.FechaFin,
                 FechaInicio = promocion.FechaInicio,
                 Tipo = promocion.Tipo,
                 Valor = promocion.Valor,
@@ -34,7 +34,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
             Promocion promocion = new Promocion
             {
                 Id = dto.Id,
-                FechaFin = dto.FechaInicio,
+                FechaFin = dto.FechaFin,
                 FechaInicio = dto.FechaInicio,
                 Tipo = dto.Tipo,
                 Valor = dto.Valor,

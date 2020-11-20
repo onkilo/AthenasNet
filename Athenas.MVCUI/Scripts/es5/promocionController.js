@@ -37,8 +37,8 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   Producto: p.Producto.Descripcion,
                   Tipo: p.Tipo === 0 ? 'Fijo' : 'Porcentual',
                   Valor: p.Tipo === 0 ? "S/. ".concat(p.Valor.toFixed(2)) : "% ".concat(p.Valor.toFixed(2)),
-                  FechaInicio: formatFecha(p.FFechaInicio),
-                  FechaFin: formatFecha(p.FFechaFin)
+                  FechaInicio: AthenasNet.formatFecha(p.FFechaInicio),
+                  FechaFin: AthenasNet.formatFecha(p.FFechaFin)
                 };
               }));
               _context.next = 11;

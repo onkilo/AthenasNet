@@ -10,8 +10,8 @@ const ProductoController = (service, ui, categoriaService) => {
             ui.generarTabla(lstProductos.map(p => ({
                 Id: p.Id,
                 Descripcion: p.Descripcion,
-                PrecioCompra: p.PrecioCompra,
-                PrecioVenta: p.PrecioVenta,
+                PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
+                PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
                 StockActual: p.StockActual,
                 StockMin: p.StockMin,
                 Categoria: p.Categoria.Descripcion

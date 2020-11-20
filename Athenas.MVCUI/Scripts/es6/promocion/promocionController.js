@@ -12,14 +12,15 @@ const ProductoController = (service, ui, productoService) => {
                 Producto: p.Producto.Descripcion,
                 Tipo: (p.Tipo === 0) ? 'Fijo' : 'Porcentual',
                 Valor: (p.Tipo === 0) ? `S/. ${p.Valor.toFixed(2)}` : `% ${p.Valor.toFixed(2)}`,
-                FechaInicio: formatFecha(p.FFechaInicio),
-                FechaFin: formatFecha(p.FFechaFin)
+                FechaInicio: AthenasNet.formatFecha(p.FFechaInicio),
+                FechaFin: AthenasNet.formatFecha(p.FFechaFin)
             })));
         }
         catch (err) {
             console.error(err);
         }
     }
+
 
     const manejaEvtTabla = () => {
         Mant.getTblMantenedor().addEventListener('click', async (evt) => {
@@ -29,7 +30,7 @@ const ProductoController = (service, ui, productoService) => {
 
                 promSeleccionado = lstPromociones.find(c => c.Id === parseInt(id));
                 promSeleccionado.accion = accion;
-                console.log(new Date(promSeleccionado.FFechaInicio + ' 00:00:00' ))
+
                 if (accion === 'editar') {
                     await muestraPoductos();
                     Mant.setFormMantenedor(
@@ -49,14 +50,6 @@ const ProductoController = (service, ui, productoService) => {
 
 
         });
-    }
-
-    const formatFecha = (fecha) => {
-
-        //yyyy-MM-dd
-        const arrElementos = fecha.split('-');
-        const nuevaFecha = arrElementos.reverse().join('/');
-        return nuevaFecha;
     }
 
     const manejaEnvioProm = () => {

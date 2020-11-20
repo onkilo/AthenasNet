@@ -119,6 +119,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     $(SEL_MODAL_CONF).modal('hide');
   };
 
+  var formatFecha = function formatFecha(fecha) {
+    var arrElementos = fecha.split('-');
+    var newFecha = arrElementos.reverse().join('/');
+    return newFecha;
+  };
+
+  var formatPrecio = function formatPrecio(precio) {
+    return "S/. ".concat(precio.toFixed(2));
+  };
+
   window.AthenasNet = {
     llamadaApi: llamadaApi,
     manejaSpinner: manejaSpinner,
@@ -127,7 +137,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getFormConfirmar: getFormConfirmar,
     mostrarConfirmacion: mostrarConfirmacion,
     ocultarConfirmacion: ocultarConfirmacion,
-    ID_TEMP_TBL_BODY: ID_TEMP_TBL_BODY
+    ID_TEMP_TBL_BODY: ID_TEMP_TBL_BODY,
+    formatFecha: formatFecha,
+    formatPrecio: formatPrecio
   };
 })(); //Handlebars helpers personalizados
 //Determina si la propiedad de un objeto es un Id

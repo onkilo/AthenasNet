@@ -2,6 +2,7 @@
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -12,87 +13,17 @@ namespace Athenas.MVCUI.Controllers
     public class ProveedorController : Controller
     {
         GenericResponseModel<String> errorResponse;
-        // GET: Proveedor
+
+        // GET: Categoria
         public ActionResult Index()
         {
-            String url = "Proveedor";
-
-            url += "/2014";
-
-            //GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-            //    .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
-
-            GenericResponseModel<String> responseModel = ApiRequests
-                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
-
-            if (errorResponse == null)
-            {
-                Debug.Write(responseModel.Mensaje);
-            }
-            else
-            {
-                Debug.Write(errorResponse);
-            }
+            ViewBag.Title = "Proveedor";
             return View();
         }
 
-        // GET: Proveedor/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: Proveedor/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Proveedor/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Proveedor/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Proveedor/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Proveedor/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Proveedor/Delete/5
+        // POST: Categoria/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -107,13 +38,19 @@ namespace Athenas.MVCUI.Controllers
                 return View();
             }
         }
+
+
         [HttpGet]
         public ActionResult Listar(string RzSocial = "")
         {
 
-            String url = "Proveedor";
+            String url = "Proveedor?";
+            
+            NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
+            queryString.Add("registros", "0");
+            if (RzSocial != "") queryString.Add("RzSocial", RzSocial);
 
-            url += "?registros=0";
+            url += queryString.ToString();
 
             GenericResponseModel<IEnumerable<ProveedorViewModel>> responseModel = ApiRequests
                 .Get<GenericResponseModel<IEnumerable<ProveedorViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
@@ -177,6 +114,26 @@ namespace Athenas.MVCUI.Controllers
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Put<GenericResponseModel<String>, ProveedorViewModel, GenericResponseModel<String>>(url, proveedor, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult Eliminar(int Id)
+        {
+
+            String url = $"Proveedor/{Id}";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Delete<GenericResponseModel<String>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
