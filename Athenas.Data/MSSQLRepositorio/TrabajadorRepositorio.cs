@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Conexion;
+using Athenas.Data.Conexion;
 using Athenas.Data.Entidades;
 using Athenas.Data.Repositorio;
 using System;
@@ -239,7 +239,7 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = USP_MNT_TRABAJADOR;
 
-                cmd.Parameters.AddWithValue("@Opcion", "1");
+                cmd.Parameters.AddWithValue("@Opcion", "3");
                 cmd.Parameters.AddWithValue("@Id", Id);
 
                 cn.Open();

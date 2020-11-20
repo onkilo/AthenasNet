@@ -75,7 +75,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var elementosFormulario = getFormMantElements();
     var entidad = {};
     arrEle.forEach(function (ele) {
-      entidad = _objectSpread(_objectSpread({}, entidad), {}, _defineProperty({}, ele, elementosFormulario[ele].value));
+      if (elementosFormulario[ele].selectedOptions) {
+        console.dir(Array.from(elementosFormulario[ele].selectedOptions).map(function (s) {
+          return s.value;
+        }));
+      }
+
+      entidad = _objectSpread(_objectSpread({}, entidad), {}, _defineProperty({}, ele, elementosFormulario[ele].multiple ? Array.from(elementosFormulario[ele].selectedOptions).map(function (s) {
+        return s.value;
+      }) : elementosFormulario[ele].value));
     });
     return entidad;
   };
@@ -98,7 +106,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var configuraTamModal = function configuraTamModal(clase) {
-    $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
+    var modal = $(SEL_MODAL_CATE + " .modal-dialog");
+    modal.addClass(clase);
   };
 
   window.AthenasNet.Mant = {

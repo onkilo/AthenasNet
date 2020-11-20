@@ -29,6 +29,7 @@
         <th>DNI</th>
         <th>Sexo</th>
         <th>Teléfono</th>
+        <th>Roles</th>
         <th>Opciones</th>
     </tr>
 }
@@ -38,6 +39,78 @@
 }
 
 @section modalMantenedorCuerpo {
-
+    <input type="hidden" name="Id" id="Id" value="0" />
+    <input type="hidden" name="accion" id="accion" value="registrar" />
+    <div class="form-group">
+        <label for="txt-nombre">Nombre</label>
+        <input type="text" class="form-control" name="Nombre" id="txt-nombre" required>
+        <div class="invalid-feedback">Por favor ingrese el nombre del usuario</div>
+    </div>
+    <div class="form-group">
+        <label>Apellido</label>
+        <input type="text" class="form-control" name="Apellido" id="txt-apellido" required>
+        <div class="invalid-feedback">Por favor ingrese el apellido del usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-telefono">Teléfono</label>
+        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9">
+        <div class="invalid-feedback">Por favor ingrese número de teléfono para el usuario, debe ser tener entre 7 y 9 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-direccion">Dirección</label>
+        <input type="text" class="form-control" name="Direccion" id="txt-direccion" th:field="*{direccion}" required>
+        <div class="invalid-feedback">Por favor ingrese una dirección para el usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-email">Email</label>
+        <input type="email" class="form-control" name="Email" id="txt-email" th:field="*{email}" required>
+        <div class="invalid-feedback">Por favor ingrese email válido </div>
+    </div>
+    <div class="form-group">
+        <label for="txt-userName">Usuario</label>
+        <input type="text" class="form-control" name="Usuario" id="txt-userName" required>
+        <div class="invalid-feedback">Por favor ingrese un nombre de usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-userPass">Contraseña</label>
+        <input type="password" class="form-control" name="Contrasenia" id="txt-userPass">
+        <div class="invalid-feedback">Por favor ingrese una contraseña para el usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-dni">DNI</label>
+        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8">
+        <div class="invalid-feedback">Por favor ingrese un número de DNI para el usuario, debe tener 8 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="cbo-sexo">Sexo</label>
+        <select name="Sexo" class="form-control" id="cbo-sexo">
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cbo-roles">Roles</label>
+        <select name="Roles" class="form-control select2 select2-danger" id="cbo-roles" multiple="multiple" required>
+            <option value="0">Seleccione</option>
+        </select>
+        <div class="invalid-feedback">Por favor seleccion un rol para el usuario</div>
+    </div>
 
 }
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/usuarioUI.js")
+    @Scripts.Render("~/Scripts/es5/usuarioController.js")
+    @Scripts.Render("~/Scripts/es5/usuario.js")
+}
+
+<script id="temp-lst-roles" type="text/template">
+    <option value="0">Seleccione</option>
+    {{#each filas}}
+    {{#if selected}}
+    <option value="{{Id}}" selected="selected">{{Nombre}}</option>
+    {{else}}
+    <option value="{{Id}}" >{{Nombre}}</option>
+    {{/if}}
+    {{/each}}
+</script>

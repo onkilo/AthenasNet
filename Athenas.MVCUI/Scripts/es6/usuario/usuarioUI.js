@@ -1,5 +1,8 @@
 const UsuarioUI = () => {
 
+    const ID_TEMP_ROL = 'temp-lst-roles';
+    const SEL_CBO_ROL = '#cbo-roles';
+
     const getFiltros = () => {
         const arrFiltros = ['Nombre'];
 
@@ -26,14 +29,23 @@ const UsuarioUI = () => {
             'Id',
             'accion',
             'Apellido',
-            'DNI',
-            'Sexo']);
+            'Dni',
+            'Sexo',
+            'Roles',
+            'Direccion',
+            'Email',
+            'Usuario',
+            'Contrasenia',
+            'Telefono'
+        ]);
     }
 
     return {
         getFiltros,
         generarTabla,
-        getUsuario
+        getUsuario,
+        ID_TEMP_ROL,
+        SEL_CBO_ROL
     }
 }
 

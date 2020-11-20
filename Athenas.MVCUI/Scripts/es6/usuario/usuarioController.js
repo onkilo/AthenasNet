@@ -1,20 +1,21 @@
 
-const UsuarioController = (service, ui, rolService) => {
+const UsuarioController = (service, ui) => {
     let lstUsuarios = [];
     let usuSeleccionado = {};
-    let lstRoles = {};
+    //let lstRoles = {};
     const { Mant } = AthenasNet;
 
     const muestraUsuarios = async (filtros = {}) => {
         try {
             lstUsuarios = await service.listar(filtros);
-            ui.generarTabla(lstUsuarios.map(p => ({
-                Id: p.Id,
-                Producto: p.Producto.Descripcion,
-                Tipo: (p.Tipo === 0) ? 'Fijo' : 'Porcentual',
-                Valor: (p.Tipo === 0) ? `S/. ${p.Valor.toFixed(2)}` : `% ${p.Valor.toFixed(2)}`,
-                FechaInicio: formatFecha(p.FFechaInicio),
-                FechaFin: formatFecha(p.FFechaFin)
+            ui.generarTabla(lstUsuarios.map(u => ({
+                Id: u.Id,
+                Nombre: u.Nombre,
+                Apellido: u.Apellido,
+                DNI: u.Dni,
+                Sexo: u.Sexo === 'M' ? 'Masculino' : 'Femenino',
+                Telefono: u.Telefono,
+                Roles: u.Roles.map(rol => rol.Nombre).join(',')
             })));
         }
         catch (err) {
@@ -30,17 +31,13 @@ const UsuarioController = (service, ui, rolService) => {
 
                 usuSeleccionado = lstUsuarios.find(c => c.Id === parseInt(id));
                 usuSeleccionado.accion = accion;
-                console.log(new Date(usuSeleccionado.FFechaInicio + ' 00:00:00'))
+                
                 if (accion === 'editar') {
-                    await muestraPoductos();
+                    await muestraRoles();
+                    delete usuSeleccionado.Roles
                     Mant.setFormMantenedor(
-                        {
-                            ...usuSeleccionado,
-                            Valor: parseFloat(usuSeleccionado.Valor).toFixed(2),
-                            Producto: usuSeleccionado.Producto.Id,
-                            FechaFin: usuSeleccionado.FFechaFin,
-                            FechaInicio: usuSeleccionado.FFechaInicio
-                        }, ['Activo', 'FFechaInicio', 'FFechaFin']);
+                        usuSeleccionado,
+                        ['Activo', 'SexoDescripcion', 'Token']);
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
@@ -52,44 +49,37 @@ const UsuarioController = (service, ui, rolService) => {
         });
     }
 
-    const formatFecha = (fecha) => {
 
-        //yyyy-MM-dd
-        const arrElementos = fecha.split('-');
-        const nuevaFecha = arrElementos.reverse().join('/');
-        return nuevaFecha;
-    }
-
-    const manejaEnvioProm = () => {
-
+    const manejaEnvioUsu = () => {
         Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            let promocion = ui.getPromocion();
-            promocion = {
-                ...promocion,
-                Producto: {
-                    Id: parseInt(promocion.Producto)
-                }
+            let usuario = ui.getUsuario();
+            usuario = {
+                ...usuario,
+                Roles: usuario.Roles.map(r => ({ Id: parseInt(r) }))
+                //Producto: {
+                //    Id: parseInt(usuario.Producto)
+                //}
             }
-            console.log(promocion);
+            console.log(usuario);
             try {
-                if (promocion.accion === 'registrar') {
-                    await service.crear(promocion);
+                if (usuario.accion === 'registrar') {
+                    await service.crear(usuario);
                     Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    AthenasNet.muestraToast({ mensaje: 'El usuario se registró satisfactoriamente', titulo: 'Registro exitoso' })
                 }
-                else if (promocion.accion === 'editar') {
-                    await service.actualizar(promocion);
+                else if (usuario.accion === 'editar') {
+                    await service.actualizar(usuario);
                     Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    AthenasNet.muestraToast({ mensaje: 'El usuario se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
                 }
                 await muestraUsuarios();
             }
             catch (err) {
                 console.error(err);
-                const mensaje = (promocion.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (promocion.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                const mensaje = (usuario.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                const titulo = (usuario.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
                 AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
             }
 
@@ -104,7 +94,7 @@ const UsuarioController = (service, ui, rolService) => {
             try {
                 await service.eliminar(parseInt(usuSeleccionado.Id));
                 AthenasNet.ocultarConfirmacion();
-                AthenasNet.muestraToast({ mensaje: 'La promoción fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
+                AthenasNet.muestraToast({ mensaje: 'El usuario fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
                 await muestraUsuarios();
             }
             catch (err) {
@@ -124,18 +114,34 @@ const UsuarioController = (service, ui, rolService) => {
     }
 
 
-    const muestraPoductos = async () => {
-        const lstProductos = await rolService.listar({});
-        const tempCatData = {
-            filas: lstProductos
+    const muestraRoles = async () => {
+        const lstRoles = await service.roles({});
+
+        let rolesDisplay = lstRoles;
+
+        if (usuSeleccionado.Roles) {
+            rolesDisplay = lstRoles.map(r => {
+                const encontrado = usuSeleccionado.Roles.find(sel => {
+                    return sel.Id === r.Id
+                });
+
+                if (encontrado)
+                    return { ...r, selected: true }
+                else
+                    return r
+            })
         }
-        console.log(lstProductos);
-        AthenasNet.compilaTemplate(ui.ID_TEMP_PROD, tempCatData, ui.SEL_CBO_PROD);
+
+        const tempCatData = {
+            filas: rolesDisplay
+        }
+        console.log(lstRoles);
+        AthenasNet.compilaTemplate(ui.ID_TEMP_ROL, tempCatData, ui.SEL_CBO_ROL);
     }
 
     const manejaAbreModal = () => {
         Mant.getBtnNuevo().addEventListener('click', async () => {
-            await muestraPoductos();
+            await muestraRoles();
         })
     }
 
@@ -144,7 +150,7 @@ const UsuarioController = (service, ui, rolService) => {
         muestraUsuarios();
         Mant.evtMostrarModMant();
         manejaEvtTabla();
-        manejaEnvioProm();
+        manejaEnvioUsu();
         manejaEnvioConf();
         manejaEnvioFiltro();
         manejaAbreModal();

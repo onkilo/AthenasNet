@@ -66,9 +66,15 @@
         let entidad = {};
 
         arrEle.forEach(ele => {
+            if (elementosFormulario[ele].selectedOptions) {
+                console.dir(Array.from(elementosFormulario[ele].selectedOptions).map((s) => s.value));
+            }
+            
             entidad = {
                 ...entidad,
-                [ele]: elementosFormulario[ele].value
+                [ele]: (elementosFormulario[ele].multiple)
+                        ? Array.from(elementosFormulario[ele].selectedOptions).map((s) => s.value)
+                        : elementosFormulario[ele].value
             }
         })
 
@@ -94,8 +100,8 @@
     }
 
     const configuraTamModal = (clase) => {
-
-        $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
+        const modal = $(SEL_MODAL_CATE + " .modal-dialog");
+        modal.addClass(clase);
        
     }
 

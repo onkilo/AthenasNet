@@ -1,6 +1,9 @@
 "use strict";
 
 var UsuarioUI = function UsuarioUI() {
+  var ID_TEMP_ROL = 'temp-lst-roles';
+  var SEL_CBO_ROL = '#cbo-roles';
+
   var getFiltros = function getFiltros() {
     var arrFiltros = ['Nombre'];
     return AthenasNet.Mant.getFiltros(arrFiltros);
@@ -18,13 +21,15 @@ var UsuarioUI = function UsuarioUI() {
   };
 
   var getUsuario = function getUsuario() {
-    return AthenasNet.Mant.getEntidad(['Nombre', 'Id', 'accion', 'Apellido', 'DNI', 'Sexo']);
+    return AthenasNet.Mant.getEntidad(['Nombre', 'Id', 'accion', 'Apellido', 'Dni', 'Sexo', 'Roles', 'Direccion', 'Email', 'Usuario', 'Contrasenia', 'Telefono']);
   };
 
   return {
     getFiltros: getFiltros,
     generarTabla: generarTabla,
-    getUsuario: getUsuario
+    getUsuario: getUsuario,
+    ID_TEMP_ROL: ID_TEMP_ROL,
+    SEL_CBO_ROL: SEL_CBO_ROL
   };
 };
 //# sourceMappingURL=usuarioUI.js.map

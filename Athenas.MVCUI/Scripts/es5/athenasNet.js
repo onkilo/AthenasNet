@@ -151,7 +151,6 @@ Handlebars.registerHelper('isId', function (key) {
 
 Handlebars.registerHelper('formatoCodigo', function (id, iniFormato, cantNum) {
   var formato = iniFormato;
-  debugger;
   var cantCeros = cantNum - id.toString().length;
 
   for (var i = 0; i < cantCeros; i++) {

@@ -2,6 +2,7 @@
 const UsuarioService = () => {
 
     const crear = async (usuario) => {
+        debugger
         const respuesta = await AthenasNet.llamadaApi({
             type: 'POST',
             data: JSON.stringify(usuario),

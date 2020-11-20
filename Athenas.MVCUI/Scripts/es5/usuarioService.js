@@ -18,18 +18,19 @@ var UsuarioService = function UsuarioService() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              debugger;
+              _context.next = 3;
               return AthenasNet.llamadaApi({
                 type: 'POST',
                 data: JSON.stringify(usuario),
                 url: 'Usuario/Crear'
               });
 
-            case 2:
+            case 3:
               respuesta = _context.sent;
               return _context.abrupt("return", respuesta);
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }

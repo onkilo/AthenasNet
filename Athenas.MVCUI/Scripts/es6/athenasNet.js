@@ -126,7 +126,6 @@ Handlebars.registerHelper('isId', (key) => {
 //Formatea el código de los diferentes mantenedores
 Handlebars.registerHelper('formatoCodigo', (id, iniFormato, cantNum) => {
     let formato = iniFormato;
-    debugger
     const cantCeros = cantNum - id.toString().length;
 
     for (let i = 0; i < cantCeros; i++) {

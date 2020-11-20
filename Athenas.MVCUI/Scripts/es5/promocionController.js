@@ -72,7 +72,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!evt.target.dataset.id) {
-                  _context2.next = 12;
+                  _context2.next = 11;
                   break;
                 }
 
@@ -81,33 +81,32 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   return c.Id === parseInt(id);
                 });
                 promSeleccionado.accion = accion;
-                console.log(new Date(promSeleccionado.FFechaInicio + ' 00:00:00'));
 
                 if (!(accion === 'editar')) {
-                  _context2.next = 11;
+                  _context2.next = 10;
                   break;
                 }
 
-                _context2.next = 8;
+                _context2.next = 7;
                 return muestraPoductos();
 
-              case 8:
+              case 7:
                 Mant.setFormMantenedor(_objectSpread(_objectSpread({}, promSeleccionado), {}, {
                   Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
                   Producto: promSeleccionado.Producto.Id,
                   FechaFin: promSeleccionado.FFechaFin,
                   FechaInicio: promSeleccionado.FFechaInicio
                 }), ['Activo', 'FFechaInicio', 'FFechaFin']);
-                _context2.next = 12;
+                _context2.next = 11;
                 break;
 
-              case 11:
+              case 10:
                 if (accion === 'eliminar') {
                   console.log('eliminar');
                   AthenasNet.mostrarConfirmacion();
                 }
 
-              case 12:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -119,13 +118,6 @@ var ProductoController = function ProductoController(service, ui, productoServic
         return _ref2.apply(this, arguments);
       };
     }());
-  };
-
-  var formatFecha = function formatFecha(fecha) {
-    //yyyy-MM-dd
-    var arrElementos = fecha.split('-');
-    var nuevaFecha = arrElementos.reverse().join('/');
-    return nuevaFecha;
   };
 
   var manejaEnvioProm = function manejaEnvioProm() {

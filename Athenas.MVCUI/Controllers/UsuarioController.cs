@@ -83,13 +83,13 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(UsuarioViewModel usuario)
+        public ActionResult Crear(UsuarioViewModel newUsuario)
         {
 
-            String url = "Producto";
+            //String url = "Producto";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Post<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, usuario, out errorResponse);
+                .Post<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(baseUrl, newUsuario, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -103,13 +103,13 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Actualizar(UsuarioViewModel usuario)
+        public ActionResult Actualizar(UsuarioViewModel newUsuario)
         {
 
-            String url = $"{baseUrl}/{usuario.Id}";
+            String url = $"{baseUrl}/{newUsuario.Id}";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Put<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, usuario, out errorResponse);
+                .Put<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, newUsuario, out errorResponse);
 
             if (errorResponse == null)
             {
