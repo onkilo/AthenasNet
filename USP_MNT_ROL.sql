@@ -27,7 +27,7 @@ BEGIN
 
 	IF @Opcion = '4'
 	BEGIN
-		SELECT 
+		SELECT DISTINCT
 			r.Id
 			,Nombre
 			,r.Activo
@@ -35,7 +35,7 @@ BEGIN
 		WHERE (@Id = 0 OR r.Id = @Id) AND  r.Activo = '1' 
 		AND (r.Nombre) LIKE '%' + @Nombre +'%' 
 		AND (@Usuario = 0 OR ru.UsuarioId = @Usuario) 
-		AND ru.Activo = '1' ;
+		AND (@Usuario = 0 OR ru.Activo = '1') ;
 	END
 
 	IF @Opcion = '5'

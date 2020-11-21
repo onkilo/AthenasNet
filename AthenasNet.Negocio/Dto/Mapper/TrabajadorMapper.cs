@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Entidades;
+using Athenas.Data.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 Id = trabajador.Id,
                 Nombre = trabajador.Nombre,
                 Apellido = trabajador.Apellido,
-                Direccion = trabajador.Contrasenia,
+                Direccion = trabajador.Direccion,
                 Dni = trabajador.Dni,
                 Email = trabajador.Email,
                 Sexo = trabajador.Sexo,

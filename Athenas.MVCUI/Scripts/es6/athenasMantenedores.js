@@ -64,11 +64,15 @@
         const elementosFormulario = getFormMantElements();
 
         let entidad = {};
-
         arrEle.forEach(ele => {
+
+            const elemento = elementosFormulario[ele].multiple
+                ? Array.from(elementosFormulario[ele].selectedOptions).map((sel) => sel.value)
+                : elementosFormulario[ele].value
+
             entidad = {
                 ...entidad,
-                [ele]: elementosFormulario[ele].value
+                [ele]: elemento
             }
         })
 
