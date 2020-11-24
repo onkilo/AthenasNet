@@ -26,12 +26,12 @@ namespace Athenas.MVCUI.ClienteHttp
         }
 
         // POST GET PUT DELETE
-        public static T Get<T,K>(string url, out K errorResponse, string token = "")
+        public static T Get<T,K>(string url, out K errorResponse)
         {
 
             errorResponse = default(K); // null
 
-            var request = CreaPeticion(HttpMethod.Get, url, null, token);
+            var request = CreaPeticion(HttpMethod.Get, url, null);
 
             var response = ApiRequests.Cliente.SendAsync(request).Result;
 
@@ -121,18 +121,20 @@ namespace Athenas.MVCUI.ClienteHttp
 
         //RequestMessage => Authorization Bearer sdcsdcsdcsc
 
-        private static HttpRequestMessage CreaPeticion(HttpMethod metodo, string url = "", Object entidad = null, string token = "")
+        private static HttpRequestMessage CreaPeticion(HttpMethod metodo, string url = "", Object entidad = null)
         {
             HttpRequestMessage request = new HttpRequestMessage();
             request.Method = metodo;
             request.RequestUri = new Uri(ConfigurationManager.AppSettings["BASE_API_URL"] + url);
 
-            if(token != "")
+            HttpContext context = HttpContext.Current;
+            if (context.Session["usuario"] != null)
             {
+                string token = ((UsuarioViewModel)context.Session["usuario"]).Token;
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
-            if(entidad != null)
+            if (entidad != null)
             {
                 request.Content = new StringContent(JsonConvert.SerializeObject(entidad), Encoding.UTF8, "application/json");
             }

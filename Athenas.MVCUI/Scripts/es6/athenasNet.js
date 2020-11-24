@@ -26,6 +26,18 @@
                 url: MVC_URL_BASE + opciones.url
             });
 
+            if (respuesta.Codigo === 401) {
+                window.location.href = MVC_URL_BASE + 'Seguridad';
+            }
+
+            if (respuesta.Codigo === 403) {
+                muestraToast({
+                    cssClass: 'bg-danger',
+                    mensaje: 'No tiene permisos para realizar esta acción',
+                    titulo: 'No autorizado'
+                });
+            }
+
             if (respuesta.Codigo !== 200) {
                 throw respuesta;
             }

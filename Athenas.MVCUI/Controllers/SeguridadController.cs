@@ -32,10 +32,19 @@ namespace Athenas.MVCUI.Controllers
                 
 
                 Session["usuario"] = responseModel.Data;
+                Session["usuarioActual"] = responseModel.Data.Nombre + " " + responseModel.Data.Apellido; 
                 return RedirectToAction("Index", "Home");
             }
 
             ViewBag.ErrorMessage = "Credenciales incorrectas";
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Session["usuario"] = null;
 
             return RedirectToAction("Index");
         }

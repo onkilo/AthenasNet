@@ -17,13 +17,13 @@
 
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fas fa-users " style="font-size: 25px"></i>
-
+            <a class="nav-link d-flex" data-toggle="dropdown" href="#">
+                <i class="fas fa-users pr-3 fa-2x" style="font-size: 25px"></i>
+                <span class="text-md">@Session["usuarioActual"]</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-                <a href="#" class="dropdown-item">
+                <a href="@Url.Action("Logout", "Seguridad")" class="dropdown-item">
                     <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
                     @*<span class="float-right text-muted text-sm">3 mins</span>*@
                 </a>

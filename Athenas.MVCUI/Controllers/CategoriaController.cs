@@ -16,7 +16,7 @@ namespace Athenas.MVCUI.Controllers
         GenericResponseModel<String> errorResponse;
 
         // GET: Categoria
-        [CustomAuthFilter(MyKeys = "Supervisor")]
+        [CustomAuthenticationFilter(TipoResultado = "View")]
         public ActionResult Index()
         {
             ViewBag.Title = "Categoría";
@@ -41,7 +41,8 @@ namespace Athenas.MVCUI.Controllers
             }
         }
 
-        
+        [CustomAuthenticationFilter(TipoResultado = "Json")]
+        [CustomAuthorizationFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor")]
         [HttpGet]
         public ActionResult Listar(string Descripcion = "")
         {
@@ -54,10 +55,8 @@ namespace Athenas.MVCUI.Controllers
 
             url += queryString.ToString();
 
-            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
-
             GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse, usuario.Token);
+                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {

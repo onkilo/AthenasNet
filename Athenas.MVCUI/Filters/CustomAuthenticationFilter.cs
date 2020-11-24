@@ -8,22 +8,32 @@ using System.Web.Routing;
 
 namespace Athenas.MVCUI.Filters
 {
-    public class CustomAuthenticationFilter : AuthorizeAttribute
+    public class CustomAuthorizationFilter: AuthorizeAttribute
     {
 
         public string TipoResultado { get; set; }
 
+        public string RolesPermitidos { get; set; }
+
         protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
         {
-            bool auth =  base.AuthorizeCore(httpContext);
+            bool auth = base.AuthorizeCore(httpContext);
 
-            if(httpContext.Session["usuario"] == null)
+            if (httpContext.Session["usuario"] == null)
             {
                 auth = false;
             }
             else
             {
-                auth = true;
+                UsuarioViewModel usuario = (UsuarioViewModel)httpContext.Session["usuario"];
+                List<RolViewModel> roles = usuario.Roles.ToList();
+                string[] arrRolesPermitidos = RolesPermitidos.Split(',');
+
+                bool encontrado = false;
+
+                encontrado = roles.Exists(r => arrRolesPermitidos.Contains(r.Nombre));
+
+                auth = encontrado;
             }
             return auth;
         }
@@ -47,9 +57,9 @@ namespace Athenas.MVCUI.Filters
                     {
 
                         GenericResponseModel<String> response = new GenericResponseModel<String>();
-                        response.Codigo = 401;
-                        response.Data = "No esta logueado en el sistema";
-                        response.Mensaje = "No esta logueado en el sistema";
+                        response.Codigo = 403;
+                        response.Data = "No tiene permisos para realizar esta acción";
+                        response.Mensaje = "No tiene permisos para realizar esta acción";
                         response.Error = true;
 
                         filterContext.Result = new JsonResult

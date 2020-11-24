@@ -42,33 +42,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 4:
               respuesta = _context.sent;
 
+              if (respuesta.Codigo === 401) {
+                window.location.href = MVC_URL_BASE + 'Seguridad';
+              }
+
+              if (respuesta.Codigo === 403) {
+                muestraToast({
+                  cssClass: 'bg-danger',
+                  mensaje: 'No tiene permisos para realizar esta acción',
+                  titulo: 'No autorizado'
+                });
+              }
+
               if (!(respuesta.Codigo !== 200)) {
-                _context.next = 7;
+                _context.next = 9;
                 break;
               }
 
               throw respuesta;
 
-            case 7:
+            case 9:
               return _context.abrupt("return", respuesta);
 
-            case 10:
-              _context.prev = 10;
+            case 12:
+              _context.prev = 12;
               _context.t0 = _context["catch"](1);
               throw _context.t0;
 
-            case 13:
-              _context.prev = 13;
+            case 15:
+              _context.prev = 15;
               //ocultar spinner
               manejaSpinner(ACCION_OCULTAR_SPINNER);
-              return _context.finish(13);
+              return _context.finish(15);
 
-            case 16:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 10, 13, 16]]);
+      }, _callee, null, [[1, 12, 15, 18]]);
     }));
 
     return function llamadaApi(_x) {
