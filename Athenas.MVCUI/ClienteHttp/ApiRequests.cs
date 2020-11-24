@@ -26,12 +26,12 @@ namespace Athenas.MVCUI.ClienteHttp
         }
 
         // POST GET PUT DELETE
-        public static T Get<T,K>(string url, out K errorResponse)
+        public static T Get<T,K>(string url, out K errorResponse, string token = "")
         {
 
             errorResponse = default(K); // null
 
-            var request = CreaPeticion(HttpMethod.Get, url);
+            var request = CreaPeticion(HttpMethod.Get, url, null, token);
 
             var response = ApiRequests.Cliente.SendAsync(request).Result;
 

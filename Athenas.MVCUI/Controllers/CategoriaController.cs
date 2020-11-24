@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Athenas.MVCUI.Controllers
         GenericResponseModel<String> errorResponse;
 
         // GET: Categoria
+        [CustomAuthFilter(MyKeys = "Supervisor")]
         public ActionResult Index()
         {
             ViewBag.Title = "Categoría";
@@ -52,8 +54,10 @@ namespace Athenas.MVCUI.Controllers
 
             url += queryString.ToString();
 
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+
             GenericResponseModel<IEnumerable<CategoriaViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+                .Get<GenericResponseModel<IEnumerable<CategoriaViewModel>>, GenericResponseModel<String>>(url, out errorResponse, usuario.Token);
 
             if (errorResponse == null)
             {

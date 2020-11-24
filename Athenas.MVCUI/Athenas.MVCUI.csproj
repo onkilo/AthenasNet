@@ -136,13 +136,16 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\SeguridadController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\CustomAuthFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Models\PromocionViewModel.cs" />
     <Compile Include="Models\ProveedorViewModel.cs" />
@@ -436,6 +439,7 @@
     <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Seguridad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
