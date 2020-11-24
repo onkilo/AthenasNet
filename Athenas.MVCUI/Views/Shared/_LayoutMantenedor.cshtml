@@ -8,6 +8,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/fontawesome/css/all.min.css")
+    @Styles.Render("~/Content/select2/select2.min.css")
+    @Styles.Render("~/Content/select2/select2-bootstrap4.min.css")
     @Styles.Render("~/Content/adminlte/adminlte.min.css")
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -73,6 +75,7 @@
     @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
     @Scripts.Render("~/Scripts/datatable/datatables.min.js")
     @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
+    @Scripts.Render("~/Scripts/select2/select2.full.min.js")
     @Scripts.Render("~/Scripts/polyfill.min.js")
     @Scripts.Render("~/Scripts/es5/athenasNet.js")
     @Scripts.Render("~/Scripts/es5/athenasMantenedores.js")
@@ -110,24 +113,24 @@
     <script type="text/template" id="temp-tbl-body">
         {{#each filas}}
         <tr>
-            
+
             {{#each this}}
-               {{#if (isId @@key)}}
-                    <td>{{formatoCodigo this ../../iniCodigo 4}}</td>
-                {{else}}
-                    <td>{{this}}</td>
-                {{/if}}
+            {{#if (isId @@key)}}
+            <td>{{formatoCodigo this ../../iniCodigo 4}}</td>
+            {{else}}
+            <td>{{this}}</td>
+            {{/if}}
             {{/each}}
             <td>
                 {{#if ../edita}}
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
+                    <i class="fas fa-edit"></i>
+                </button>
                 {{/if}}
                 {{#if ../elimina}}
-                    <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
-                        <i class="fas fa-trash-alt" data-del-action="true"></i>
-                    </button>
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="eliminar">
+                    <i class="fas fa-trash-alt" data-del-action="true"></i>
+                </button>
                 {{/if}}
 
             </td>

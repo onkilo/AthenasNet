@@ -30,14 +30,14 @@ namespace AthenasNet.Negocio.Servicio
 
         public void Actualizar(TrabajadorDto trabajador)
         {
-            if(trabajador.Contrasenia != null || trabajador.Contrasenia.Trim() != "")
+            if(trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
             {
                 string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
                 trabajador.Contrasenia = hash;
             }
             else
             {
-                TrabajadorDto trabActual = BuscarPorId(trabajador.Id);
+                Trabajador trabActual = repositorio.BuscarPorId(trabajador.Id);
 
                 trabajador.Contrasenia = trabActual.Contrasenia;
                 //trabajador.Nombre = (trabajador.Nombre == null || trabajador.Nombre == "") ? trabActual.Nombre : trabajador.Nombre;

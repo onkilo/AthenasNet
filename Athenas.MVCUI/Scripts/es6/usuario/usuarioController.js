@@ -137,6 +137,7 @@ const UsuarioController = (service, ui) => {
         }
         console.log(lstRoles);
         AthenasNet.compilaTemplate(ui.ID_TEMP_ROL, tempCatData, ui.SEL_CBO_ROL);
+        $('#cbo-roles').select2();
     }
 
     const manejaAbreModal = () => {
