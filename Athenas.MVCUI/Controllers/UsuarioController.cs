@@ -141,5 +141,47 @@ namespace Athenas.MVCUI.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View(new LoginViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult LoginPost(LoginViewModel login)
+        {
+
+            GenericResponseModel<UsuarioViewModel> responseModel = ApiRequests
+                .Post<GenericResponseModel<UsuarioViewModel>, LoginViewModel, GenericResponseModel<String>>(baseUrl + "/login", login, out errorResponse);
+
+            if(errorResponse == null)
+            {
+
+                UsuarioViewModel usuario = responseModel.Data;
+                Session["usuario"] = usuario;
+                Session["token"] = usuario.Token;
+                Session["usuarioActual"] = usuario.Nombre + " " + usuario.Apellido;
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Session["usuario"] = null;
+            Session["token"] = null;
+            Session["usuarioActual"] = null;
+
+            return RedirectToAction("Login");
+        }
+
     }
 }

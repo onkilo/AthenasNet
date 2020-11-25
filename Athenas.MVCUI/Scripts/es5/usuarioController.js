@@ -322,8 +322,9 @@ var UsuarioController = function UsuarioController(service, ui) {
               };
               console.log(lstRoles);
               AthenasNet.compilaTemplate(ui.ID_TEMP_ROL, tempRolData, ui.SEL_CBO_ROL);
+              $('#cbo-roles').select2();
 
-            case 7:
+            case 8:
             case "end":
               return _context6.stop();
           }
