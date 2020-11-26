@@ -136,15 +136,21 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\CustomAutenticacionFilter.cs" />
+    <Compile Include="Filters\CustomAutorizacionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Models\PromocionViewModel.cs" />
     <Compile Include="Models\ProveedorViewModel.cs" />
+    <Compile Include="Models\RolViewModel.cs" />
+    <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +179,9 @@
     <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\select2\select2-bootstrap4.min.css" />
+    <Content Include="Content\select2\select2.css" />
+    <Content Include="Content\select2\select2.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -232,6 +241,10 @@
     <Content Include="Scripts\es6\proveedor\proveedorController.js" />
     <Content Include="Scripts\es6\proveedor\proveedorService.js" />
     <Content Include="Scripts\es6\proveedor\proveedorUI.js" />
+    <Content Include="Scripts\es6\usuario\usuario.js" />
+    <Content Include="Scripts\es6\usuario\usuarioController.js" />
+    <Content Include="Scripts\es6\usuario\usuarioService.js" />
+    <Content Include="Scripts\es6\usuario\usuarioUI.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -309,6 +322,8 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\select2\select2.full.min.js" />
+    <Content Include="Scripts\select2\select2.min.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -413,6 +428,8 @@
     <Content Include="Views\Promocion\Index.cshtml" />
     <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

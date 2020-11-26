@@ -93,6 +93,8 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
 
               case 7:
                 Mant.setFormMantenedor(_objectSpread(_objectSpread({}, prodSeleccionado), {}, {
+                  PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
+                  PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
                   Categoria: prodSeleccionado.Categoria.Id
                 }), ['Imagen', 'Activo', 'Base64Imagen']);
                 ui.getImgDisplay().src = prodSeleccionado.Imagen;

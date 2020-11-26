@@ -33,7 +33,12 @@ const ProductoController = (service, ui, categoriaService) => {
 
                 if (accion === 'editar') {
                     await muestraCategorias();
-                    Mant.setFormMantenedor({ ...prodSeleccionado, Categoria: prodSeleccionado.Categoria.Id }, ['Imagen', 'Activo', 'Base64Imagen']);
+                    Mant.setFormMantenedor({
+                        ...prodSeleccionado,
+                        PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
+                        PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
+                        Categoria: prodSeleccionado.Categoria.Id
+                    }, ['Imagen', 'Activo', 'Base64Imagen']);
                     ui.getImgDisplay().src = prodSeleccionado.Imagen;
                 }
                 else if (accion === 'eliminar') {

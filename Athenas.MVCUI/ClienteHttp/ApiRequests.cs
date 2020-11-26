@@ -121,15 +121,17 @@ namespace Athenas.MVCUI.ClienteHttp
 
         //RequestMessage => Authorization Bearer sdcsdcsdcsc
 
-        private static HttpRequestMessage CreaPeticion(HttpMethod metodo, string url = "", Object entidad = null, string token = "")
+        private static HttpRequestMessage CreaPeticion(HttpMethod metodo, string url = "", Object entidad = null)
         {
             HttpRequestMessage request = new HttpRequestMessage();
             request.Method = metodo;
             request.RequestUri = new Uri(ConfigurationManager.AppSettings["BASE_API_URL"] + url);
 
-            if(token != "")
+            if(HttpContext.Current.Session["usuario"] != null)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                UsuarioViewModel usuario = (UsuarioViewModel)HttpContext.Current.Session["usuario"];
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", usuario.Token);
             }
 
             if(entidad != null)

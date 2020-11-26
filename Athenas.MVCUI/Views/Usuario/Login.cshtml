@@ -1,0 +1,83 @@
+@model Athenas.MVCUI.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/fontawesome/css/all.min.css")
+    @Styles.Render("~/Content/adminlte/adminlte.min.css")
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        
+        <!-- /.login-logo -->
+        <div class="card card-dark">
+            <div class="card-header">
+                <div class="login-logo">
+                    @Html.ActionLink("Athenas", "Index", "Home", null, new { @class = "text-center" })
+                </div>
+            </div>
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Login</p>
+
+                @using (Html.BeginForm("LoginPost", "Usuario"))
+                {
+                    @*@Html.AntiForgeryToken()*@
+
+
+                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    <div class="input-group mb-3">
+                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", placeholder = "Usuario" } })
+                        @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        @Html.PasswordFor(model => model.Contrasenia, new { @class = "form-control", placeholder = "Contraseña" })
+                        @Html.ValidationMessageFor(model => model.Contrasenia, "", new { @class = "text-danger" })
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                }
+
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+
+    <!-- ./wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
+    @Scripts.Render("~/Scripts/polyfill.min.js")
+
+</body>
+</html>

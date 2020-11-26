@@ -1,6 +1,6 @@
 (function () {
 
-    const MVC_URL_BASE = 'http://localhost:62622/';
+    const MVC_URL_BASE = `${window.location.protocol}//${window.location.host}/`;
     const ACCION_MOSTRAR_SPINNER = 'mostrar';
     const ACCION_OCULTAR_SPINNER = 'ocultar';
     const SEL_MODAL_CONF = '#modal-confirmar';
@@ -25,6 +25,23 @@
                 ...opciones,
                 url: MVC_URL_BASE + opciones.url
             });
+
+            if (respuesta.Codigo === 401) {
+
+                window.location.href = MVC_URL_BASE + 'Usuario/Login';
+                return null;
+
+            }
+
+            if (respuesta.Codigo === 403) {
+
+                muestraToast({
+                    cssClass: 'bg-danger',
+                    mensaje: 'No tiene permisos para realizar esta acción',
+                    titulo: 'Error de autorización'
+                })
+
+            }
 
             if (respuesta.Codigo !== 200) {
                 throw respuesta;
@@ -126,7 +143,6 @@ Handlebars.registerHelper('isId', (key) => {
 //Formatea el código de los diferentes mantenedores
 Handlebars.registerHelper('formatoCodigo', (id, iniFormato, cantNum) => {
     let formato = iniFormato;
-    debugger
     const cantCeros = cantNum - id.toString().length;
 
     for (let i = 0; i < cantCeros; i++) {

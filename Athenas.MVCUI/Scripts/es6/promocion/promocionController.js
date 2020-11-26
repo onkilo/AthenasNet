@@ -36,6 +36,7 @@ const ProductoController = (service, ui, productoService) => {
                     Mant.setFormMantenedor(
                         {
                             ...promSeleccionado,
+                            Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
                             Producto: promSeleccionado.Producto.Id,
                             FechaFin: promSeleccionado.FFechaFin,
                             FechaInicio: promSeleccionado.FFechaInicio

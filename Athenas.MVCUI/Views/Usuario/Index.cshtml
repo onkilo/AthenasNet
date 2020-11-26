@@ -1,0 +1,118 @@
+
+@{
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+
+
+@section cardTitulo {
+    Usuarios Registrados
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Ingrese el nombre del usuario">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Telefono</th>
+        <th>Sexo</th>
+        <th>Roles</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+@section mantenedorTitulo {
+    Datos del usuario
+}
+
+@section modalMantenedorCuerpo {
+    <input type="hidden" name="Id" id="Id" value="0" />
+    <input type="hidden" name="accion" id="accion" value="registrar" />
+    <div class="form-group">
+        <label for="txt-nombre">Nombre</label>
+        <input type="text" class="form-control" name="Nombre" id="txt-nombre"required>
+        <div class="invalid-feedback">Por favor ingrese el nombre del usuario</div>
+    </div>
+    <div class="form-group">
+        <label>Apellido</label>
+        <input type="text" class="form-control" name="Apellido" id="txt-apellido"  required>
+        <div class="invalid-feedback">Por favor ingrese el apellido del usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-telefono">Teléfono</label>
+        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9">
+        <div class="invalid-feedback">Por favor ingrese número de teléfono para el usuario, debe ser tener entre 7 y 9 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-direccion">Dirección</label>
+        <input type="text" class="form-control" name="Direccion" id="txt-direccion" required>
+        <div class="invalid-feedback">Por favor ingrese una dirección para el usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-email">Email</label>
+        <input type="email" class="form-control" name="Email" id="txt-email" required>
+        <div class="invalid-feedback">Por favor ingrese email válido </div>
+    </div>
+    <div class="form-group">
+        <label for="txt-userName">Usuario</label>
+        <input type="text" class="form-control" name="Usuario" id="txt-userName" required>
+        <div class="invalid-feedback">Por favor ingrese un nombre de usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-userPass">Contraseña</label>
+        <input type="password" class="form-control" name="Contrasenia" id="txt-userPass" >
+        <div class="invalid-feedback">Por favor ingrese una contraseña para el usuario</div>
+    </div>
+    <div class="form-group">
+        <label for="txt-dni">DNI</label>
+        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8">
+        <div class="invalid-feedback">Por favor ingrese un número de DNI para el usuario, debe tener 8 caracteres</div>
+    </div>
+    <div class="form-group">
+        <label for="cbo-sexo">Sexo</label>
+        <select name="Sexo" class="form-control" id="cbo-sexo">
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cbo-roles">Roles</label>
+        <select name="Roles" class="form-control select2 select2-danger" id="cbo-roles" multiple="multiple" required>
+        </select>
+        <div class="invalid-feedback">Por favor seleccion un rol para el usuario</div>
+    </div>
+
+}
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/usuarioUI.js")
+    @Scripts.Render("~/Scripts/es5/usuarioController.js")
+    @Scripts.Render("~/Scripts/es5/usuario.js")
+}
+
+<script id="temp-lst-rol" type="text/template">
+    {{#each filas}}
+    {{#if selected}}
+    <option value="{{Id}}" selected>{{Nombre}}</option>
+    {{else}}
+    <option value="{{Id}}">{{Nombre}}</option>
+    {{/if}}
+    {{/each}}
+</script>

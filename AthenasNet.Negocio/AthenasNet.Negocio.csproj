@@ -84,6 +84,7 @@
     <Compile Include="Servicio\ProductoServicio.cs" />
     <Compile Include="Servicio\PromocionServicio.cs" />
     <Compile Include="Servicio\ProveedorServicio.cs" />
+    <Compile Include="Servicio\RolServicio.cs" />
     <Compile Include="Servicio\TrabajadorServicio.cs" />
     <Compile Include="Servicio\VentaServicio.cs" />
   </ItemGroup>

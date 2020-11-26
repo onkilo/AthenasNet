@@ -75,7 +75,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var elementosFormulario = getFormMantElements();
     var entidad = {};
     arrEle.forEach(function (ele) {
-      entidad = _objectSpread(_objectSpread({}, entidad), {}, _defineProperty({}, ele, elementosFormulario[ele].value));
+      var elemento = elementosFormulario[ele].multiple ? Array.from(elementosFormulario[ele].selectedOptions).map(function (sel) {
+        return sel.value;
+      }) : elementosFormulario[ele].value;
+      entidad = _objectSpread(_objectSpread({}, entidad), {}, _defineProperty({}, ele, elemento));
     });
     return entidad;
   };
