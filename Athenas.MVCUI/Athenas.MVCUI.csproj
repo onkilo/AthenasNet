@@ -137,6 +137,8 @@
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\CustomAutenticacionFilter.cs" />
+    <Compile Include="Filters\CustomAutorizacionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

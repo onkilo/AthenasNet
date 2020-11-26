@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ using System.Web.Mvc;
 
 namespace Athenas.MVCUI.Controllers
 {
+    
     public class CategoriaController : Controller
     {
         GenericResponseModel<String> errorResponse;
 
+
         // GET: Categoria
+        [CustomAutenticacionFilter(TipoResultado = "View")]
+        [CustomAutorizacionFilter(TipoResultado = "View", RolesPermitidos = "Vendedor")]
         public ActionResult Index()
         {
             ViewBag.Title = "Categoría";
@@ -39,7 +44,8 @@ namespace Athenas.MVCUI.Controllers
             }
         }
 
-        
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor")]
         [HttpGet]
         public ActionResult Listar(string Descripcion = "")
         {
@@ -63,7 +69,6 @@ namespace Athenas.MVCUI.Controllers
             {
                 return Json(errorResponse, JsonRequestBehavior.AllowGet);
             }
-
         }
 
         [HttpGet]

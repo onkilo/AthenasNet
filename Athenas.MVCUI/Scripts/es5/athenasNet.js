@@ -11,7 +11,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 (function () {
-  var MVC_URL_BASE = 'http://localhost:62622/';
+  var MVC_URL_BASE = "".concat(window.location.protocol, "//").concat(window.location.host, "/");
   var ACCION_MOSTRAR_SPINNER = 'mostrar';
   var ACCION_OCULTAR_SPINNER = 'ocultar';
   var SEL_MODAL_CONF = '#modal-confirmar';
@@ -42,33 +42,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 4:
               respuesta = _context.sent;
 
+              if (!(respuesta.Codigo === 401)) {
+                _context.next = 8;
+                break;
+              }
+
+              window.location.href = MVC_URL_BASE + 'Usuario/Login';
+              return _context.abrupt("return", null);
+
+            case 8:
+              if (respuesta.Codigo === 403) {
+                muestraToast({
+                  cssClass: 'bg-danger',
+                  mensaje: 'No tiene permisos para realizar esta acción',
+                  titulo: 'Error de autorización'
+                });
+              }
+
               if (!(respuesta.Codigo !== 200)) {
-                _context.next = 7;
+                _context.next = 11;
                 break;
               }
 
               throw respuesta;
 
-            case 7:
+            case 11:
               return _context.abrupt("return", respuesta);
 
-            case 10:
-              _context.prev = 10;
+            case 14:
+              _context.prev = 14;
               _context.t0 = _context["catch"](1);
               throw _context.t0;
 
-            case 13:
-              _context.prev = 13;
+            case 17:
+              _context.prev = 17;
               //ocultar spinner
               manejaSpinner(ACCION_OCULTAR_SPINNER);
-              return _context.finish(13);
+              return _context.finish(17);
 
-            case 16:
+            case 20:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 10, 13, 16]]);
+      }, _callee, null, [[1, 14, 17, 20]]);
     }));
 
     return function llamadaApi(_x) {

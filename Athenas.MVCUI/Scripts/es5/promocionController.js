@@ -92,6 +92,7 @@ var ProductoController = function ProductoController(service, ui, productoServic
 
               case 7:
                 Mant.setFormMantenedor(_objectSpread(_objectSpread({}, promSeleccionado), {}, {
+                  Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
                   Producto: promSeleccionado.Producto.Id,
                   FechaFin: promSeleccionado.FFechaFin,
                   FechaInicio: promSeleccionado.FFechaInicio
