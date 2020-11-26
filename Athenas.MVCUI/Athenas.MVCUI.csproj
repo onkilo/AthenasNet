@@ -133,6 +133,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
@@ -145,8 +146,10 @@
     </Compile>
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />
+    <Compile Include="Models\DetPedidoViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PedidoViewModel.cs" />
     <Compile Include="Models\ProductoViewModel.cs" />
     <Compile Include="Models\PromocionViewModel.cs" />
     <Compile Include="Models\ProveedorViewModel.cs" />
@@ -234,6 +237,10 @@
     <Content Include="Scripts\es6\cliente\clienteController.js" />
     <Content Include="Scripts\es6\cliente\clienteService.js" />
     <Content Include="Scripts\es6\cliente\clienteUI.js" />
+    <Content Include="Scripts\es6\pedido\pedido.js" />
+    <Content Include="Scripts\es6\pedido\pedidoLstController.js" />
+    <Content Include="Scripts\es6\pedido\pedidoLstUI.js" />
+    <Content Include="Scripts\es6\pedido\pedidoService.js" />
     <Content Include="Scripts\es6\producto\producto.js" />
     <Content Include="Scripts\es6\producto\productoController.js" />
     <Content Include="Scripts\es6\producto\productoService.js" />
@@ -441,6 +448,7 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Seguridad\Index.cshtml" />
+    <Content Include="Views\Pedido\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

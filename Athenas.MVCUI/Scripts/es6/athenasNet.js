@@ -1,6 +1,6 @@
 (function () {
 
-    const MVC_URL_BASE = 'http://localhost:62622/';
+    const MVC_URL_BASE = `${window.location.protocol}//${window.location.host}/`;
     const ACCION_MOSTRAR_SPINNER = 'mostrar';
     const ACCION_OCULTAR_SPINNER = 'ocultar';
     const SEL_MODAL_CONF = '#modal-confirmar';
