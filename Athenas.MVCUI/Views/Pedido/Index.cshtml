@@ -1,0 +1,47 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+@section cardTitulo {
+    Pedidos Registrados
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="RzSocial" id="RzSocial" class="form-control" placeholder="Ingrese la razón social del proveedor">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Fecha</th>
+        <th>Colaborador</th>
+        <th>Proveedor</th>
+        <th>Importe</th>
+        <th>Estado</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/pedidoService.js")
+    @Scripts.Render("~/Scripts/es5/pedidoLstUI.js")
+    @Scripts.Render("~/Scripts/es5/pedidoLstController.js")
+    @Scripts.Render("~/Scripts/es5/pedido.js")
+}
+
+
+
