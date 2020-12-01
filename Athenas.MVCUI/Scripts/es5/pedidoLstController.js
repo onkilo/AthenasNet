@@ -1,7 +1,5 @@
 "use strict";
 
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -30,15 +28,15 @@ var PedidoController = function PedidoController(service, ui) {
               ui.generarTabla(lstPedidos.map(function (p) {
                 var importe = 0;
                 p.Detalles.forEach(function (det) {
-                  return importe += (_readOnlyError("importe"), det.Precio * det.Cantidad);
+                  return importe += det.Precio * det.Cantidad;
                 });
                 return {
                   Id: p.Id,
-                  Fecha: p.FFecha,
+                  Fecha: AthenasNet.formatFecha(p.FFecha),
                   Empleado: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
                   Proveedor: p.Proveedor.RzSocial,
-                  Importe: importe,
-                  Estado: p.StockMin
+                  Importe: AthenasNet.formatPrecio(importe),
+                  Estado: p.Estado === 0 ? 'Registrado' : 'Recibido'
                 };
               }));
               _context.next = 11;
@@ -79,7 +77,7 @@ var PedidoController = function PedidoController(service, ui) {
                   pedSeleccionado.accion = accion;
 
                   if (accion === 'editar') {
-                    window.location.href = "".concat(AthenasNet.MVC_URL_BASE, "/Pedido/Edit/").concat(pedSeleccionado.Id);
+                    window.location.href = "".concat(AthenasNet.MVC_URL_BASE, "/Pedido/Recibir/").concat(pedSeleccionado.Id);
                   } else if (accion === 'eliminar') {
                     console.log('eliminar');
                     AthenasNet.mostrarConfirmacion();

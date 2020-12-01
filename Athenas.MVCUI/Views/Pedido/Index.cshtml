@@ -9,12 +9,21 @@
     Pedidos Registrados
 }
 
+@section btnNuevo {
+    <a  
+       class="btn btn-success btn-sm btn-sin-click" 
+       id="btn-nuevo" 
+       href="@Url.Action("Create")">
+        <i class="fas fa-plus mr-1"></i> Nuevo
+    </a>
+}
+
 @section formFiltrar {
     <input type="hidden" name="tipo" value="filtrar">
     <div class="form-group row">
         <div class="col-md-12">
             <div class="input-group">
-                <input type="text" name="RzSocial" id="srchRzSocial" class="form-control" placeholder="Ingrese la razón social del proveedor">
+                <input type="text" name="Proveedor" id="Proveedor" class="form-control" placeholder="Ingrese la razón social del proveedor">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
                 </div>

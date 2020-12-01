@@ -24,32 +24,48 @@ namespace Athenas.MVCUI.Controllers
         // GET: Pedido/Create
         public ActionResult Create()
         {
-            return View();
+            PedidoViewModel pedido = new PedidoViewModel();
+            pedido.Trabajador = (UsuarioViewModel)Session["usuario"];
+
+            return View(pedido);
         }
 
         
 
         // GET: Pedido/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Recibir(int id)
         {
-            return View();
+            String url = $"{baseUrl}/{id}";
+
+            GenericResponseModel<PedidoViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(responseModel.Data);
+            }
+
         }
 
 
 
 
         [HttpGet]
-        public ActionResult Listar(string Nombre = "")
+        public ActionResult Listar(string Proveedor = "")
         {
             string url = $"{baseUrl}?";
             NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
             queryString.Add("registros", "0");
-            if (Nombre != "") queryString.Add("Nombre", Nombre);
+            if (Proveedor != "") queryString.Add("Proveedor", Proveedor);
 
             url += queryString.ToString();
 
-            GenericResponseModel<IEnumerable<UsuarioViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<UsuarioViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+            GenericResponseModel<IEnumerable<PedidoViewModel>> responseModel = ApiRequests
+                .Get<GenericResponseModel<IEnumerable<PedidoViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -62,22 +78,6 @@ namespace Athenas.MVCUI.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Roles()
-        {
-            GenericResponseModel<IEnumerable<UsuarioViewModel>> responseModel = ApiRequests
-                 .Get<GenericResponseModel<IEnumerable<UsuarioViewModel>>, GenericResponseModel<String>>("Rol", out errorResponse);
-
-            if (errorResponse == null)
-            {
-                return Json(responseModel, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(errorResponse, JsonRequestBehavior.AllowGet);
-            }
-
-        }
 
         [HttpGet]
         public ActionResult Obtener(int Id)
@@ -85,8 +85,8 @@ namespace Athenas.MVCUI.Controllers
 
             String url = $"{baseUrl}/{Id}";
 
-            GenericResponseModel<UsuarioViewModel> responseModel = ApiRequests
-                .Get<GenericResponseModel<UsuarioViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+            GenericResponseModel<PedidoViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -100,13 +100,12 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(UsuarioViewModel newUsuario)
+        public ActionResult Crear(PedidoViewModel pedido)
         {
 
-            //String url = "Producto";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Post<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(baseUrl, newUsuario, out errorResponse);
+                .Post<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(baseUrl, pedido, out errorResponse);
 
             if (errorResponse == null)
             {
@@ -120,13 +119,13 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Actualizar(UsuarioViewModel newUsuario)
+        public ActionResult Actualizar(PedidoViewModel pedido)
         {
 
-            String url = $"{baseUrl}/{newUsuario.Id}";
+            String url = $"{baseUrl}/{pedido.Id}";
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Put<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, newUsuario, out errorResponse);
+                .Put<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(url, pedido, out errorResponse);
 
             if (errorResponse == null)
             {

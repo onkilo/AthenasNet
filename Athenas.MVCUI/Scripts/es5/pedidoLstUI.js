@@ -2,16 +2,19 @@
 
 var PedidoUI = function PedidoUI() {
   var getFiltros = function getFiltros() {
-    var arrFiltros = ['RzSocial'];
+    var arrFiltros = ['Proveedor'];
     return AthenasNet.Mant.getFiltros(arrFiltros);
   };
 
   var generarTabla = function generarTabla(lstPedido) {
+    console.log(lstPedido);
     var data = {
       filas: lstPedido,
-      edita: true,
+      edita: false,
+      recibe: true,
       elimina: true,
-      iniCodigo: 'PED'
+      iniCodigo: 'PED',
+      recibirUrl: "".concat(window.location.host).concat(window.location.pathname, "/Recibir")
     };
     AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();

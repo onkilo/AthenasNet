@@ -449,6 +449,7 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Seguridad\Index.cshtml" />
     <Content Include="Views\Pedido\Index.cshtml" />
+    <Content Include="Views\Pedido\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

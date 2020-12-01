@@ -9,17 +9,17 @@ const PedidoController = (service, ui) => {
             lstPedidos = await service.listar(filtros);
             ui.generarTabla(lstPedidos.map(p => {
 
-                const importe = 0;
+                let importe = 0;
 
                 p.Detalles.forEach(det => importe += (det.Precio * det.Cantidad) );
 
                 return {
                     Id: p.Id,
-                    Fecha: p.FFecha,
+                    Fecha: AthenasNet.formatFecha(p.FFecha),
                     Empleado: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
                     Proveedor: p.Proveedor.RzSocial,
-                    Importe: importe,
-                    Estado: p.StockMin
+                    Importe: AthenasNet.formatPrecio(importe),
+                    Estado: p.Estado === 0 ? 'Registrado' : 'Recibido'
                 }
                 
             }));
@@ -39,7 +39,7 @@ const PedidoController = (service, ui) => {
                 pedSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
-                    window.location.href = `${AthenasNet.MVC_URL_BASE}/Pedido/Edit/${pedSeleccionado.Id}`
+                    window.location.href = `${AthenasNet.MVC_URL_BASE}/Pedido/Recibir/${pedSeleccionado.Id}`
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')

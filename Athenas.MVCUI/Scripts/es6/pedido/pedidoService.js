@@ -25,7 +25,7 @@ const PedidoService = () => {
     const listar = async (filtros) => {
 
         const filtrosDefecto = {
-            Descripcion: '',
+            Proveedor: '',
             ...filtros
         }
 

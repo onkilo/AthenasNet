@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Conexion;
+using Athenas.Data.Conexion;
 using Athenas.Data.Entidades;
 using Athenas.Data.Repositorio;
 using System;
@@ -352,7 +352,7 @@ namespace Athenas.Data.MSSQLRepositorio
         public IEnumerable<Compra> Listar(string Criterio, int UsuarioId)
         {
             List<Compra> compras = new List<Compra>();
-            List<DetalleCompra> detalles = new List<DetalleCompra>();
+            
             try
             {
                 cn.Open();
@@ -400,14 +400,14 @@ namespace Athenas.Data.MSSQLRepositorio
 
                 foreach (Compra compra in compras)
                 {
+                    List<DetalleCompra> detalles = new List<DetalleCompra>();
+
                     SqlCommand cmdDetalle = new SqlCommand(USP_MNT_DETALLECOMPRA, cn);
                     cmdDetalle.CommandType = CommandType.StoredProcedure;
                     cmdDetalle.Parameters.AddWithValue("@Opcion", "4");
                     cmdDetalle.Parameters.AddWithValue("@CompraId", compra.Id);
 
                     SqlDataReader drDetalle = cmdDetalle.ExecuteReader();
-
-                    detalles.Clear();
 
                     while (drDetalle.Read())
                     {

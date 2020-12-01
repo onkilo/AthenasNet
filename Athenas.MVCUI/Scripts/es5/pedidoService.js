@@ -81,7 +81,7 @@ var PedidoService = function PedidoService() {
           switch (_context3.prev = _context3.next) {
             case 0:
               filtrosDefecto = _objectSpread({
-                Descripcion: ''
+                Proveedor: ''
               }, filtros);
               _context3.next = 3;
               return AthenasNet.llamadaApi({
