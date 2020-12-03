@@ -55,11 +55,23 @@ const PedidoService = () => {
 
     }
 
+    const recibir = async (id) => {
+
+        const respuesta = await AthenasNet.llamadaApi({
+            type: 'POST',
+            data: {},
+            url: `Pedido/FormRecibir/${id}`
+        })
+
+        return respuesta;
+    }
+
     return {
         crear,
         actualizar,
         listar,
         eliminar,
-        buscar
+        buscar,
+        recibir
     }
 }

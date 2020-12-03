@@ -170,12 +170,44 @@ var PedidoService = function PedidoService() {
     };
   }();
 
+  var recibir = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(id) {
+      var respuesta;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return AthenasNet.llamadaApi({
+                type: 'POST',
+                data: {},
+                url: "Pedido/FormRecibir/".concat(id)
+              });
+
+            case 2:
+              respuesta = _context6.sent;
+              return _context6.abrupt("return", respuesta);
+
+            case 4:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    return function recibir(_x6) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+
   return {
     crear: crear,
     actualizar: actualizar,
     listar: listar,
     eliminar: eliminar,
-    buscar: buscar
+    buscar: buscar,
+    recibir: recibir
   };
 };
 //# sourceMappingURL=pedidoService.js.map

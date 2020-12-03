@@ -26,7 +26,7 @@ namespace Athenas.MVCUI.Controllers
         {
             PedidoViewModel pedido = new PedidoViewModel();
             pedido.Trabajador = (UsuarioViewModel)Session["usuario"];
-
+            pedido.Fecha = DateTime.Now;
             return View(pedido);
         }
 
@@ -40,12 +40,16 @@ namespace Athenas.MVCUI.Controllers
             GenericResponseModel<PedidoViewModel> responseModel = ApiRequests
                 .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
 
-            if (errorResponse == null)
+            if (errorResponse != null)
             {
                 return RedirectToAction("Index");
             }
             else
             {
+
+                PedidoViewModel pedido = responseModel.Data;
+                pedido.Trabajador.Nombre += " " + pedido.Trabajador.Apellido;
+                pedido.Total = pedido.Detalles.Sum(d => d.Cantidad * d.Precio);
                 return View(responseModel.Data);
             }
 
@@ -119,13 +123,16 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Actualizar(PedidoViewModel pedido)
+        public ActionResult FormRecibir(int Id)
         {
 
-            String url = $"{baseUrl}/{pedido.Id}";
+            String url = $"{baseUrl}/{Id}";
+
+            GenericResponseModel<PedidoViewModel> pedidoResponseModel = ApiRequests
+                .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
 
             GenericResponseModel<String> responseModel = ApiRequests
-                .Put<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(url, pedido, out errorResponse);
+                .Put<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(url, pedidoResponseModel.Data, out errorResponse);
 
             if (errorResponse == null)
             {

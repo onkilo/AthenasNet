@@ -83,7 +83,6 @@
     }
 
     const compilaTemplate = (idTemplate, data, selObjetivo) => {
-
         const htmlTemplate = document.getElementById(idTemplate).innerHTML;
 
         const template = Handlebars.compile(htmlTemplate);
@@ -125,7 +124,8 @@
         ocultarConfirmacion,
         ID_TEMP_TBL_BODY,
         formatFecha,
-        formatPrecio
+        formatPrecio,
+        MVC_URL_BASE
     };
 })()
 

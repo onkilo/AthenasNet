@@ -22,5 +22,9 @@ namespace Athenas.MVCUI.Models
         public IEnumerable<DetPedidoViewModel> Detalles { get; set; }
 
         public string FFecha { get => Fecha.ToString("yyyy-MM-dd"); }
+
+        public string FId { get => "PED" + Id.ToString("D4"); }
+
+        public Double Total { get; set; }
     }
 }
