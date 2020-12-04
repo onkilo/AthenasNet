@@ -23,14 +23,26 @@ namespace Athenas.MVCUI.Controllers
         // GET: Pedido/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new PedidoViewModel());
         }
 
 
         // GET: Pedido/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Recibir(int id)
         {
-            return View();
+            String url = $"{baseUrl}/{id}";
+
+            GenericResponseModel<PedidoViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if(errorResponse != null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            PedidoViewModel pedido = responseModel.Data;
+            pedido.Trabajador.Nombre += " " + pedido.Trabajador.Apellido;
+            return View(pedido);
         }
 
    
@@ -38,14 +50,14 @@ namespace Athenas.MVCUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Listar(string RzSocial = "")
+        public ActionResult Listar(string Proveedor = "")
         {
 
             String url = $"{baseUrl}?";
 
             NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
             queryString.Add("registros", "0");
-            if (RzSocial != "") queryString.Add("RzSocial", RzSocial);
+            if (Proveedor != "") queryString.Add("Proveedor", Proveedor);
 
             url += queryString.ToString();
 

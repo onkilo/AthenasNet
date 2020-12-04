@@ -1,11 +1,9 @@
 window.addEventListener('load', () => {
-    const service = PromocionService();
+    const service = PedidoService();
 
-    const ui = ProductoUI();
+    const ui = PedidoUI();
 
-    const productoService = ProductoService();
-
-    const controller = ProductoController(service, ui, productoService);
+    const controller = PedidoController(service, ui);
 
     controller.iniciar();
 

@@ -1,20 +1,28 @@
 
-const ProductoController = (service, ui, productoService) => {
-    let lstPromociones = [];
-    let promSeleccionado = {};
+const PedidoController = (service, ui) => {
+    let lstPedidos = [];
+    let pedidoSeleccionado = {};
     const { Mant } = AthenasNet;
 
-    const muestraPromociones = async (filtros = {}) => {
+    const muesraPedidos = async (filtros = {}) => {
         try {
-            lstPromociones = await service.listar(filtros);
-            ui.generarTabla(lstPromociones.map(p => ({
-                Id: p.Id,
-                Producto: p.Producto.Descripcion,
-                Tipo: (p.Tipo === 0) ? 'Fijo' : 'Porcentual',
-                Valor: (p.Tipo === 0) ? `S/. ${p.Valor.toFixed(2)}` : `% ${p.Valor.toFixed(2)}`,
-                FechaInicio: AthenasNet.formatFecha(p.FFechaInicio),
-                FechaFin: AthenasNet.formatFecha(p.FFechaFin)
-            })));
+            lstPedidos = await service.listar(filtros);
+            ui.generarTabla(lstPedidos.map(p => {
+
+                let importe = 0;
+
+                p.Detalles.forEach(d => importe += (d.Cantidad * d.Precio));
+
+                return {
+                    Id: p.Id,
+                    Fecha: AthenasNet.formatFecha(p.FFecha),
+                    Colaborador: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
+                    Proveedor: p.Proveedor.RzSocial,
+                    Importe: AthenasNet.formatPrecio(importe),
+                    Estado: p.Estado === 0 ? 'Por Recibir' : 'Recibido'
+                }
+
+            }));
         }
         catch (err) {
             console.error(err);
@@ -28,18 +36,18 @@ const ProductoController = (service, ui, productoService) => {
             if (evt.target.dataset.id) {
                 const { id, accion } = evt.target.dataset;
 
-                promSeleccionado = lstPromociones.find(c => c.Id === parseInt(id));
-                promSeleccionado.accion = accion;
+                pedidoSeleccionado = lstPedidos.find(c => c.Id === parseInt(id));
+                pedidoSeleccionado.accion = accion;
 
                 if (accion === 'editar') {
                     await muestraPoductos();
                     Mant.setFormMantenedor(
                         {
-                            ...promSeleccionado,
-                            Valor: parseFloat(promSeleccionado.Valor).toFixed(2),
-                            Producto: promSeleccionado.Producto.Id,
-                            FechaFin: promSeleccionado.FFechaFin,
-                            FechaInicio: promSeleccionado.FFechaInicio
+                            ...pedidoSeleccionado,
+                            Valor: parseFloat(pedidoSeleccionado.Valor).toFixed(2),
+                            Producto: pedidoSeleccionado.Producto.Id,
+                            FechaFin: pedidoSeleccionado.FFechaFin,
+                            FechaInicio: pedidoSeleccionado.FFechaInicio
                         },
                         ['Activo', 'FFechaInicio', 'FFechaFin']);
                 }
@@ -53,52 +61,16 @@ const ProductoController = (service, ui, productoService) => {
         });
     }
 
-    const manejaEnvioProm = () => {
 
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
-            evt.preventDefault();
-
-            let promocion = ui.getPromocion();
-            promocion = {
-                ...promocion,
-                Producto: {
-                    Id: parseInt(promocion.Producto)
-                }
-            }
-            console.log(promocion);
-            try {
-                if (promocion.accion === 'registrar') {
-                    await service.crear(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
-                }
-                else if (promocion.accion === 'editar') {
-                    await service.actualizar(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
-                }
-                await muestraPromociones();
-            }
-            catch (err) {
-                console.error(err);
-                const mensaje = (promocion.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (promocion.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
-            }
-
-
-        })
-
-    }
 
     const manejaEnvioConf = () => {
         AthenasNet.getFormConfirmar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             try {
-                await service.eliminar(parseInt(promSeleccionado.Id));
+                await service.eliminar(parseInt(pedidoSeleccionado.Id));
                 AthenasNet.ocultarConfirmacion();
-                AthenasNet.muestraToast({ mensaje: 'La promoción fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
-                await muestraPromociones();
+                AthenasNet.muestraToast({ mensaje: 'El pedido fue eliminado satisfactoriamente', titulo: 'Eliminación exitosa' })
+                await muesraPedidos();
             }
             catch (err) {
                 console.error(err);
@@ -112,36 +84,18 @@ const ProductoController = (service, ui, productoService) => {
         Mant.getFormFiltrar().addEventListener('submit', async (evt) => {
             evt.preventDefault();//evitar la accion del evento
             const filtros = ui.getFiltros();
-            await muestraPromociones(filtros);
+            await muesraPedidos(filtros);
         })
     }
 
 
-    const muestraPoductos = async () => {
-        const lstProductos = await productoService.listar({});
-        const tempCatData = {
-            filas: lstProductos
-        }
-        console.log(lstProductos);
-        AthenasNet.compilaTemplate(ui.ID_TEMP_PROD, tempCatData, ui.SEL_CBO_PROD);
-    }
 
-    const manejaAbreModal = () => {
-        Mant.getBtnNuevo().addEventListener('click', async () => {
-            await muestraPoductos();
-        })
-    }
 
     const iniciar = () => {
-        Mant.configuraTamModal('modal-lg');
-        muestraPromociones();
-        Mant.evtMostrarModMant();
+        muesraPedidos();
         manejaEvtTabla();
-        manejaEnvioProm();
         manejaEnvioConf();
         manejaEnvioFiltro();
-        debugger
-        manejaAbreModal();
     }
 
 

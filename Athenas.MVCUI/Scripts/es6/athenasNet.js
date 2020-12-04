@@ -130,7 +130,8 @@
         ocultarConfirmacion,
         ID_TEMP_TBL_BODY,
         formatFecha,
-        formatPrecio
+        formatPrecio,
+        MVC_URL_BASE
     };
 })()
 

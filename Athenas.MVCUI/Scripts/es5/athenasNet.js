@@ -156,7 +156,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ocultarConfirmacion: ocultarConfirmacion,
     ID_TEMP_TBL_BODY: ID_TEMP_TBL_BODY,
     formatFecha: formatFecha,
-    formatPrecio: formatPrecio
+    formatPrecio: formatPrecio,
+    MVC_URL_BASE: MVC_URL_BASE
   };
 })(); //Handlebars helpers personalizados
 //Determina si la propiedad de un objeto es un Id

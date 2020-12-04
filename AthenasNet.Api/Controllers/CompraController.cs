@@ -1,4 +1,4 @@
-﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
@@ -18,13 +18,13 @@ namespace AthenasNet.Api.Controllers
     {
         private readonly CompraServicio servicio = new CompraServicio();
 
-        public GenericResponse<IEnumerable<CompraDto>> Get(int pagina = 1, int registros = 10, string proveedor = "", int id = 0)
+        public GenericResponse<IEnumerable<CompraDto>> Get(int pagina = 1, int registros = 10, string Proveedor = "", int id = 0)
         {
             GenericResponse<IEnumerable<CompraDto>> response = new GenericResponse<IEnumerable<CompraDto>>();
 
             try
             {
-                IEnumerable<CompraDto> data = servicio.Listar(proveedor, id);
+                IEnumerable<CompraDto> data = servicio.Listar(Proveedor, id);
                 response = ResponseUtil.GetListaPaginada<CompraDto>(data, pagina, registros);
             }
             catch (Exception ex)

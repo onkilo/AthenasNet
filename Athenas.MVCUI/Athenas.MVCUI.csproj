@@ -234,6 +234,7 @@
     <Content Include="Scripts\es6\cliente\clienteUI.js" />
     <Content Include="Scripts\es6\pedido\pedido.js" />
     <Content Include="Scripts\es6\pedido\pedidoLstController.js" />
+    <Content Include="Scripts\es6\pedido\pedidoRecibirController.js" />
     <Content Include="Scripts\es6\pedido\pedidoService.js" />
     <Content Include="Scripts\es6\pedido\pedidoLstUI.js" />
     <Content Include="Scripts\es6\producto\producto.js" />
@@ -438,6 +439,8 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Pedido\Index.cshtml" />
+    <Content Include="Views\Pedido\Create.cshtml" />
+    <Content Include="Views\Pedido\Recibir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
