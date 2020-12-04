@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="trabajador.id" id="trabajador.id" value="1">
                                 <label for="txt-trab">Colaborador</label>
-                                @Html.EditorFor(m => m.Trabajador.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                <input type="text" name="Trabajador.Nombre" id="Trabajador.Nombre" readonly class="form-control" value="@Session["usuarioActual"]"/>
                             </div>
                         </div>
                     </div>
@@ -46,24 +46,39 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Proveedor</label>
-                                @Html.EditorFor(m => m.Proveedor.RzSocial, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.EditorFor(m => m.Proveedor.RzSocial, new {
+                               htmlAttributes = new {
+                                   @class = "form-control",
+                                   @readonly = "readonly",
+                                   id = "Proveedor.RzSocial"
+                               } })
                                 <div class="invalid-feedback">Por favor seleccione un proveedor</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Dirección</label>
-                                @Html.EditorFor(m => m.Proveedor.Direccion, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.EditorFor(m => m.Proveedor.Direccion, new {
+                               htmlAttributes = new {
+                                   @class = "form-control",
+                                   @readonly = "readonly",
+                                   id = "Proveedor.Direccion"
+                               } })
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Telefono</label>
-                                @Html.EditorFor(m => m.Proveedor.Telefono, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @Html.EditorFor(m => m.Proveedor.Telefono, new {
+                               htmlAttributes = new {
+                                   @class = "form-control",
+                                   @readonly = "readonly",
+                                   id = "Proveedor.Telefono"
+                               } })
                             </div>
                         </div>
                         <div class="col-lg-3 d-flex align-items-center">
-                            <button class="btn btn-primary form-control" id="btn-buscar-proveedor" type="button" data-toggle="modal" data-target="#modalBuscar" style="min-width: 150px">
+                            <button class="btn btn-primary form-control" id="btn-buscar-proveedor" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
                                 Buscar Proveedor
                             </button>
                         </div>
@@ -74,7 +89,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="Producto.Id" id="Producto.Id">
                                 <label for="codigo-prod">Código del producto </label>
-                                <input type="text" name="codigo-prod" id="codigo-prod" readonly class="form-control">
+                                <input type="text" name="Producto.Codigo" id="Producto.Codigo" readonly class="form-control">
                                 <div class="invalid-feedback">Por favor seleccione un producto</div>
                             </div>
                         </div>
@@ -106,7 +121,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                            <button class="btn btn-primary" id="btn-buscar-producto" type="button" data-toggle="modal" data-target="#modalBuscar" style="min-width: 150px">
+                            <button class="btn btn-primary" id="btn-buscar-producto" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
                                 Buscar Producto
                             </button>
 
@@ -137,7 +152,9 @@
                                                             <th>Opciones</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="det-body"></tbody>
+                                                    <tbody id="det-body">
+
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -175,43 +192,29 @@
 </div>
 
 
-<div class="modal fade " id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalTitleCliente" aria-hidden="true">
+<div class="modal fade modalBuscar" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalTitleCliente" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitleCliente">Seleccionar Proveedor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-11 ">
-
-                        </div>
-                    </div>
-                    <div class="col-12 px-0 mt-4">
-                        <div class="col-12 px-0" style="overflow: auto; max-height: 50vh;">
-                            <table class="table table-bordered table-striped table-sm" id="tbl-buscar-prov">
-                                <thead class="bg-dark text-light">
-                                    <tr></tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-
-            </div>
         </div>
     </div>
 </div>
 
-<script type="text/template" id="tempModalBuscar">
+<script type="text/x-handlebars" id="tempDetalle">
+    {{#each filas}}
+        <tr>
+            <td>{{Codigo}}</td>
+            <td>{{Descripcion}}</td>
+            <td>{{Precio}}</td>
+            <td>{{Cantidad}}</td>
+            <td>{{SubTotal}}</td>
+            <td>
+                <button class="btn btn-danger" type="button" data-producto-id="{{Id}}"><i class="far fa-trash-alt"></i></button>
+            </td>
+        </tr>
+    {{/each}}
+</script>
+
+<script type="text/x-handlebars" id="tempModalBuscar">
     <div class="modal-header">
         <h5 class="modal-title" id="modalTitleCliente">{{titulo}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -238,9 +241,15 @@
                         <tbody>
                             {{#each columnas}}
                             <tr>
-                                {{#each this}}
-                                {{this}}
+                                {{#each data}}
+                                <td>{{this}}</td>
                                 {{/each}}
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-success btn-sin-click" data-seleccion-id="{{Id}}">
+                                        <i class="far fa-check-circle"></i>
+                                    </button>
+                                </td>
                             </tr>
 
                             {{/each}}
@@ -254,6 +263,8 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/es5/pedidoService.js")
+    @Scripts.Render("~/Scripts/es5/productoService.js")
+    @Scripts.Render("~/Scripts/es5/proveedorService.js")
     @Scripts.Render("~/Scripts/es5/pedidoLstUI.js")
     @Scripts.Render("~/Scripts/es5/pedidoRegistroController.js")
     @Scripts.Render("~/Scripts/es5/pedido.js")

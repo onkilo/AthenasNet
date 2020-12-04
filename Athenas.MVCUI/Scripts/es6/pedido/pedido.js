@@ -4,7 +4,17 @@ window.addEventListener('load', () => {
 
     const ui = PedidoUI();
 
-    const controller = PedidoController(service, ui);
+    let productoService = null, proveedorService = null;
+
+    if (window.ProductoService) {
+        productoService = ProductoService();
+    }
+
+    if (window.ProveedorService) {
+        proveedorService = ProveedorService();
+    }
+
+    const controller = PedidoController(service, ui, proveedorService, productoService);
 
     controller.iniciar();
 

@@ -78,16 +78,7 @@
 
     </div>
     <!-- ./wrapper -->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
-    @Scripts.Render("~/Scripts/datatable/datatables.min.js")
-    @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
-    @Scripts.Render("~/Scripts/select2/select2.full.min.js")
-    @Scripts.Render("~/Scripts/polyfill.min.js")
-    @Scripts.Render("~/Scripts/es5/athenasNet.js")
-    @Scripts.Render("~/Scripts/es5/athenasMantenedores.js")
-    @RenderSection("scripts", required: false)
+
 
 
     @Html.Partial("_ModalConfirmacion")
@@ -136,7 +127,7 @@
                 </button>
                 {{/if}}
                 {{#if ../recibe}}
-                <a  class="btn btn-success btn-sm btn-sin-click" href="{{../recibirUrl}}/{{Id}}" data-accion="recibir">
+                <a class="btn btn-success btn-sm btn-sin-click" href="{{../recibirUrl}}/{{Id}}" data-accion="recibir">
                     <i class="fa fa-check"></i>
                 </a>
                 {{/if}}
@@ -151,5 +142,16 @@
         {{/each}}
     </script>
     @RenderBody()
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/adminlte/adminlte.min.js")
+    @Scripts.Render("~/Scripts/datatable/datatables.min.js")
+    @Scripts.Render("~/Scripts/handlebars/handlebars.min.js")
+    @Scripts.Render("~/Scripts/select2/select2.full.min.js")
+    @Scripts.Render("~/Scripts/polyfill.min.js")
+    @Scripts.Render("~/Scripts/es5/athenasNet.js")
+    @Scripts.Render("~/Scripts/es5/athenasMantenedores.js")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

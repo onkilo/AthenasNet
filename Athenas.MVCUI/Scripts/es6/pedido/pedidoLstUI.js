@@ -26,20 +26,25 @@ const PedidoUI = () => {
 
     const getTblModalBuscar = () => document.getElementById('tbl-modal-buscar');
 
-    const getModalBuscar = () => $('modalBuscar');
+    const getModalBuscar = () => $('#modalBuscar');
 
     const getBtnBuscarProducto = () => document.getElementById('btn-buscar-producto');
 
     const getBtnBuscarProveedor = () => document.getElementById('btn-buscar-proveedor');
 
+    const getBtnAgregarDet = () => document.getElementById('btn-agregar-detalle');
+
+    const getFormPedido = () => document.getElementById('form-pedido');
+
 
     const setProducto = (producto) => {
-        const Id = document.getElementById('Producto.Id');
+        //const Id = document.getElementById('Producto.Id');
+        const Codigo = document.getElementById('Producto.Codigo');
         const Descripcion = document.getElementById('Producto.Descripcion');
         const PrecioCompra = document.getElementById('Producto.PrecioCompra');
         const StockActual = document.getElementById('Producto.StockActual');
 
-        Id.value = producto.Id;
+        Codigo.value = producto.Codigo;
         Descripcion.value = producto.Descripcion;
         PrecioCompra.value = producto.PrecioCompra;
         StockActual.value = producto.StockActual;
@@ -59,8 +64,12 @@ const PedidoUI = () => {
 
     }
 
-    const setListModalBuscar = (data) => {
-        AthenasNet.compilaTemplate('tempModalBuscar', data, document.querySelector('#modalBuscar .modal-content'));
+    const setModalBuscarData = (lstData) => {
+        AthenasNet.compilaTemplate('tempModalBuscar', lstData, '#modalBuscar .modal-content')
+    }
+
+    const setDetallesData = (lstData) => {
+        AthenasNet.compilaTemplate('tempDetalle', lstData, '#tb-detalle #det-body')
     }
 
     return {
@@ -70,8 +79,11 @@ const PedidoUI = () => {
         getModalBuscar,
         setProducto,
         setProveedor,
-        setListModalBuscar,
         getBtnBuscarProducto,
-        getBtnBuscarProveedor
+        getBtnBuscarProveedor,
+        setModalBuscarData,
+        getBtnAgregarDet,
+        setDetallesData,
+        getFormPedido
     }
 }

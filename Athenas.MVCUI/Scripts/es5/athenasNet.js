@@ -141,6 +141,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return "S/. ".concat(precio.toFixed(2));
   };
 
+  var formatId = function formatId(id, iniFormato, cantNum) {
+    var formato = iniFormato;
+    var cantCeros = cantNum - id.toString().length;
+
+    for (var i = 0; i < cantCeros; i++) {
+      formato += '0';
+    }
+
+    formato += id.toString();
+    return formato;
+  };
+
   window.AthenasNet = {
     llamadaApi: llamadaApi,
     manejaSpinner: manejaSpinner,
@@ -152,7 +164,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ID_TEMP_TBL_BODY: ID_TEMP_TBL_BODY,
     formatFecha: formatFecha,
     formatPrecio: formatPrecio,
-    MVC_URL_BASE: MVC_URL_BASE
+    MVC_URL_BASE: MVC_URL_BASE,
+    formatId: formatId
   };
 })(); //Handlebars helpers personalizados
 //Determina si la propiedad de un objeto es un Id

@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Entidades;
+using Athenas.Data.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,8 +80,8 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 Proveedor = ProveedorMapper.ToProveedor(dto.Proveedor),
                 Fecha = dto.Fecha,
                 Trabajador = TrabajadorMapper.ToTrabajador(dto.Trabajador),
-                Detalles = ToDetalles(dto.Detalles)
-                
+                Detalles = ToDetalles(dto.Detalles),
+                Estado = dto.Estado
             };
 
             return compra;
@@ -98,8 +98,8 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 Proveedor = ProveedorMapper.ToProveedorDto(compra.Proveedor),
                 Fecha = compra.Fecha,
                 Trabajador = TrabajadorMapper.ToTrabajadorDto(compra.Trabajador),
-                Detalles = ToDetallesDto(compra.Detalles)
-
+                Detalles = ToDetallesDto(compra.Detalles),
+                Estado = compra.Estado
             };
 
             return dto;

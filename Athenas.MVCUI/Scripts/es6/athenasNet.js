@@ -84,9 +84,7 @@
 
     const compilaTemplate = (idTemplate, data, selObjetivo) => {
         const htmlTemplate = document.getElementById(idTemplate).innerHTML;
-
         const template = Handlebars.compile(htmlTemplate);
-
         const compTemplate = template(data);
 
         document.querySelector(selObjetivo).innerHTML = compTemplate;
@@ -113,6 +111,19 @@
         return `S/. ${precio.toFixed(2)}`;
     }
 
+    const formatId = (id, iniFormato, cantNum) => {
+        let formato = iniFormato;
+        const cantCeros = cantNum - id.toString().length;
+
+        for (let i = 0; i < cantCeros; i++) {
+            formato += '0';
+        }
+
+        formato += id.toString();
+
+        return formato;
+    }
+
 
     window.AthenasNet = {
         llamadaApi,
@@ -125,7 +136,8 @@
         ID_TEMP_TBL_BODY,
         formatFecha,
         formatPrecio,
-        MVC_URL_BASE
+        MVC_URL_BASE,
+        formatId
     };
 })()
 

@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,18 @@ namespace Athenas.MVCUI.Controllers
         }
 
         
-
+        [CustomAuthenticationFilter(TipoResultado = "View")]
         // GET: Pedido/Create
         public ActionResult Create()
         {
             PedidoViewModel pedido = new PedidoViewModel();
             pedido.Trabajador = (UsuarioViewModel)Session["usuario"];
             pedido.Fecha = DateTime.Now;
+
+            UsuarioViewModel trabajador = (UsuarioViewModel)Session["usuario"];
+            trabajador.Nombre += trabajador.Apellido;
+            pedido.Trabajador = trabajador;
+
             return View(pedido);
         }
 
@@ -106,7 +112,9 @@ namespace Athenas.MVCUI.Controllers
         [HttpPost]
         public ActionResult Crear(PedidoViewModel pedido)
         {
+            UsuarioViewModel trabajador = (UsuarioViewModel)Session["usuario"];
 
+            pedido.Trabajador = trabajador;
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Post<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(baseUrl, pedido, out errorResponse);

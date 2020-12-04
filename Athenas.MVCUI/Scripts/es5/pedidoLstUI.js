@@ -26,7 +26,7 @@ var PedidoUI = function PedidoUI() {
   };
 
   var getModalBuscar = function getModalBuscar() {
-    return $('modalBuscar');
+    return $('#modalBuscar');
   };
 
   var getBtnBuscarProducto = function getBtnBuscarProducto() {
@@ -37,12 +37,21 @@ var PedidoUI = function PedidoUI() {
     return document.getElementById('btn-buscar-proveedor');
   };
 
+  var getBtnAgregarDet = function getBtnAgregarDet() {
+    return document.getElementById('btn-agregar-detalle');
+  };
+
+  var getFormPedido = function getFormPedido() {
+    return document.getElementById('form-pedido');
+  };
+
   var setProducto = function setProducto(producto) {
-    var Id = document.getElementById('Producto.Id');
+    //const Id = document.getElementById('Producto.Id');
+    var Codigo = document.getElementById('Producto.Codigo');
     var Descripcion = document.getElementById('Producto.Descripcion');
     var PrecioCompra = document.getElementById('Producto.PrecioCompra');
     var StockActual = document.getElementById('Producto.StockActual');
-    Id.value = producto.Id;
+    Codigo.value = producto.Codigo;
     Descripcion.value = producto.Descripcion;
     PrecioCompra.value = producto.PrecioCompra;
     StockActual.value = producto.StockActual;
@@ -59,8 +68,12 @@ var PedidoUI = function PedidoUI() {
     Telefono.value = proveedor.Telefono;
   };
 
-  var setListModalBuscar = function setListModalBuscar(data) {
-    AthenasNet.compilaTemplate('tempModalBuscar', data, document.querySelector('#modalBuscar .modal-content'));
+  var setModalBuscarData = function setModalBuscarData(lstData) {
+    AthenasNet.compilaTemplate('tempModalBuscar', lstData, '#modalBuscar .modal-content');
+  };
+
+  var setDetallesData = function setDetallesData(lstData) {
+    AthenasNet.compilaTemplate('tempDetalle', lstData, '#tb-detalle #det-body');
   };
 
   return {
@@ -70,9 +83,12 @@ var PedidoUI = function PedidoUI() {
     getModalBuscar: getModalBuscar,
     setProducto: setProducto,
     setProveedor: setProveedor,
-    setListModalBuscar: setListModalBuscar,
     getBtnBuscarProducto: getBtnBuscarProducto,
-    getBtnBuscarProveedor: getBtnBuscarProveedor
+    getBtnBuscarProveedor: getBtnBuscarProveedor,
+    setModalBuscarData: setModalBuscarData,
+    getBtnAgregarDet: getBtnAgregarDet,
+    setDetallesData: setDetallesData,
+    getFormPedido: getFormPedido
   };
 };
 //# sourceMappingURL=pedidoLstUI.js.map
