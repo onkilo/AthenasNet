@@ -89,13 +89,25 @@ const PedidoController = (service, ui) => {
     }
 
 
+    const muestraMensaje = () => {
+        if (localStorage.getItem('mensaje')) {
 
+            const mensaje = JSON.parse(localStorage.getItem('mensaje'));
 
-    const iniciar = () => {
-        muesraPedidos();
+            AthenasNet.muestraToast({ mensaje: mensaje.texto, titulo: mensaje.titulo, cssClass: mensaje.color })
+
+            localStorage.removeItem('mensaje');
+        }
+    }
+
+    const iniciar = async () => {
+        
         manejaEvtTabla();
         manejaEnvioConf();
         manejaEnvioFiltro();
+        await muesraPedidos();
+        muestraMensaje();
+
     }
 
 

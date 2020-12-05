@@ -202,12 +202,45 @@ var PedidoController = function PedidoController(service, ui) {
     }());
   };
 
-  var iniciar = function iniciar() {
-    muesraPedidos();
-    manejaEvtTabla();
-    manejaEnvioConf();
-    manejaEnvioFiltro();
+  var muestraMensaje = function muestraMensaje() {
+    if (localStorage.getItem('mensaje')) {
+      var mensaje = JSON.parse(localStorage.getItem('mensaje'));
+      AthenasNet.muestraToast({
+        mensaje: mensaje.texto,
+        titulo: mensaje.titulo,
+        cssClass: mensaje.color
+      });
+      localStorage.removeItem('mensaje');
+    }
   };
+
+  var iniciar = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              manejaEvtTabla();
+              manejaEnvioConf();
+              manejaEnvioFiltro();
+              _context5.next = 5;
+              return muesraPedidos();
+
+            case 5:
+              muestraMensaje();
+
+            case 6:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function iniciar() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
 
   return {
     iniciar: iniciar

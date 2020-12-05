@@ -235,6 +235,7 @@
     <Content Include="Scripts\es6\pedido\pedido.js" />
     <Content Include="Scripts\es6\pedido\pedidoLstController.js" />
     <Content Include="Scripts\es6\pedido\pedidoRecibirController.js" />
+    <Content Include="Scripts\es6\pedido\pedidoRegistrarController.js" />
     <Content Include="Scripts\es6\pedido\pedidoService.js" />
     <Content Include="Scripts\es6\pedido\pedidoLstUI.js" />
     <Content Include="Scripts\es6\producto\producto.js" />

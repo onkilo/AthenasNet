@@ -55,7 +55,7 @@ const PedidoService = () => {
     }
 
     const recibir = async (id) => {
-
+        debugger
         const respuesta = await AthenasNet.llamadaApi({
             type: 'POST',
             data: {},

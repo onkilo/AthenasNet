@@ -42,7 +42,6 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.Parameters.AddWithValue("@Activo", "1");
                 
-                cn.Open();
 
 
                 int filas = cmd.ExecuteNonQuery();

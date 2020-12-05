@@ -177,18 +177,19 @@ var PedidoService = function PedidoService() {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              _context6.next = 2;
+              debugger;
+              _context6.next = 3;
               return AthenasNet.llamadaApi({
                 type: 'POST',
                 data: {},
                 url: "Pedido/FormRecibir/".concat(id)
               });
 
-            case 2:
+            case 3:
               respuesta = _context6.sent;
               return _context6.abrupt("return", respuesta);
 
-            case 4:
+            case 5:
             case "end":
               return _context6.stop();
           }

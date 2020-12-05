@@ -45,7 +45,31 @@ namespace Athenas.MVCUI.Controllers
             return View(pedido);
         }
 
-   
+        [HttpPost]
+        public ActionResult FormRecibir(int id)
+        {
+            String url = $"{baseUrl}/{id}";
+
+            GenericResponseModel<PedidoViewModel> pedidoResponseModel = ApiRequests
+                .Get<GenericResponseModel<PedidoViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+            PedidoViewModel pedido = pedidoResponseModel.Data;
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Put<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(url, pedido, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
 
 
 

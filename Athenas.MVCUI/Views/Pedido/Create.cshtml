@@ -5,5 +5,265 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="row">
+    <div class="col-md-12 col-lg-8 offset-lg-2">
+        <div class="card card-outline card-primary mt-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h5>Datos del pedido</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="post" id="form-pedido">
+                    <input type="hidden" name="id" th:field="*{id}">
+                    <div class="text-danger d-none row bg-danger text-center p-2" id="msj-error">
+                        Debe ingresar al menos un producto para registrar una venta
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="codigo-pedido">Código del pedido</label>
+                                @Html.EditorFor(m => m.FId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 ">
+                            <div class="form-group">
+                                <label for="fecha-pedido">Fecha</label>
+                                <input type="date" name="fecha" id="fecha-pedido" readonly class="form-control" value="@Model.FFecha">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="hidden" name="trabajador.id" id="trabajador.id" value="1">
+                                <label for="txt-trab">Colaborador</label>
+                                <input type="text" class="form-control" readonly name="Trabajador.Nombre" id="Trabajador.Nombre" value="@*@Session[" usuarioActual"]*@" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--DATOS DEL PROVEEDOR-->
+                    <div class="row">
+                        <input type="hidden" value="" name="proveedor.id" id="proveedor.id">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Proveedor</label>
+                                @Html.EditorFor(m => m.Proveedor.RzSocial, new {
+                               htmlAttributes = new {
+                                   @class = "form-control", @readonly = "readonly",
+                                   id = "Proveedor.RzSocial"
+                               } })
+                                <div class="invalid-feedback">Por favor seleccione un proveedor</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                @Html.EditorFor(m => m.Proveedor.Direccion, new {
+                               htmlAttributes = new {
+                                   @class = "form-control", @readonly = "readonly",
+                                   id = "Proveedor.Direccion"
+                               } })
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                @Html.EditorFor(m => m.Proveedor.Telefono, new {
+                               htmlAttributes = new {
+                                   @class = "form-control", @readonly = "readonly",
+                                   id = "Proveedor.Telefono"
+                               } })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 d-flex align-items-center">
+                            <button class="btn btn-primary form-control" id="btn-buscar-proveedor" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
+                                Buscar Proveedor
+                            </button>
+                        </div>
+                    </div>
+                    <!--DATOS DEL PRODUCTO-->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="Producto.Codigo">Código del producto </label>
+                                <input type="text" name="Producto.Codigo" id="Producto.Codigo" readonly class="form-control">
+                                <div class="invalid-feedback">Por favor seleccione un producto</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="Producto.Descripcion">Descripción del producto</label>
+                                <input type="text" name="Producto.Descripcion" id="Producto.Descripcion" readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="Producto.PrecioCompra">Precio </label>
+                                <input type="text" name="Producto.PrecioCompra" id="Producto.PrecioCompra" readonly class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="Producto.StockActual">Stock</label>
+                                <input type="text" name="Producto.StockActual" id="Producto.StockActual" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="Producto.Cantidad">Cantidad</label>
+                                <input type="number" name="Producto.Cantidad" id="Producto.Cantidad" class="form-control">
+                                <div class="invalid-feedback">Por favor ingrese una cantidad válida</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 d-flex align-items-center justify-content-end">
+                            <button class="btn btn-primary" id="btn-buscar-producto" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
+                                Buscar Producto
+                            </button>
 
+                        </div>
+                        <div class="col-lg-3 d-flex align-items-center">
+                            <button class="btn btn-primary" type="button" id="btn-agregar-detalle" style="min-width: 150px">Agregar</button>
+                        </div>
+                    </div>
+                    <!--DATOS DEL DETALLE-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!--Card del detalle-->
+                            <div class="card" style="border:1px solid rgba(0,0,0,0.4)">
+                                <div class="card-header p-1 pl-4 bg-success text-white">
+                                    Detalle
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm" id="tb-detalle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Descripción</th>
+                                                            <th>Precio</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Subtotal</th>
+                                                            <th>Opciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="det-body"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 d-flex justify-content-end">
+                                            <div class="form-group">
+                                                <label for="total">Total</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">S/ </span>
+                                                    </div>
+                                                    <input type="text" readonly="readonly" class="form-control" name="total" id="total" value="@String.Format("{0:N2}", Model.Total)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4 btn-sin-click" id="btn-pedido-recibir" data-id="@Model.Id">
+                            <i class="fas fa-save mr-1"></i>Recibir
+                        </button>
+                        <a class="btn btn-success ml-lg-4 col-lg-2 mt-1 mt-lg-0  btn-loader" href="@Url.Action("Index", "Pedido")"><i class="fas fa-arrow-left mr-1"></i>Regresar</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modalBuscar" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalTitleCliente" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/template" id="tempModalBuscar">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modalTitleCliente">{{titulo}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-11 ">
+
+                </div>
+            </div>
+            <div class="col-12 px-0 mt-4">
+                <div class="col-12 px-0" style="overflow: auto; max-height: 50vh;">
+                    <table class="table table-bordered table-striped table-sm" id="tbl-buscar-prov">
+                        <thead class="bg-dark text-light">
+                            <tr>
+                                {{#each cabecera}}
+                                <th>{{this}}</th>
+                                {{/each}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each filas}}
+                            <tr>
+                                {{#each data}}
+                                <td>{{this}}</td>
+                                {{/each}}
+                                <td>
+                                    <button type="button" class="btn btn-success" data-seleccion-id="{{Id}}">
+                                        <i class="far fa-check-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+
+    </div>
+</script>
+
+
+<script type="text/template" id="tempDetalle">
+    {{#each filas}}
+    <tr>
+        {{#each data}}
+        <td>{{this}}</td>
+        {{/each}}
+        <td><button class="btn btn-danger" type="button" data-poducto-id="{{Id}}"><i class="far fa-trash-alt"></i></button></td>
+    </tr>
+    {{/each}}
+
+</script>
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/pedidoService.js")
+    @Scripts.Render("~/Scripts/es5/productoService.js")
+    @Scripts.Render("~/Scripts/es5/proveedorService.js")
+    @Scripts.Render("~/Scripts/es5/pedidoLstUI.js")
+    @Scripts.Render("~/Scripts/es5/pedidoRegistrarController.js")
+    @Scripts.Render("~/Scripts/es5/pedido.js")
+}

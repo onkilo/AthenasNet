@@ -24,7 +24,11 @@ namespace Athenas.MVCUI.Models
 
         public string FFecha { get => Fecha.ToString("yyyy-MM-dd"); }
 
-        public double Total { get => Detalles.Sum(d => d.Cantidad * d.Precio); }
+        public double Total { get  {
+
+                if (Detalles == null) return 0;
+                else return Detalles.Sum(d => d.Cantidad * d.Precio);
+            } }
 
         public string FId { get => String.Format("PED{0:D4}", Id); }
     }

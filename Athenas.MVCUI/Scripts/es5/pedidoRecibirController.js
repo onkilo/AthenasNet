@@ -8,29 +8,32 @@ var PedidoController = function PedidoController(service, ui) {
   var iniciar = function iniciar() {
     var btnRecibir = ui.getBtnPostRecibir();
     btnRecibir.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var Id;
+      var Id, mensaje;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              Id = btnRecibir.dataset.Id;
-              _context.prev = 1;
-              _context.next = 4;
+              Id = btnRecibir.dataset.id;
+              debugger;
+              _context.prev = 2;
+              _context.next = 5;
               return service.recibir(Id);
 
-            case 4:
-              AthenasNet.muestraToast({
-                cssClass: 'bg-danger',
-                mensaje: 'El pedido fue recibido exitosamente',
-                titulo: 'Error'
-              });
+            case 5:
+              //AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: 'El pedido fue recibido exitosamente', titulo: 'Error' })
+              mensaje = {
+                color: 'bg-success',
+                titulo: 'Recepción exitosa',
+                texto: 'El pedido fue recibido exitosamente'
+              };
+              localStorage.setItem('mensaje', JSON.stringify(mensaje));
               window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
-              _context.next = 12;
+              _context.next = 14;
               break;
 
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context["catch"](1);
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](2);
               console.error(_context.t0);
               AthenasNet.muestraToast({
                 cssClass: 'bg-danger',
@@ -38,12 +41,12 @@ var PedidoController = function PedidoController(service, ui) {
                 titulo: 'Error'
               });
 
-            case 12:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee, null, [[2, 10]]);
     })));
   };
 
