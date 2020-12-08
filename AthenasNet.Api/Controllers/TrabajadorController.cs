@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
@@ -18,7 +19,6 @@ namespace AthenasNet.Api.Controllers
     public class TrabajadorController : ApiController
     {
         TrabajadorServicio servicio = new TrabajadorServicio();
-
 
         // GET: api/Trabajador
         public GenericResponse<IEnumerable<TrabajadorDto>> Get(int pagina = 1, int registros = 10, string Nombre = "")
@@ -147,6 +147,52 @@ namespace AthenasNet.Api.Controllers
             }
             return response;
 
+        }
+
+        [HttpGet]
+        [Route("api/Trabajador/InfoPrincipal")]
+        [CustomAutenticacionFilter]
+        public GenericResponse<InfoPrincipal> InfoPrincipal()
+        {
+            GenericResponse<InfoPrincipal> response = new GenericResponse<InfoPrincipal>();
+
+            try
+            {
+                ProductoServicio prodServicio = new ProductoServicio();
+                PromocionServicio promServicio = new PromocionServicio();
+                ClienteServicio cliServicio = new ClienteServicio();
+                VentaServicio ventServicio = new VentaServicio();
+                JwtDecodeModel model = (JwtDecodeModel)Thread.CurrentPrincipal;
+                int cantProductos = prodServicio.Listar("", 0).Count();
+                int cantVentas = (model.IsInRole("Vendedor")) ? ventServicio.Listar("", model.Id).Count() : ventServicio.Listar("", 0).Count() ;
+                int cantUsuarios = servicio.Listar("").Count();
+                int cantClientes = servicio.Listar("").Count();
+
+                InfoPrincipal info = new InfoPrincipal
+                {
+                    CantClientes = cantClientes,
+                    CantProductos = cantProductos,
+                    CantUsuarios = cantUsuarios,
+                    CantVentas = cantVentas,
+                    ProductosBajoStock = prodServicio.Listar("", 1),
+                    PromosActuales = promServicio.Listar("", 1)
+                };
+
+                response.Data = info;
+                response.Codigo = 200; // OK
+                response.Error = false;
+                response.Mensaje = "OK";
+            }
+            catch (CustomResponseException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+            return response;
         }
     }
 }
