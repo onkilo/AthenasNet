@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Entidades;
+using Athenas.Data.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +9,6 @@ namespace Athenas.Data.Repositorio
 {
     public interface IPromocionRepositorio : IGenericRepositorio<Promocion>
     {
+        IEnumerable<Promocion> Listar(string Criterio, int Estado);
     }
 }

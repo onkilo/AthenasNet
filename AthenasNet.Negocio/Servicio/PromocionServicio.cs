@@ -1,4 +1,4 @@
-﻿using Athenas.Data.MSSQLRepositorio;
+using Athenas.Data.MSSQLRepositorio;
 using Athenas.Data.Repositorio;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Negocio.Dto.Mapper;
@@ -39,9 +39,9 @@ namespace AthenasNet.Negocio.Servicio
             return PromocionMapper.ToPromocionDto(repositorio.BuscarPorId(id));
         }
 
-        public IEnumerable<PromocionDto> Listar(string producto)
+        public IEnumerable<PromocionDto> Listar(string producto,int estado)
         {
-            return PromocionMapper.ToPromocionesDto(repositorio.Listar(producto));
+            return PromocionMapper.ToPromocionesDto(repositorio.Listar(producto, estado));
         }
 
     }

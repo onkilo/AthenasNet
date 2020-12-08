@@ -9,7 +9,8 @@ CREATE OR ALTER PROCEDURE USP_MNT_PROMOCION
 	@FechaInicio DATE = '',
 	@FechaFin DATE = '',
 	@ProductoDesc VARCHAR(100) = '',
-	@Activo CHAR(1) = '1'
+	@Activo CHAR(1) = '1',
+	@Estado INT = 0
 )
 AS
 BEGIN
@@ -63,6 +64,14 @@ BEGIN
 			,c.PrecioVenta
 		FROM Promocion p JOIN Producto c ON p.ProductoId = c.Id 
 		WHERE (@Id = 0 OR p.Id = @Id) AND  p.Activo = @Activo 
-			AND (c.Descripcion LIKE '%' + @ProductoDesc + '%');
+			AND (c.Descripcion LIKE '%' + @ProductoDesc + '%')
+			AND (
+				CASE 
+					WHEN @Estado = 0 THEN 1
+					WHEN @Estado = 1 AND GETDATE() BETWEEN p.FechaInicio and p.FechaFin THEN 1
+					WHEN @Estado = 2 AND p.FechaFin < GETDATE() THEN 1
+					ELSE 0
+				END
+			) = 1;
 	END
 	END

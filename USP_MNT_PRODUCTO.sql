@@ -9,7 +9,8 @@ CREATE OR ALTER PROCEDURE USP_MNT_PRODUCTO
 	@StockMin INT = 0,
 	@CategoriaId INT = 0,
 	@Imagen VARCHAR(255) = '',
-	@Activo CHAR(1) = '1'
+	@Activo CHAR(1) = '1',
+	@BajoStock INT = 0
 )
 AS
 BEGIN
@@ -73,7 +74,8 @@ BEGIN
 			,dbo.UDF_DESC_PROD(p.Id) as Descuento
 		FROM Producto p JOIN Categoria c ON p.CategoriaId = c.Id 
 		WHERE (@Id = 0 OR p.Id = @Id) AND  p.Activo = @Activo 
-		AND p.Descripcion LIKE '%' + @Descripcion +'%';
+		AND p.Descripcion LIKE '%' + @Descripcion +'%' 
+		AND (@BajoStock = 0 OR p.StockActual <= p.StockMin);
 	END
 
 	IF @Opcion = '5'

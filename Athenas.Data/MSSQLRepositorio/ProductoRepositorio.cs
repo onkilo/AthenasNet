@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Conexion;
+using Athenas.Data.Conexion;
 using Athenas.Data.Entidades;
 using Athenas.Data.Repositorio;
 using System;
@@ -207,6 +207,63 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.Parameters.AddWithValue("@Opcion", "4");
                 cmd.Parameters.AddWithValue("@Descripcion", Criterio);
                 cmd.Parameters.AddWithValue("@Activo", "1");
+
+                cn.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    productos.Add(new Producto
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        Descripcion = dr["Descripcion"].ToString(),
+                        PrecioCompra = Convert.ToDouble(dr["PrecioCompra"]),
+                        PrecioVenta = Convert.ToDouble(dr["PrecioVenta"]),
+                        StockActual = Convert.ToInt32(dr["StockActual"]),
+                        StockMin = Convert.ToInt32(dr["StockMin"]),
+                        Imagen = dr["Imagen"].ToString(),
+                        //Descuento = Convert.ToDouble(dr["Descuento"]),
+                        Activo = dr["Activo"].ToString(),
+                        Categoria = new Categoria
+                        {
+                            Id = Convert.ToInt32(dr["CategoriaId"]),
+                            Descripcion = dr["Categoria"].ToString()
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+
+            }
+
+            return productos;
+        }
+
+        public IEnumerable<Producto> Listar(string Criterio, int BajoStock)
+        {
+            List<Producto> productos = new List<Producto>();
+
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = USP_MNT_PRODUCTO;
+
+                cmd.Parameters.AddWithValue("@Opcion", "4");
+                cmd.Parameters.AddWithValue("@Descripcion", Criterio);
+                cmd.Parameters.AddWithValue("@Activo", "1");
+                cmd.Parameters.AddWithValue("@BajoStock", BajoStock);
 
                 cn.Open();
 

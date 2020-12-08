@@ -182,6 +182,12 @@ namespace Athenas.Data.MSSQLRepositorio
 
         public IEnumerable<Promocion> Listar(string Criterio)
         {
+            return Listar(Criterio, 0);
+        }
+
+
+        public IEnumerable<Promocion> Listar(string Criterio, int estado)
+        {
             List<Promocion> promociones = new List<Promocion>();
 
             try
@@ -195,6 +201,7 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.Parameters.AddWithValue("@Id", 0);
                 cmd.Parameters.AddWithValue("@ProductoDesc", Criterio);
                 cmd.Parameters.AddWithValue("@Activo", "1");
+                cmd.Parameters.AddWithValue("@Estado", estado);
 
                 cn.Open();
 
