@@ -119,6 +119,19 @@
         return `S/. ${precio.toFixed(2)}`;
     }
 
+    const formatCodigo = (id, iniFormato, cantNum) => {
+        let formato = iniFormato;
+        const cantCeros = cantNum - id.toString().length;
+
+        for (let i = 0; i < cantCeros; i++) {
+            formato += '0';
+        }
+
+        formato += id.toString();
+
+        return formato;
+    }
+
 
     window.AthenasNet = {
         llamadaApi,
@@ -131,7 +144,8 @@
         ID_TEMP_TBL_BODY,
         formatFecha,
         formatPrecio,
-        MVC_URL_BASE
+        MVC_URL_BASE,
+        formatCodigo
     };
 })()
 

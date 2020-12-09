@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="trabajador.id" id="trabajador.id" value="1">
                                 <label for="txt-trab">Colaborador</label>
-                                <input type="text" class="form-control" readonly name="Trabajador.Nombre" id="Trabajador.Nombre" value="@*@Session[" usuarioActual"]*@" />
+                                <input type="text" class="form-control" readonly name="Trabajador.Nombre" id="Trabajador.Nombre" value="@Session["usuarioActual"]" />
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">S/ </span>
                                                     </div>
-                                                    <input type="text" readonly="readonly" class="form-control" name="total" id="total" value="@String.Format("{0:N2}", Model.Total)">
+                                                    <input type="text" readonly="readonly" class="form-control" name="total" id="txt-total" value="@String.Format("{0:N2}", Model.Total)">
                                                 </div>
                                             </div>
                                         </div>
@@ -174,8 +174,8 @@
                     </div>
 
                     <div class="row justify-content-center">
-                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4 btn-sin-click" id="btn-pedido-recibir" data-id="@Model.Id">
-                            <i class="fas fa-save mr-1"></i>Recibir
+                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4 btn-sin-click" id="btn-pedido-crear">
+                            <i class="fas fa-save mr-1"></i>Registrar
                         </button>
                         <a class="btn btn-success ml-lg-4 col-lg-2 mt-1 mt-lg-0  btn-loader" href="@Url.Action("Index", "Pedido")"><i class="fas fa-arrow-left mr-1"></i>Regresar</a>
                     </div>
@@ -211,7 +211,7 @@
             </div>
             <div class="col-12 px-0 mt-4">
                 <div class="col-12 px-0" style="overflow: auto; max-height: 50vh;">
-                    <table class="table table-bordered table-striped table-sm" id="tbl-buscar-prov">
+                    <table class="table table-bordered table-striped table-sm" id="tbl-modal-buscar">
                         <thead class="bg-dark text-light">
                             <tr>
                                 {{#each cabecera}}
@@ -226,7 +226,7 @@
                                 <td>{{this}}</td>
                                 {{/each}}
                                 <td>
-                                    <button type="button" class="btn btn-success" data-seleccion-id="{{Id}}">
+                                    <button type="button" class="btn btn-success btn-sin-click" data-seleccion-id="{{Id}}">
                                         <i class="far fa-check-circle"></i>
                                     </button>
                                 </td>
@@ -252,7 +252,7 @@
         {{#each data}}
         <td>{{this}}</td>
         {{/each}}
-        <td><button class="btn btn-danger" type="button" data-poducto-id="{{Id}}"><i class="far fa-trash-alt"></i></button></td>
+        <td><button class="btn btn-danger btn-sin-click" type="button" data-producto-id="{{productoId}}"><i class="far fa-trash-alt"></i></button></td>
     </tr>
     {{/each}}
 

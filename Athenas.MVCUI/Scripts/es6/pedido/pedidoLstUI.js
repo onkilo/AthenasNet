@@ -60,7 +60,19 @@ const PedidoUI = () => {
 
     const getBtnAgregarDet = () => document.getElementById('btn-agregar-detalle');
 
+    const getInputCantidad = () => document.getElementById('Producto.Cantidad');
+
+    const getFormPedido = () => document.getElementById('form-pedido');
+
+    const setTotal = (total) => document.getElementById('txt-total').value = total;
+
     const getModalBuscar = () => $('#modalBuscar');
+
+    const getModalContentBuscar = () => document.querySelector('#modalBuscar .modal-content');
+
+    const getTblModalBuscar = () => document.getElementById('tbl-modal-buscar');
+
+    const getTblDetalle = () => document.getElementById('tb-detalle');
 
     const setModalBuscarData = (data) => {
         AthenasNet.compilaTemplate('tempModalBuscar', data, '#modalBuscar .modal-content')
@@ -81,6 +93,12 @@ const PedidoUI = () => {
         getModalBuscar,
         setModalBuscarData,
         setDetalleData,
-        getBtnAgregarDet
+        getBtnAgregarDet,
+        getTblModalBuscar,
+        getModalContentBuscar,
+        getInputCantidad,
+        setTotal,
+        getTblDetalle,
+        getFormPedido
     }
 }
