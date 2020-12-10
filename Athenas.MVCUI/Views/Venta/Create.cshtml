@@ -1,82 +1,84 @@
-@model Athenas.MVCUI.Models.PedidoViewModel
-
+﻿@model Athenas.MVCUI.Models.VentaViewModel
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Create</h2>
+
 <div class="row">
+
     <div class="col-md-12 col-lg-8 offset-lg-2">
         <div class="card card-outline card-primary mt-4">
+
             <div class="card-header">
                 <div class="card-title">
-                    <h5>Datos del pedido</h5>
+                    <h5>Datos de la Venta</h5>
                 </div>
             </div>
             <div class="card-body">
-                <form method="post" id="form-pedido">
-                    <input type="hidden" name="id" th:field="*{id}">
+                <form method="post" id="form-venta">
                     <div class="text-danger d-none row bg-danger text-center p-2" id="msj-error">
                         Debe ingresar al menos un producto para registrar una venta
                     </div>
+                    <input type="hidden" name="id" th:field="*{id}">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="codigo-pedido">Código del pedido</label>
+                                <label for="codigo-venta">Código de venta</label>
                                 @Html.EditorFor(m => m.FId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </div>
                         </div>
                         <div class="col-lg-3 ">
                             <div class="form-group">
                                 <label for="fecha-pedido">Fecha</label>
-                                <input type="date" name="fecha" id="fecha-pedido" readonly class="form-control" value="@Model.FFecha">
+                                <input type="date" name="fecha" id="fecha-venta" readonly class="form-control" value="@Model.FFecha">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="hidden" name="trabajador.id" id="trabajador.id" value="1">
                                 <label for="txt-trab">Colaborador</label>
-                                <input type="text" class="form-control" readonly name="Trabajador.Nombre" id="Trabajador.Nombre" value="@*@Session["usuarioActual"]*@" />
+                                <input type="text" class="form-control" readonly name="Trabajador.Nombre" id="Trabajador.Nombre" value="@*@Session[" usuarioActual"]*@" />
                             </div>
                         </div>
                     </div>
-                    <!--DATOS DEL PROVEEDOR-->
+                    <!--DATOS DEL CLIENTE-->
                     <div class="row">
-                        <input type="hidden" value="" name="proveedor.id" id="proveedor.id">
+                        <input type="hidden" value="" name="cliente.id" id="cliente.id">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Proveedor</label>
-                                @Html.EditorFor(m => m.Proveedor.RzSocial, new {
-                               htmlAttributes = new {
-                                   @class = "form-control", @readonly = "readonly",
-                                   id = "Proveedor.RzSocial"
-                               } })
-                                <div class="invalid-feedback">Por favor seleccione un proveedor</div>
+                                <label>Cliente</label>
+                                @Html.EditorFor(m => m.Cliente.Nombre, new {
+                                htmlAttributes = new {
+                                @class = "form-control", @readonly = "readonly",
+                                id = "Cliente.Nombre"
+                                } })
+                                <div class="invalid-feedback">Por favor seleccione un Cliente</div>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Dirección</label>
-                                @Html.EditorFor(m => m.Proveedor.Direccion, new {
-                               htmlAttributes = new {
-                                   @class = "form-control", @readonly = "readonly",
-                                   id = "Proveedor.Direccion"
-                               } })
+                                <label>DNI</label>
+                                @Html.EditorFor(m => m.Cliente.Dni, new {
+                                htmlAttributes = new {
+                                @class = "form-control", @readonly = "readonly",
+                                id = "Cliente.Dni"
+                                } })
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Telefono</label>
-                                @Html.EditorFor(m => m.Proveedor.Telefono, new {
-                               htmlAttributes = new {
-                                   @class = "form-control", @readonly = "readonly",
-                                   id = "Proveedor.Telefono"
-                               } })
+                                @Html.EditorFor(m => m.Cliente.Telefono, new {
+                                htmlAttributes = new {
+                                @class = "form-control", @readonly = "readonly",
+                                id = "Cliente.Telefono"
+                                } })
                             </div>
                         </div>
                         <div class="col-lg-3 d-flex align-items-center">
-                            <button class="btn btn-primary form-control" id="btn-buscar-proveedor" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
-                                Buscar Proveedor
+                            <button class="btn btn-primary form-control" id="btn-buscar-cliente" type="button" data-toggle="modal" data-target=".modalBuscar" style="min-width: 150px">
+                                Buscar Cliente
                             </button>
                         </div>
                     </div>
@@ -97,8 +99,8 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="Producto.PrecioCompra">Precio </label>
-                                <input type="text" name="Producto.PrecioCompra" id="Producto.PrecioCompra" readonly class="form-control">
+                                <label for="Producto.PrecioVenta">Precio </label>
+                                <input type="text" name="Producto.PrecioVenta" id="Producto.PrecioVenta" readonly class="form-control">
                             </div>
                         </div>
                     </div>
@@ -126,7 +128,6 @@
                             <button class="btn btn-primary" type="button" id="btn-agregar-detalle" style="min-width: 150px">Agregar</button>
                         </div>
                     </div>
-                    <!--DATOS DEL DETALLE-->
                     <div class="row">
                         <div class="col-lg-12">
                             <!--Card del detalle-->
@@ -140,14 +141,13 @@
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-sm" id="tb-detalle">
                                                     <thead>
-                                                        <tr>
-                                                            <th>Código</th>
-                                                            <th>Descripción</th>
-                                                            <th>Precio</th>
-                                                            <th>Cantidad</th>
-                                                            <th>Subtotal</th>
-                                                            <th>Opciones</th>
-                                                        </tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Precio</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Subtotal</th>
+                                                    <th>Descuento</th>
+                                                    <th>Opciones</th>
                                                     </thead>
                                                     <tbody id="det-body"></tbody>
                                                 </table>
@@ -155,14 +155,38 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-3 d-flex justify-content-end">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="subtotal">Subtotal Final</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">S/ </span>
+                                                    </div>
+                                                    <input type="text" readonly="readonly" class="form-control" name="subtotal" id="subtotal" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="descTotal">Descuento total</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">S/ </span>
+                                                    </div>
+                                                    <input type="text" readonly="readonly" class="form-control" name="descTotal" id="desctotal" value=""
+                                                           th:field="*{descTotal}">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="total">Total</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">S/ </span>
                                                     </div>
-                                                    <input type="text" readonly="readonly" class="form-control" name="total" id="total" value="@String.Format("{0:N2}", Model.Total)">
+                                                    <input type="text" readonly="readonly" class="form-control" name="total" id="total" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -172,98 +196,23 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row justify-content-center">
-                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4 btn-sin-click" id="btn-pedido-recibir" data-id="@Model.Id">
-                            <i class="fas fa-save mr-1"></i>Recibir
+                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4 btn-sin-click" id="btn-pedido-registrar" data-id="@Model.Id">
+                            <i class="fas fa-save mr-1"></i>Registrar
                         </button>
-                        <a class="btn btn-success ml-lg-4 col-lg-2 mt-1 mt-lg-0  btn-loader" href="@Url.Action("Index", "Pedido")"><i class="fas fa-arrow-left mr-1"></i>Regresar</a>
+                        <a class="btn btn-success ml-lg-4 col-lg-2 mt-1 mt-lg-0  btn-loader" href="@Url.Action("Index", "Venta")"><i class="fas fa-arrow-left mr-1"></i>Regresar</a>
                     </div>
                 </form>
-
             </div>
 
         </div>
     </div>
 </div>
-
-<div class="modal fade modalBuscar" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalTitleCliente" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-
-
-<script type="text/template" id="tempModalBuscar">
-    <div class="modal-header">
-        <h5 class="modal-title" id="modalTitleCliente">{{titulo}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="col-11 ">
-
-                </div>
-            </div>
-            <div class="col-12 px-0 mt-4">
-                <div class="col-12 px-0" style="overflow: auto; max-height: 50vh;">
-                    <table class="table table-bordered table-striped table-sm" id="tbl-buscar-prov">
-                        <thead class="bg-dark text-light">
-                            <tr>
-                                {{#each cabecera}}
-                                <th>{{this}}</th>
-                                {{/each}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each filas}}
-                            <tr>
-                                {{#each data}}
-                                <td>{{this}}</td>
-                                {{/each}}
-                                <td>
-                                    <button type="button" class="btn btn-success" data-seleccion-id="{{Id}}">
-                                        <i class="far fa-check-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            {{/each}}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-
-    </div>
-</script>
-
-
-<script type="text/template" id="tempDetalle">
-    {{#each filas}}
-    <tr>
-        {{#each data}}
-        <td>{{this}}</td>
-        {{/each}}
-        <td><button class="btn btn-danger" type="button" data-poducto-id="{{Id}}"><i class="far fa-trash-alt"></i></button></td>
-    </tr>
-    {{/each}}
-
-</script>
-
-
 @section scripts {
-    @Scripts.Render("~/Scripts/es5/pedidoService.js")
+    @Scripts.Render("~/Scripts/es5/ventaService.js")
     @Scripts.Render("~/Scripts/es5/productoService.js")
-    @Scripts.Render("~/Scripts/es5/proveedorService.js")
-    @Scripts.Render("~/Scripts/es5/pedidoLstUI.js")
-    @Scripts.Render("~/Scripts/es5/pedidoRegistrarController.js")
-    @Scripts.Render("~/Scripts/es5/pedido.js")
+    @Scripts.Render("~/Scripts/es5/clienteService.js")
+    @Scripts.Render("~/Scripts/es5/ventaLstUI.js")
+    @Scripts.Render("~/Scripts/es5/ventaRegistrarController.js")
+    @Scripts.Render("~/Scripts/es5/venta.js")
 }

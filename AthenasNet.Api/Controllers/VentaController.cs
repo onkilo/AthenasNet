@@ -18,7 +18,7 @@ namespace AthenasNet.Api.Controllers
     {
         private readonly VentaServicio servicio = new VentaServicio();
         // GET: api/Venta
-        public GenericResponse<IEnumerable<VentaDto>> Get(int pagina = 1, int registros = 10, string cliente = "")
+        public GenericResponse<IEnumerable<VentaDto>> Get(int pagina = 1, int registros = 10, string Cliente = "")
         {
             
 
@@ -26,7 +26,7 @@ namespace AthenasNet.Api.Controllers
 
             try
             {
-                IEnumerable<VentaDto> data = servicio.Listar(cliente, 0);
+                IEnumerable<VentaDto> data = servicio.Listar(Cliente, 0);
                 response = ResponseUtil.GetListaPaginada<VentaDto>(data, pagina, registros);
             }
             catch (Exception ex)

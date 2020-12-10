@@ -138,6 +138,7 @@
     <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Filters\CustomAutenticacionFilter.cs" />
     <Compile Include="Filters\CustomAutorizacionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -146,6 +147,7 @@
     <Compile Include="Models\CategoriaViewModel.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\DetPedidoViewModel.cs" />
+    <Compile Include="Models\DetVentaViewModel.cs" />
     <Compile Include="Models\GenericResponseModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\PedidoViewModel.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Models\ProveedorViewModel.cs" />
     <Compile Include="Models\RolViewModel.cs" />
     <Compile Include="Models\UsuarioViewModel.cs" />
+    <Compile Include="Models\VentaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +257,10 @@
     <Content Include="Scripts\es6\usuario\usuarioController.js" />
     <Content Include="Scripts\es6\usuario\usuarioService.js" />
     <Content Include="Scripts\es6\usuario\usuarioUI.js" />
+    <Content Include="Scripts\es6\venta\venta.js" />
+    <Content Include="Scripts\es6\venta\ventaLstController.js" />
+    <Content Include="Scripts\es6\venta\ventaLstUI.js" />
+    <Content Include="Scripts\es6\venta\ventaService.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -442,6 +449,8 @@
     <Content Include="Views\Pedido\Index.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
     <Content Include="Views\Pedido\Recibir.cshtml" />
+    <Content Include="Views\Venta\Index.cshtml" />
+    <Content Include="Views\Venta\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
