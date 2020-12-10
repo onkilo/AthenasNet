@@ -1,4 +1,5 @@
-﻿using System;
+using Athenas.MVCUI.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,12 @@ namespace Athenas.MVCUI.Controllers
 {
     public class HomeController : Controller
     {
+        [CustomAuthenticationFilter(TipoResultado = "View")]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
     }
 }

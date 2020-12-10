@@ -1,9 +1,12 @@
+@using Athenas.MVCUI.Helpers
+@using Athenas.MVCUI.Util
+
 @{
     ViewBag.Title = "Inicio";
 }
 
-<div class="row">
-    <div class="callout callout-info col-12">
+<div class="row ">
+    <div class="callout callout-info col-12 mt-4">
         <h5><i class="fas fa-info"></i> Bienvenido <span style="font-weight: bolder;" >@Session["usuarioActual"]</span> </h5>
     </div>
 </div>
@@ -50,11 +53,12 @@
             <a href="@Url.Action("Index", "Venta")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6" sec:authorize="hasRole('ROLE_Administrador')">
+   
+    <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3 id="txt-cant-usuario">150</h3>
+                <h3 id="txt-cant-usuario"></h3>
                 <p>Usuarios</p>
             </div>
             <div class="icon">
@@ -63,6 +67,7 @@
             <a href="@Url.Action("Index", "Usuario")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+
 
 </div>
 <div class="row">
@@ -112,7 +117,7 @@
 </div>
 
 <script type="text/template" id="tempTblProdBajoStock">
-    {{each filas}}
+    {{#each filas}}
         <tr>
             <td>{{Descripcion}}</td>
             <td>{{StockActual}}</td>
@@ -122,7 +127,7 @@
 </script>
 
 <script type="text/template" id="tempTblPromosActuales">
-    {{each filas}}
+    {{#each filas}}
     <tr>
         <td>{{Producto.Descripcion}}</td>
         <td>{{FDescuento}}</td>

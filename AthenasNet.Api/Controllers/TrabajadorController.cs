@@ -164,8 +164,8 @@ namespace AthenasNet.Api.Controllers
                 VentaServicio ventServicio = new VentaServicio();
                 JwtDecodeModel model = (JwtDecodeModel)Thread.CurrentPrincipal;
                 int cantProductos = prodServicio.Listar("", 0).Count();
-                int cantVentas = (model.IsInRole("Vendedor")) ? ventServicio.Listar("", model.Id).Count() : ventServicio.Listar("", 0).Count() ;
-                int cantUsuarios = servicio.Listar("").Count();
+                int cantVentas = (model.IsInRole("Supervisor") || model.IsInRole("Administrador")) ? ventServicio.Listar("", 0).Count() : ventServicio.Listar("", model.Id).Count();
+                int cantUsuarios = (model.IsInRole("Supervisor") || model.IsInRole("Administrador")) ? servicio.Listar("").Count() : 0;
                 int cantClientes = servicio.Listar("").Count();
 
                 InfoPrincipal info = new InfoPrincipal
