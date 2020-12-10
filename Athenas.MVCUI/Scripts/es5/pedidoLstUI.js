@@ -57,8 +57,32 @@ var PedidoUI = function PedidoUI() {
     return document.getElementById('btn-agregar-detalle');
   };
 
+  var getInputCantidad = function getInputCantidad() {
+    return document.getElementById('Producto.Cantidad');
+  };
+
+  var getFormPedido = function getFormPedido() {
+    return document.getElementById('form-pedido');
+  };
+
+  var setTotal = function setTotal(total) {
+    return document.getElementById('txt-total').value = total;
+  };
+
   var getModalBuscar = function getModalBuscar() {
     return $('#modalBuscar');
+  };
+
+  var getModalContentBuscar = function getModalContentBuscar() {
+    return document.querySelector('#modalBuscar .modal-content');
+  };
+
+  var getTblModalBuscar = function getTblModalBuscar() {
+    return document.getElementById('tbl-modal-buscar');
+  };
+
+  var getTblDetalle = function getTblDetalle() {
+    return document.getElementById('tb-detalle');
   };
 
   var setModalBuscarData = function setModalBuscarData(data) {
@@ -80,7 +104,13 @@ var PedidoUI = function PedidoUI() {
     getModalBuscar: getModalBuscar,
     setModalBuscarData: setModalBuscarData,
     setDetalleData: setDetalleData,
-    getBtnAgregarDet: getBtnAgregarDet
+    getBtnAgregarDet: getBtnAgregarDet,
+    getTblModalBuscar: getTblModalBuscar,
+    getModalContentBuscar: getModalContentBuscar,
+    getInputCantidad: getInputCantidad,
+    setTotal: setTotal,
+    getTblDetalle: getTblDetalle,
+    getFormPedido: getFormPedido
   };
 };
 //# sourceMappingURL=pedidoLstUI.js.map

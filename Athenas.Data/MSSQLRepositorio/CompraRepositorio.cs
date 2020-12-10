@@ -131,6 +131,8 @@ namespace Athenas.Data.MSSQLRepositorio
                         RzSocial = drCompra["Proveedor"].ToString(),
                         Representante = drCompra["Representante"].ToString(),
                         RUC = drCompra["RUC"].ToString(),
+                        Direccion = drCompra["Direccion"].ToString(),
+                        Telefono = drCompra["Telefono"].ToString(),
                     };
                     compra.Trabajador = new Trabajador
                     {

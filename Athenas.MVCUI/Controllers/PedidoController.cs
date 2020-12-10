@@ -23,7 +23,9 @@ namespace Athenas.MVCUI.Controllers
         // GET: Pedido/Create
         public ActionResult Create()
         {
-            return View(new PedidoViewModel());
+            PedidoViewModel pedido = new PedidoViewModel();
+            pedido.Fecha = DateTime.Now;
+            return View(pedido);
         }
 
 
@@ -122,6 +124,8 @@ namespace Athenas.MVCUI.Controllers
         [HttpPost]
         public ActionResult Crear(PedidoViewModel pedido)
         {
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+            pedido.Trabajador = usuario;
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Post<GenericResponseModel<String>, PedidoViewModel, GenericResponseModel<String>>(baseUrl, pedido, out errorResponse);
