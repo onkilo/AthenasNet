@@ -16,13 +16,13 @@ namespace AthenasNet.Api.Controllers
     {
         private readonly PromocionServicio servicio = new PromocionServicio();
         // GET: api/Promocion
-        public GenericResponse<IEnumerable<PromocionDto>> Get(int pagina = 1, int registros = 10, string Producto = "")
+        public GenericResponse<IEnumerable<PromocionDto>> Get(int pagina = 1, int registros = 10, string Producto = "", int Estado = 0)
         {
             GenericResponse<IEnumerable<PromocionDto>> response = new GenericResponse<IEnumerable<PromocionDto>>();
 
             try
             {
-                IEnumerable<PromocionDto> data = servicio.Listar(Producto);
+                IEnumerable<PromocionDto> data = servicio.Listar(Producto, Estado);
                 response = ResponseUtil.GetListaPaginada<PromocionDto>(data, pagina, registros);
             }
             catch (Exception ex)

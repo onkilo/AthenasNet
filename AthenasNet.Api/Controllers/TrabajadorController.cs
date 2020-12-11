@@ -148,5 +148,37 @@ namespace AthenasNet.Api.Controllers
             return response;
 
         }
+
+        [HttpGet]
+        [Route("api/Trabajador/InfoPrincipal")]
+        public GenericResponse<InfoPrincipalModel> InfoPrincipal(int id)
+        {
+            GenericResponse<InfoPrincipalModel> response = new GenericResponse<InfoPrincipalModel>();
+            try
+            {
+                ProductoServicio prodServicio = new ProductoServicio();
+                VentaServicio ventServicio = new VentaServicio();
+                ClienteServicio cliServicio = new ClienteServicio();
+                PromocionServicio promServicio = new PromocionServicio();
+
+                InfoPrincipalModel data = new InfoPrincipalModel();
+                data.CantClientes = cliServicio.Listar("").Count();
+                data.CantProdcutos = prodServicio.Listar("", 0).Count();
+                data.CantVentas = ventServicio.Listar("", 0).Count();
+                data.CantUsuarios = servicio.Listar("").Count();
+                data.PromosActuales = promServicio.Listar("", 1);
+                data.ProdBajoStock = prodServicio.Listar("", 1);
+
+                response.Data = data;
+                response.Codigo = 200; // OK
+                response.Error = false;
+                response.Mensaje = "OK";
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+            return response;
+        }
     }
 }
