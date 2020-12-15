@@ -1,15 +1,24 @@
-const CategoriaController = (service, ui) => {
+const CategoriaController = (service, ui, usuarioService) => {
     let lstCategorias = [];
     let cateSeleccionada = {};
+    let lstRoles = [];
     const { Mant } = AthenasNet;
 
     const muestraCategorias = async (filtros = {}) => {
         try {
             lstCategorias = await service.listarCategoria(filtros);
-            ui.generarTabla(lstCategorias.map(c => ({
-                Id: c.Id,
-                Descripcion: c.Descripcion
-            })));
+
+            const data = {
+                filas: lstCategorias.map(c => ({
+                    Id: c.Id,
+                    Descripcion: c.Descripcion
+                })),//=> item
+                edita: !(lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor'),
+                elimina: !(lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor'),
+                iniCodigo: 'CT'
+            }
+
+            ui.generarTabla(data);
         }
         catch (err) {
             console.error(err);
@@ -31,6 +40,9 @@ const CategoriaController = (service, ui) => {
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
                     AthenasNet.mostrarConfirmacion();
+                }
+                else if (accion === 'detalle') {
+                    Mant.setFormMantenedor(cateSeleccionada, [], true);
                 }
             }
 
@@ -94,7 +106,10 @@ const CategoriaController = (service, ui) => {
         })
     }
 
-    const iniciar = () => {
+    const iniciar = async () => {
+
+        lstRoles = await usuarioService.rolesActuales();
+        console.log(lstRoles)
         muestraCategorias();
         Mant.evtMostrarModMant();
         manejaEvtTabla();

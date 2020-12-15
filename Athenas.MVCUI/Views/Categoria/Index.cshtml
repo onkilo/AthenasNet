@@ -1,3 +1,4 @@
+@using Athenas.MVCUI.Util
 
 @{
     ViewBag.Title = "Index";
@@ -45,10 +46,15 @@
 
 }
 
-
+@if (!RolUtil.IsInRol("Supervisor,Administrador"))
+{
+    @section btnNuevo {
+    }
+}
 
 
 @section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
     @Scripts.Render("~/Scripts/es5/categoriaService.js")
     @Scripts.Render("~/Scripts/es5/categoriaUI.js")
     @Scripts.Render("~/Scripts/es5/categoriaController.js")

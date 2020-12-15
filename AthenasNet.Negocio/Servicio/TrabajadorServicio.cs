@@ -30,20 +30,32 @@ namespace AthenasNet.Negocio.Servicio
 
         public void Actualizar(TrabajadorDto trabajador)
         {
-            if(trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
-            {
-                string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
-                trabajador.Contrasenia = hash;
-            }
-            else
-            {
-                Trabajador trabActual = repositorio.BuscarPorId(trabajador.Id);
+            Trabajador trabActual = repositorio.BuscarPorId(trabajador.Id);
+            trabActual.Nombre = trabajador.Nombre != null && trabajador.Nombre.Trim() != "" ? trabajador.Nombre : trabActual.Nombre;
+            trabActual.Apellido = trabajador.Apellido != null && trabajador.Apellido.Trim() != "" ? trabajador.Apellido : trabActual.Apellido;
+            trabActual.Direccion = trabajador.Direccion != null && trabajador.Direccion.Trim() != "" ? trabajador.Direccion : trabActual.Direccion;
+            trabActual.Telefono = trabajador.Telefono != null && trabajador.Telefono.Trim() != "" ? trabajador.Telefono : trabActual.Telefono;
+            trabActual.Dni = trabajador.Dni != null && trabajador.Dni.Trim() != "" ? trabajador.Dni : trabActual.Dni;
+            trabActual.Email = trabajador.Email != null && trabajador.Email.Trim() != "" ? trabajador.Email : trabActual.Email;
+            trabActual.Sexo = trabajador.Sexo != null && trabajador.Sexo.Trim() != "" ? trabajador.Sexo : trabActual.Sexo;
+            trabActual.Usuario = trabajador.Usuario != null && trabajador.Usuario.Trim() != "" ? trabajador.Usuario : trabActual.Usuario;
+            trabActual.Roles = trabajador.Roles != null && trabajador.Roles.Count() > 0 ? RolMapper.ToRoles(trabajador.Roles) : trabActual.Roles;
+            //if (trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
+            //{
+            //    string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
+            //    trabajador.Contrasenia = hash;
+            //}
+            //else
+            //{
+            //    trabajador.Contrasenia = trabActual.Contrasenia;
+            //}
 
-                trabajador.Contrasenia = trabActual.Contrasenia;
-                //trabajador.Nombre = (trabajador.Nombre == null || trabajador.Nombre == "") ? trabActual.Nombre : trabajador.Nombre;
-            }
+            trabActual.Contrasenia = trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "" 
+                ? BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10) 
+                : trabActual.Contrasenia;
 
-            repositorio.Actualizar(TrabajadorMapper.ToTrabajador(trabajador));
+
+            repositorio.Actualizar(trabActual);
         }
 
         public TrabajadorDto BuscarPorId(int id)

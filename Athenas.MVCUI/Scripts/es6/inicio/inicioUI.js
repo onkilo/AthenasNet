@@ -16,16 +16,16 @@ const InicioUI = () => {
     const setPromoData = (data) => {
 
         AthenasNet.compilaTemplate('tempTblPromosActuales', data, '#tb-promocion tbody');
-
+        $('#tb-promocion').DataTable();
     }
 
     const setProductoData = (data) => {
 
         AthenasNet.compilaTemplate('tempTblProdBajoStock', data, '#tb-producto tbody');
-
+        $('#tb-producto').DataTable();
     }
     const ocultarVendedor = () => {
-
+        document.getElementById('info-usuarios').style.display = 'none';
     }
 
     return {

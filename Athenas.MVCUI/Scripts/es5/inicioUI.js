@@ -23,13 +23,17 @@ var InicioUI = function InicioUI() {
 
   var setPromoData = function setPromoData(data) {
     AthenasNet.compilaTemplate('tempTblPromosActuales', data, '#tb-promocion tbody');
+    $('#tb-promocion').DataTable();
   };
 
   var setProductoData = function setProductoData(data) {
     AthenasNet.compilaTemplate('tempTblProdBajoStock', data, '#tb-producto tbody');
+    $('#tb-producto').DataTable();
   };
 
-  var ocultarVendedor = function ocultarVendedor() {};
+  var ocultarVendedor = function ocultarVendedor() {
+    document.getElementById('info-usuarios').style.display = 'none';
+  };
 
   return {
     setCantUsuario: setCantUsuario,

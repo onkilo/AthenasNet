@@ -6,14 +6,7 @@ var CategoriaUI = function CategoriaUI() {
     return AthenasNet.Mant.getFiltros(arrFiltros);
   };
 
-  var generarTabla = function generarTabla(lstCategorias) {
-    var data = {
-      filas: lstCategorias,
-      //=> item
-      edita: true,
-      elimina: true,
-      iniCodigo: 'CT'
-    };
+  var generarTabla = function generarTabla(data) {
     AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
   };

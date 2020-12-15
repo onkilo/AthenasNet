@@ -5,6 +5,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var InicioController = function InicioController(ui, usuarioService) {
+  var lstRoles = [];
+
   var muestraInfoPrincipal = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var infoPrincipal;
@@ -60,9 +62,69 @@ var InicioController = function InicioController(ui, usuarioService) {
     };
   }();
 
-  var iniciar = function iniciar() {
-    muestraInfoPrincipal();
-  };
+  var validacionUI = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return usuarioService.rolesActuales();
+
+            case 3:
+              lstRoles = _context2.sent;
+              console.log(lstRoles);
+
+              if (lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor') {
+                ui.ocultarVendedor();
+              }
+
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              console.error(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 8]]);
+    }));
+
+    return function validacionUI() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  var iniciar = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return validacionUI();
+
+            case 2:
+              muestraInfoPrincipal();
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function iniciar() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
 
   return {
     iniciar: iniciar

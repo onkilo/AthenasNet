@@ -7,15 +7,7 @@ const CategoriaUI = () => {
 
     }
 
-    const generarTabla = (lstCategorias) => {
-
-        const data = {
-            filas: lstCategorias,//=> item
-            edita: true,
-            elimina: true,
-            iniCodigo: 'CT'
-        }
-
+    const generarTabla = (data) => {
         AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
         $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
     }

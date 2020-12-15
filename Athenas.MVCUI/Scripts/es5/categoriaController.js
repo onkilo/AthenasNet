@@ -4,15 +4,17 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var CategoriaController = function CategoriaController(service, ui) {
+var CategoriaController = function CategoriaController(service, ui, usuarioService) {
   var lstCategorias = [];
   var cateSeleccionada = {};
+  var lstRoles = [];
   var _AthenasNet = AthenasNet,
       Mant = _AthenasNet.Mant;
 
   var muestraCategorias = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var filtros,
+          data,
           _args = arguments;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -25,26 +27,33 @@ var CategoriaController = function CategoriaController(service, ui) {
 
             case 4:
               lstCategorias = _context.sent;
-              ui.generarTabla(lstCategorias.map(function (c) {
-                return {
-                  Id: c.Id,
-                  Descripcion: c.Descripcion
-                };
-              }));
-              _context.next = 11;
+              data = {
+                filas: lstCategorias.map(function (c) {
+                  return {
+                    Id: c.Id,
+                    Descripcion: c.Descripcion
+                  };
+                }),
+                //=> item
+                edita: !(lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor'),
+                elimina: !(lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor'),
+                iniCodigo: 'CT'
+              };
+              ui.generarTabla(data);
+              _context.next = 12;
               break;
 
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](1);
               console.error(_context.t0);
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee, null, [[1, 9]]);
     }));
 
     return function muestraCategorias() {
@@ -68,6 +77,8 @@ var CategoriaController = function CategoriaController(service, ui) {
         } else if (accion === 'eliminar') {
           console.log('eliminar');
           AthenasNet.mostrarConfirmacion();
+        } else if (accion === 'detalle') {
+          Mant.setFormMantenedor(cateSeleccionada, [], true);
         }
       }
     });
@@ -230,14 +241,37 @@ var CategoriaController = function CategoriaController(service, ui) {
     }());
   };
 
-  var iniciar = function iniciar() {
-    muestraCategorias();
-    Mant.evtMostrarModMant();
-    manejaEvtTabla();
-    manejaEnvioCat();
-    manejaEnvioConf();
-    manejaEnvioFiltro();
-  };
+  var iniciar = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return usuarioService.rolesActuales();
+
+            case 2:
+              lstRoles = _context5.sent;
+              console.log(lstRoles);
+              muestraCategorias();
+              Mant.evtMostrarModMant();
+              manejaEvtTabla();
+              manejaEnvioCat();
+              manejaEnvioConf();
+              manejaEnvioFiltro();
+
+            case 10:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function iniciar() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
 
   return {
     iniciar: iniciar

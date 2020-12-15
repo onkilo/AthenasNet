@@ -35,17 +35,25 @@
 
     const getFormEleValue = (ele) => getFormMantElements()[ele].value;
 
-    const setFormEleValue = (ele, value) => { getFormMantElements()[ele].value = value; }
+    const setFormEleValue = (ele, value, readonly = false) => {
+        const htmlEle = getFormMantElements()[ele];
+        htmlEle.value = value;
+        htmlEle.readOnly = readonly;
+        console.log(getFormMantElements()[ele].readOnly)
+    }
 
-    const setFormMantenedor = (entidad, arrExcepciones = []) => {
+    const setFormMantenedor = (entidad, arrExcepciones = [], readonly = false) => {
         const elementos = Object.keys(entidad);
 
         elementos.forEach(ele => {
             if (arrExcepciones.includes(ele)) return; 
 
-            setFormEleValue(ele, entidad[ele]);
+            setFormEleValue(ele, entidad[ele], readonly);
         })
 
+        if (readonly) {
+            document.querySelector('#btn-modal-mant-guardar').style.display = 'none';
+        }
 
         $(SEL_MODAL_CATE).modal('show');
     }

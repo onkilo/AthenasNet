@@ -4,7 +4,9 @@ window.addEventListener('load', () => {
 
     const ui = CategoriaUI();
 
-    const controller = CategoriaController(service, ui);
+    const usuarioService = UsuarioService();
+
+    const controller = CategoriaController(service, ui, usuarioService);
 
     controller.iniciar();
 

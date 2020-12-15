@@ -20,7 +20,7 @@ namespace AthenasNet.Api.Controllers
 
         // GET: api/Categoria
         [CustomAutenticacionFilter]
-        [CustomAutorizacionFilter("Administrador, Supervisor")]
+        [CustomAutorizacionFilter("Administrador, Supervisor, Vendedor")]
         public GenericResponse<IEnumerable<CategoriaDto>> Get(int pagina = 1, int registros = 10, string Descripcion = "")
         {
             GenericResponse<IEnumerable<CategoriaDto>> response = new GenericResponse<IEnumerable<CategoriaDto>>();

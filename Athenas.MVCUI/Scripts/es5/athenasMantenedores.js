@@ -48,16 +48,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var setFormEleValue = function setFormEleValue(ele, value) {
-    getFormMantElements()[ele].value = value;
+    var readonly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var htmlEle = getFormMantElements()[ele];
+    htmlEle.value = value;
+    htmlEle.readOnly = readonly;
+    console.log(getFormMantElements()[ele].readOnly);
   };
 
   var setFormMantenedor = function setFormMantenedor(entidad) {
     var arrExcepciones = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var readonly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     var elementos = Object.keys(entidad);
     elementos.forEach(function (ele) {
       if (arrExcepciones.includes(ele)) return;
-      setFormEleValue(ele, entidad[ele]);
+      setFormEleValue(ele, entidad[ele], readonly);
     });
+
+    if (readonly) {
+      document.querySelector('#btn-modal-mant-guardar').style.display = 'none';
+    }
+
     $(SEL_MODAL_CATE).modal('show');
   };
 

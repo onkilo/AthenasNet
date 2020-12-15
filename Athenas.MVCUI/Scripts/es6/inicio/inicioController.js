@@ -1,5 +1,7 @@
 const InicioController = (ui, usuarioService) => {
 
+    let lstRoles = [];
+
     const muestraInfoPrincipal = async () => {
         try {
             const infoPrincipal = await usuarioService.infoPrincipal();
@@ -25,8 +27,27 @@ const InicioController = (ui, usuarioService) => {
         }
     }
 
+    const validacionUI = async () => {
 
-    const iniciar = () => {
+        try {
+            lstRoles = await usuarioService.rolesActuales();
+            console.log(lstRoles);
+
+            if (lstRoles.length == 1 && lstRoles[0].Nombre === 'Vendedor') {
+                ui.ocultarVendedor();
+            }
+
+        }
+        catch (err) {
+            console.error(err);
+        }
+        
+
+
+    }
+
+    const iniciar = async () => {
+        await validacionUI()
         muestraInfoPrincipal();
     }
 

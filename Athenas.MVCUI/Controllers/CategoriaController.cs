@@ -42,7 +42,7 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [CustomAuthenticationFilter(TipoResultado = "Json")]
-        [CustomAuthorizationFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor")]
+        //[CustomAuthorizationFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor")]
         [HttpGet]
         public ActionResult Listar(string Descripcion = "")
         {
