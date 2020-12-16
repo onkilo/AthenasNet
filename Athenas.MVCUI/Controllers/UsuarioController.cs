@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -181,6 +182,25 @@ namespace Athenas.MVCUI.Controllers
             Session["usuarioActual"] = null;
 
             return RedirectToAction("Login");
+        }
+
+
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        public ActionResult InfoPrincipal()
+        {
+            String url = $"{baseUrl}/InfoPrincipal";
+
+            GenericResponseModel<IEnumerable<InfoPrincipalViewModel>> responseModel = ApiRequests
+                .Get<GenericResponseModel<IEnumerable<InfoPrincipalViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

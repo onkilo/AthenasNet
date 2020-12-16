@@ -7,6 +7,7 @@ BEGIN
 	SELECT @Valor = pm.Valor, @Tipo = pm.Tipo, @Desc = pd.PrecioVenta
 	FROM Producto pd JOIN Promocion pm ON pd.Id = pm.ProductoId
 	WHERE GETDATE() BETWEEN pm.FechaInicio AND pm.FechaFin AND pm.Activo = '1'
+	AND pd.Id = @ProductoId
 
 	IF @Tipo = 0
 	BEGIN
