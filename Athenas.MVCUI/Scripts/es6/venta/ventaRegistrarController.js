@@ -1,10 +1,10 @@
-const PedidoController = (service, ui, proveedorService, productoService) => {
+﻿const VentaController = (service, ui, clienteService, productoService) => {
     let lstProductos = [];
-    let lstProveedores = [];
-    let tipoBusqueda = null;//Producto, Proveedor
+    let lstClientes = [];
+    let tipoBusqueda = null;//Producto, Cliente
     let lstDetalles = [];
     let prodSeleccionado = {};
-    let provSeleccionado = {};
+    let cliSeleccionado = {};
 
     const muestraProductos = async () => {
         lstProductos = await productoService.listar({});
@@ -14,6 +14,7 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                 'Descripción',
                 'Precio',
                 'Stock',
+                'Descuento',
                 'Categoría',
                 'Acciones'
             ],
@@ -22,8 +23,9 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                 return {
                     data: {
                         Descripcion: prod.Descripcion,
-                        Precio: AthenasNet.formatPrecio(prod.PrecioCompra),
+                        Precio: AthenasNet.formatPrecio(prod.PrecioVenta),
                         Stock: prod.StockActual,
+                        Descuento: AthenasNet.formatPrecio(prod.Descuento),
                         Categoria: prod.Categoria.Descripcion
                     },
                     Id: prod.Id
@@ -36,52 +38,41 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
         console.log(lstProductos)
     }
 
-    const muestraProveedores = async () => {
-        lstProveedores = await proveedorService.listarProveedor({});
+    const muestraClientes = async () => {
+        lstClientes = await clienteService.listarCliente({});
         const data = {
-            titulo: 'Buscar Proveedor',
+            titulo: 'Buscar Cliente',
             cabecera: [
-                'Razón Social',
-                'Representante',
-                'Dirección',
+                'Nombre Completo',
+                'Dni',
                 'Teléfono',
                 'Acciones'
             ],
-            filas: lstProveedores.map(prov => {
+            filas: lstClientes.map(cli => {
 
                 return {
                     data: {
-                        RzSocial: prov.RzSocial,
-                        Representante: prov.Representante,
-                        Direccion: prov.Direccion,
-                        Telefono: prov.Telefono
+                        Nombre: cli.Nombre + ' ' + cli.Apellido ,
+                        Dni: cli.Dni,
+                        Telefono: cli.Telefono
                     },
-                    Id: prov.Id
+                    Id: cli.Id
                 }
 
             })
         }
         ui.setModalBuscarData(data);
-        console.log(lstProveedores)
+        console.log(lstClientes)
     }
 
     const evtBtnBuscarProducto = () => ui.getBtnBuscarProducto().addEventListener('click', () => tipoBusqueda = 'Producto');
 
-    const evtBtnBuscarProveedor = () => ui.getBtnBuscarProveedor().addEventListener('click', () => tipoBusqueda = 'Proveedor');
-
-    //const evtAbreModal = () => {
-    //    ui.getModalBuscar().on('show.bs.modal', async (e) => {
-    //        if (tipoBusqueda === 'Producto') await muestraProductos();
-    //        else await muestraProveedores();
-
-    //        evtBtnSelModalBuscar();
-    //    })
-    //}
+    const evtBtnBuscarCliente = () => ui.getBtnBuscarCliente().addEventListener('click', () => tipoBusqueda = 'Cliente');
 
     const evtAbreModal = () => {
         ui.getModalBuscar().on('show.bs.modal', (e) => {
             if (tipoBusqueda === 'Producto') muestraProductos();
-            else muestraProveedores();
+            else muestraClientes();
         })
     }
 
@@ -101,15 +92,16 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
 
                     ui.setProducto({
                         ...prodSeleccionado,
-                        PrecioCompra: AthenasNet.formatPrecio(prodSeleccionado.PrecioCompra),
+                        PrecioVenta: AthenasNet.formatPrecio(prodSeleccionado.PrecioVenta),
+                        Descuento: AthenasNet.formatPrecio(prodSeleccionado.Descuento),
                         Codigo: AthenasNet.formatCodigo(prodSeleccionado.Id, 'PRD', 4)
                     });
                     ui.getModalBuscar().modal('hide');
                 }
                 else {
-                    provSeleccionado = lstProveedores.find(prov => prov.Id === id);
+                    cliSeleccionado = lstClientes.find(cli => cli.Id === id);
 
-                    ui.setProveedor(provSeleccionado);
+                    ui.setCliente(cliSeleccionado);
                     ui.getModalBuscar().modal('hide');
                 }
 
@@ -147,11 +139,12 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                         Descripcion: prodSeleccionado.Descripcion
                     },
                     Cantidad: parseInt(cantidad),
-                    Precio: prodSeleccionado.PrecioCompra
+                    Precio: prodSeleccionado.PrecioVenta,
+                    Descuento: prodSeleccionado.Descuento
 
                 });
             }
-           
+
 
             muestraDetalle();
         })
@@ -176,13 +169,19 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
     }
 
     const muestraDetalle = () => {
+        let subtotal = 0;
+        let descuento = 0;
         let total = 0;
+        
 
         const data = {
 
             filas: lstDetalles.map(det => {
 
-                total += parseInt(det.Cantidad) * det.Precio;
+                subtotal += parseInt(det.Cantidad) * det.Precio;
+                descuento += parseInt(det.Cantidad) * det.Descuento;
+                total += parseInt(det.Cantidad) * det.Precio - parseInt(det.Cantidad) * det.Descuento;
+
 
                 return {
                     data: {
@@ -190,51 +189,53 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                         Descripcion: det.Producto.Descripcion,
                         Precio: AthenasNet.formatPrecio(det.Precio),
                         Cantidad: det.Cantidad,
-                        SubTotal: AthenasNet.formatPrecio(det.Precio * det.Cantidad)
-                        
+                        SubTotal: AthenasNet.formatPrecio(det.Precio * det.Cantidad),
+                        Descuento: AthenasNet.formatPrecio(det.Descuento * det.Cantidad)
                     },
                     productoId: det.Producto.Id
                 }
-
+                
             })
         }
 
         ui.setDetalleData(data);
+        ui.setSubTotal(subtotal.toFixed(2));
+        ui.setDescuento(descuento.toFixed(2));
         ui.setTotal(total.toFixed(2));
     }
 
-    const evtFormPedido = () => {
+    const evtFormVenta = () => {
 
-        ui.getFormPedido().addEventListener('submit', async (e) => {
+        ui.getFormVenta().addEventListener('submit', async (e) => {
 
             e.preventDefault();
 
-            const pedido = {
-                Proveedor: {
-                    Id: provSeleccionado.Id
+            const venta = {
+                Cliente: {
+                    Id: cliSeleccionado.Id
                 },
                 Detalles: lstDetalles
             }
             try {
-                await service.crear(pedido)
+                await service.crear(venta)
                 console.log('registrado');
             }
             catch (err) {
                 console.error(err);
             }
-            
+
         })
 
     }
 
     const iniciar = () => {
         evtBtnBuscarProducto();
-        evtBtnBuscarProveedor();
+        evtBtnBuscarCliente();
         evtAbreModal();
         evtBtnSelModalBuscar();
         evtBtnAgregarDet();
         evtEliminaDetalle();
-        evtFormPedido();
+        evtFormVenta();
     }
 
     return {

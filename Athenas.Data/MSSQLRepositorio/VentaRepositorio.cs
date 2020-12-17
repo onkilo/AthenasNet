@@ -69,7 +69,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         Apellido = drVenta["ApeTrabajador"].ToString()
                     };
                     venta.Fecha = Convert.ToDateTime(drVenta["Fecha"]);
-                    venta.DescTotal = Convert.ToDouble(drVenta["DescTotal"]);
+                    venta.Descuento = Convert.ToDouble(drVenta["DescTotal"]);
                     venta.Activo = drVenta["Activo"].ToString();
 
 
@@ -136,7 +136,7 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.Parameters.AddWithValue("@Opcion", "1");
                 cmd.Parameters.AddWithValue("@ClienteId", entidad.Cliente.Id);
                 cmd.Parameters.AddWithValue("@TrabajadorId", entidad.Trabajador.Id);
-                cmd.Parameters.AddWithValue("@DescTotal", entidad.DescTotal);
+                cmd.Parameters.AddWithValue("@DescTotal", entidad.Descuento);
 
 
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -264,7 +264,7 @@ namespace Athenas.Data.MSSQLRepositorio
         public IEnumerable<Venta> Listar(string Criterio, int UsuarioId)
         {
             List<Venta> ventas = new List<Venta>();
-            List<DetalleVenta> detalles = new List<DetalleVenta>();
+            
             try
             {
                 cn.Open();
@@ -301,7 +301,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         Apellido = drVenta["ApeTrabajador"].ToString()
                     };
                     venta.Fecha = Convert.ToDateTime(drVenta["Fecha"]);
-                    venta.DescTotal = Convert.ToDouble(drVenta["DescTotal"]);
+                    venta.Descuento = Convert.ToDouble(drVenta["DescTotal"]);
                     venta.Activo = drVenta["Activo"].ToString();
 
                     ventas.Add(venta);
@@ -312,6 +312,7 @@ namespace Athenas.Data.MSSQLRepositorio
 
                 foreach (Venta venta in ventas)
                 {
+                    List<DetalleVenta> detalles = new List<DetalleVenta>();
                     SqlCommand cmdDetalle = new SqlCommand(USP_MNT_DETALLEVENTA, cn);
                     cmdDetalle.CommandType = CommandType.StoredProcedure;
                     cmdDetalle.Parameters.AddWithValue("@Opcion", "4");

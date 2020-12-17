@@ -67,7 +67,7 @@
                 await service.eliminar(parseInt(ventaSeleccionada.Id));
                 AthenasNet.ocultarConfirmacion();
                 AthenasNet.muestraToast({ mensaje: 'La venta fue eliminada satisfactoriamente', titulo: 'Eliminación exitosa' })
-                await muesraPedidos();
+                await muestraVentas();
             }
             catch (err) {
                 console.error(err);

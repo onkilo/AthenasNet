@@ -24,7 +24,9 @@ namespace Athenas.MVCUI.Controllers
         // GET: Venta/Create
         public ActionResult Create()
         {
-            return View(new VentaViewModel());
+            VentaViewModel venta = new VentaViewModel();
+            venta.Fecha = DateTime.Now;
+            return View(venta);
         }
 
         [HttpGet]

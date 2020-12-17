@@ -142,7 +142,7 @@ var VentaController = function VentaController(service, ui) {
                   titulo: 'Eliminación exitosa'
                 });
                 _context3.next = 8;
-                return muesraPedidos();
+                return muestraVentas();
 
               case 8:
                 _context3.next = 14;

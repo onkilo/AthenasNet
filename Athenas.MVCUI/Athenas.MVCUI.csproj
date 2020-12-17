@@ -270,6 +270,7 @@
     <Content Include="Scripts\es6\venta\venta.js" />
     <Content Include="Scripts\es6\venta\ventaLstController.js" />
     <Content Include="Scripts\es6\venta\ventaLstUI.js" />
+    <Content Include="Scripts\es6\venta\ventaRegistrarController.js" />
     <Content Include="Scripts\es6\venta\ventaService.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />

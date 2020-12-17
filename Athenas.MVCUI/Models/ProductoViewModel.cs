@@ -16,7 +16,7 @@ namespace Athenas.MVCUI.Models
         public string Imagen { get; set; }
         public string Activo { get; set; }
 
-        //public double Descuento { get; set; }
+        public double Descuento { get; set; }
 
         public string Base64Imagen { get; set; }
 

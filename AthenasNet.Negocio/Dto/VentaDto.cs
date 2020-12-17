@@ -16,7 +16,7 @@ namespace AthenasNet.Negocio.Dto
 
         public DateTime Fecha { get; set; }
 
-        public double DescTotal { get; set; }
+        public double Descuento { get; set; }
 
         public string Activo { get; set; }
 
