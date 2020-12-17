@@ -145,9 +145,13 @@ namespace Athenas.MVCUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string redirectUrl = "")
         {
-            return View(new LoginViewModel());
+            LoginViewModel login = new LoginViewModel();
+
+            login.RedirectUrl = redirectUrl;
+
+            return View(login);
         }
 
         [HttpPost]
@@ -165,7 +169,13 @@ namespace Athenas.MVCUI.Controllers
                 Session["token"] = usuario.Token;
                 Session["usuarioActual"] = usuario.Nombre + " " + usuario.Apellido;
 
-                return RedirectToAction("Index", "Home");
+                if (login.RedirectUrl != null && login.RedirectUrl != "") {
+
+                    return Redirect(login.RedirectUrl);//primera redireccion
+
+                } 
+
+                return RedirectToAction("Index", "Home");//segunda redireccion
             }
             else
             {

@@ -216,7 +216,13 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
             }
             try {
                 await service.crear(pedido)
-                console.log('registrado');
+                const mensaje = {
+                    color: 'bg-success',
+                    titulo: 'Registro exitoso',
+                    texto: 'El pedido fue registrado exitosamente'
+                }
+                localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
             }
             catch (err) {
                 console.error(err);

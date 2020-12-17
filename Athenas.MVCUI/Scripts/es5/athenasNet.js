@@ -20,7 +20,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
   var llamadaApi = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(opciones) {
-      var opcionsDefecto, respuesta;
+      var opcionsDefecto, respuesta, urlActual;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -43,14 +43,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               respuesta = _context.sent;
 
               if (!(respuesta.Codigo === 401)) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
 
-              window.location.href = MVC_URL_BASE + 'Usuario/Login';
+              urlActual = window.location.href;
+              window.location.href = MVC_URL_BASE + 'Usuario/Login?redirectUrl=' + urlActual;
               return _context.abrupt("return", null);
 
-            case 8:
+            case 9:
               if (respuesta.Codigo === 403) {
                 muestraToast({
                   cssClass: 'bg-danger',
@@ -60,32 +61,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }
 
               if (!(respuesta.Codigo !== 200)) {
-                _context.next = 11;
+                _context.next = 12;
                 break;
               }
 
               throw respuesta;
 
-            case 11:
+            case 12:
               return _context.abrupt("return", respuesta);
 
-            case 14:
-              _context.prev = 14;
+            case 15:
+              _context.prev = 15;
               _context.t0 = _context["catch"](1);
               throw _context.t0;
 
-            case 17:
-              _context.prev = 17;
+            case 18:
+              _context.prev = 18;
               //ocultar spinner
               manejaSpinner(ACCION_OCULTAR_SPINNER);
-              return _context.finish(17);
+              return _context.finish(18);
 
-            case 20:
+            case 21:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 14, 17, 20]]);
+      }, _callee, null, [[1, 15, 18, 21]]);
     }));
 
     return function llamadaApi(_x) {

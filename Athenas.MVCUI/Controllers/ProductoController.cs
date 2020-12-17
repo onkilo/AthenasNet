@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Athenas.MVCUI.Controllers
         GenericResponseModel<String> errorResponse;
 
         // GET: Producto
+        [CustomAutenticacionFilter(TipoResultado = "View")]
         public ActionResult Index()
         {
             ViewBag.Title = "Producto";
@@ -21,6 +23,7 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
         public ActionResult Listar(string Descripcion = "")
         {
 

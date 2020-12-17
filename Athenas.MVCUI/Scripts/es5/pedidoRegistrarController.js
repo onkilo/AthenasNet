@@ -220,7 +220,7 @@ var PedidoController = function PedidoController(service, ui, proveedorService, 
   var evtFormPedido = function evtFormPedido() {
     ui.getFormPedido().addEventListener('submit', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
-        var pedido;
+        var pedido, mensaje;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -237,21 +237,27 @@ var PedidoController = function PedidoController(service, ui, proveedorService, 
                 return service.crear(pedido);
 
               case 5:
-                console.log('registrado');
-                _context3.next = 11;
+                mensaje = {
+                  color: 'bg-success',
+                  titulo: 'Registro exitoso',
+                  texto: 'El pedido fue registrado exitosamente'
+                };
+                localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
+                _context3.next = 13;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](2);
                 console.error(_context3.t0);
 
-              case 11:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 8]]);
+        }, _callee3, null, [[2, 10]]);
       }));
 
       return function (_x) {
