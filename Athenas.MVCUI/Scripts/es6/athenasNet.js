@@ -27,7 +27,7 @@
             });
 
             if (respuesta.Codigo === 401) {
-                window.location.href = MVC_URL_BASE + 'Seguridad';
+                window.location.href = MVC_URL_BASE + 'Seguridad?redirectUrl=' + window.location.href;
             }
 
             if (respuesta.Codigo === 403) {

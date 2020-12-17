@@ -261,6 +261,37 @@ var UsuarioService = function UsuarioService() {
     };
   }();
 
+  var actualizarCuenta = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(usuario) {
+      var respuesta;
+      return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.next = 2;
+              return AthenasNet.llamadaApi({
+                type: 'POST',
+                data: JSON.stringify(usuario),
+                url: 'Usuario/ActualizarDatos'
+              });
+
+            case 2:
+              respuesta = _context9.sent;
+              return _context9.abrupt("return", respuesta);
+
+            case 4:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
+    }));
+
+    return function actualizarCuenta(_x6) {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+
   return {
     crear: crear,
     actualizar: actualizar,
@@ -269,7 +300,8 @@ var UsuarioService = function UsuarioService() {
     buscar: buscar,
     roles: roles,
     infoPrincipal: infoPrincipal,
-    rolesActuales: rolesActuales
+    rolesActuales: rolesActuales,
+    actualizarCuenta: actualizarCuenta
   };
 };
 //# sourceMappingURL=usuarioService.js.map

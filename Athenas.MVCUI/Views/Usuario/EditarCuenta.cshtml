@@ -1,10 +1,95 @@
 
+@model Athenas.MVCUI.Models.UsuarioViewModel
+@using Athenas.MVCUI.Models
+
 @{
     ViewBag.Title = "EditarCuenta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="card">
+<div class="row mt-4">
+    <div class="col-12 mt-4 col-lg-8 offset-lg-2">
+        <div class="card card-outline  card-primary">
+            <div class="card-header">
+                <div class="card-title">
+                    <h5>Tus datos personales</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <form  method="post" class="form col-md-12" novalidate id="form-usuario">
+                   <div class="form-group">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" class="form-control" name="Nombre" id="Nombre" required value="@Model.Nombre">
+                        <div class="invalid-feedback">Por favor ingrese el nombre del usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Apellido" >Apellido</label>
+                        <input type="text" class="form-control" name="Apellido" id="Apellido" value="@Model.Apellido" required>
+                        <div class="invalid-feedback">Por favor ingrese el apellido del usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="Telefono" id="Telefono" value="@Model.Telefono" required minlength="7" maxlength="9">
+                        <div class="invalid-feedback">Por favor ingrese número de teléfono para el usuario, debe ser tener entre 7 y 9 caracteres</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Direccion">Dirección</label>
+                        <input type="text" class="form-control" name="Direccion" id="Direccion" value="@Model.Direccion" required>
+                        <div class="invalid-feedback">Por favor ingrese una dirección para el usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" class="form-control" name="Email" id="Email" value="@Model.Email" required>
+                        <div class="invalid-feedback">Por favor ingrese email válido </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Usuario">Usuario</label>
+                        <input type="text" class="form-control" name="Usuario" id="Usuario" value="@Model.Usuario">
+                        <div class="invalid-feedback">Por favor ingrese un nombre de usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Contrasenia">Contraseña (* si no desea cambiar su contraseña déjela en blanco)</label>
+                        <input type="password" class="form-control" name="Contrasenia" id="Contrasenia" >
+                        <div class="invalid-feedback">Por favor ingrese una contraseña para el usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Dni">DNI</label>
+                        <input type="text" class="form-control" name="Dni" id="Dni" value="@Model.Dni" required minlength="8" maxlength="8">
+                        <div class="invalid-feedback">Por favor ingrese un número de DNI para el usuario, debe tener 8 caracteres</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Sexo">Sexo</label>
+                        <select name="Sexo" class="form-control" id="Sexo">
+                            <option value="M" @((Model.Sexo == "M") ? "selected": "") >Masculino</option>
+                            <option value="F" @((Model.Sexo == "F") ? "selected": "")>Femenino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Roles</label>
+                        <ul>
+                            @foreach (RolViewModel r in Model.Roles)
+                            {
+                                <li>@r.Nombre</li>
+                            }
 
+                        </ul>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4"><i class="far fa-save mr-1"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/usuarioCuentaUI.js")
+    @Scripts.Render("~/Scripts/es5/usuarioCuentaController.js")
+    @Scripts.Render("~/Scripts/es5/usuario.js")
+
+}

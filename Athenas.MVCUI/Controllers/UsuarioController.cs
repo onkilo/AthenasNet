@@ -24,7 +24,8 @@ namespace Athenas.MVCUI.Controllers
 
         public ActionResult EditarCuenta()
         {
-            return View();
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+            return View(usuario);
         }
 
         [HttpGet]
@@ -194,7 +195,20 @@ namespace Athenas.MVCUI.Controllers
 
             if (errorResponse == null)
             {
-                return Json(responseModel, JsonRequestBehavior.AllowGet);
+                UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+                url = $"{baseUrl}/{usuario.Id}";
+
+                GenericResponseModel<UsuarioViewModel> cuentaResponseModel = ApiRequests
+                   .Get<GenericResponseModel<UsuarioViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+                if(errorResponse == null)
+                {
+                    Session["usuario"] = cuentaResponseModel.Data;
+
+                    return Json(responseModel, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
             }
             else
             {

@@ -23,6 +23,7 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAuthenticationFilter(TipoResultado = "Json")]
         public ActionResult Listar(string Descripcion = "")
         {
 
