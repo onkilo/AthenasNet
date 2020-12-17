@@ -40,7 +40,8 @@ namespace Athenas.MVCUI.Filters
                         filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
                             {
                                  { "controller", "Seguridad" },
-                                 { "action", "Index" }
+                                 { "action", "Index" },
+                                  { "redirectUrl", filterContext.HttpContext.Request.Url }
                             });
                     }
                     else

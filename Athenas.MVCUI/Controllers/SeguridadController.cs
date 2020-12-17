@@ -13,13 +13,15 @@ namespace Athenas.MVCUI.Controllers
         GenericResponseModel<String> errorResponse;
 
         // GET: Seguridad
-        public ActionResult Index()
+        public ActionResult Index(string redirectUrl = "")
         {
-            return View(new LoginViewModel());
+            LoginViewModel login = new LoginViewModel();
+            login.RedirectUrl = redirectUrl;
+            return View(login);
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel login)
+        public ActionResult Login( LoginViewModel login)
         {
             String url = $"Trabajador/Login";
 
@@ -32,11 +34,15 @@ namespace Athenas.MVCUI.Controllers
                 
 
                 Session["usuario"] = responseModel.Data;
-                Session["usuarioActual"] = responseModel.Data.Nombre + " " + responseModel.Data.Apellido; 
+                Session["usuarioActual"] = responseModel.Data.Nombre + " " + responseModel.Data.Apellido;
+
+                if (login.RedirectUrl != null && login.RedirectUrl != "") return Redirect(login.RedirectUrl);
+
                 return RedirectToAction("Index", "Home");
             }
 
             ViewBag.ErrorMessage = "Credenciales incorrectas";
+
 
             return RedirectToAction("Index");
         }

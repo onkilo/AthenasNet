@@ -41,6 +41,7 @@
 
                 @using (Html.BeginForm("Login", "Seguridad"))
                 {
+                    @Html.HiddenFor(model => model.RedirectUrl)
                     <div class="input-group mb-3">
                     @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
                     <div class="input-group-append">

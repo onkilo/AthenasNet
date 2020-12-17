@@ -22,6 +22,11 @@ namespace Athenas.MVCUI.Controllers
             return View();
         }
 
+        public ActionResult EditarCuenta()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Listar(string Nombre = "")
         {
@@ -176,5 +181,26 @@ namespace Athenas.MVCUI.Controllers
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpPost]
+        [CustomAuthenticationFilter(TipoResultado = "Json")]
+        public ActionResult ActualizarDatos(UsuarioViewModel newUsuario)
+        {
+            String url = $"{baseUrl}/EditarCuenta";
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Patch<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, newUsuario, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

@@ -24,8 +24,12 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
                 <a href="@Url.Action("Logout", "Seguridad")" class="dropdown-item">
-                    <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
+                    <i class="fa fa-sign-out-alt mr-2"></i> Cerrar Sesión
                     @*<span class="float-right text-muted text-sm">3 mins</span>*@
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="@Url.Action("EditarCuenta", "Usuario")" class="dropdown-item">
+                    <i class="fas fa-user-edit mr-2"></i>Editar Cuenta
                 </a>
                 @*<div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
