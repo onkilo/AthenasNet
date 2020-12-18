@@ -18,6 +18,7 @@ var VentaController = function VentaController(service, ui, clienteService, prod
   var lstDetalles = [];
   var prodSeleccionado = {};
   var cliSeleccionado = {};
+  var descuento = 0;
 
   var muestraProductos = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -171,7 +172,7 @@ var VentaController = function VentaController(service, ui, clienteService, prod
           },
           Cantidad: parseInt(cantidad),
           Precio: prodSeleccionado.PrecioVenta,
-          Descuento: prodSeleccionado.Descuento
+          DesctUni: prodSeleccionado.Descuento
         });
       }
 
@@ -193,13 +194,12 @@ var VentaController = function VentaController(service, ui, clienteService, prod
 
   var muestraDetalle = function muestraDetalle() {
     var subtotal = 0;
-    var descuento = 0;
     var total = 0;
     var data = {
       filas: lstDetalles.map(function (det) {
         subtotal += parseInt(det.Cantidad) * det.Precio;
-        descuento += parseInt(det.Cantidad) * det.Descuento;
-        total += parseInt(det.Cantidad) * det.Precio - parseInt(det.Cantidad) * det.Descuento;
+        descuento += parseInt(det.Cantidad) * det.DesctUni;
+        total += parseInt(det.Cantidad) * det.Precio - parseInt(det.Cantidad) * det.DesctUni;
         return {
           data: {
             Codigo: AthenasNet.formatCodigo(det.Producto.Id, 'PRD', 4),
@@ -207,7 +207,7 @@ var VentaController = function VentaController(service, ui, clienteService, prod
             Precio: AthenasNet.formatPrecio(det.Precio),
             Cantidad: det.Cantidad,
             SubTotal: AthenasNet.formatPrecio(det.Precio * det.Cantidad),
-            Descuento: AthenasNet.formatPrecio(det.Descuento * det.Cantidad)
+            Descuento: AthenasNet.formatPrecio(det.DesctUni * det.Cantidad)
           },
           productoId: det.Producto.Id
         };
@@ -218,6 +218,8 @@ var VentaController = function VentaController(service, ui, clienteService, prod
     ui.setDescuento(descuento.toFixed(2));
     ui.setTotal(total.toFixed(2));
   };
+
+  debugger;
 
   var evtFormVenta = function evtFormVenta() {
     ui.getFormVenta().addEventListener('submit', /*#__PURE__*/function () {
@@ -232,7 +234,8 @@ var VentaController = function VentaController(service, ui, clienteService, prod
                   Cliente: {
                     Id: cliSeleccionado.Id
                   },
-                  Detalles: lstDetalles
+                  Detalles: lstDetalles,
+                  Descuento: descuento
                 };
                 _context3.prev = 2;
                 _context3.next = 5;

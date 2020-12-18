@@ -5,6 +5,7 @@
     let lstDetalles = [];
     let prodSeleccionado = {};
     let cliSeleccionado = {};
+    let descuento = 0;
 
     const muestraProductos = async () => {
         lstProductos = await productoService.listar({});
@@ -140,7 +141,7 @@
                     },
                     Cantidad: parseInt(cantidad),
                     Precio: prodSeleccionado.PrecioVenta,
-                    Descuento: prodSeleccionado.Descuento
+                    DesctUni: prodSeleccionado.Descuento
 
                 });
             }
@@ -167,10 +168,11 @@
         })
 
     }
+    
 
     const muestraDetalle = () => {
         let subtotal = 0;
-        let descuento = 0;
+        
         let total = 0;
         
 
@@ -179,8 +181,8 @@
             filas: lstDetalles.map(det => {
 
                 subtotal += parseInt(det.Cantidad) * det.Precio;
-                descuento += parseInt(det.Cantidad) * det.Descuento;
-                total += parseInt(det.Cantidad) * det.Precio - parseInt(det.Cantidad) * det.Descuento;
+                descuento += parseInt(det.Cantidad) * det.DesctUni;
+                total += parseInt(det.Cantidad) * det.Precio - parseInt(det.Cantidad) * det.DesctUni;
 
 
                 return {
@@ -190,7 +192,7 @@
                         Precio: AthenasNet.formatPrecio(det.Precio),
                         Cantidad: det.Cantidad,
                         SubTotal: AthenasNet.formatPrecio(det.Precio * det.Cantidad),
-                        Descuento: AthenasNet.formatPrecio(det.Descuento * det.Cantidad)
+                        Descuento: AthenasNet.formatPrecio(det.DesctUni * det.Cantidad)
                     },
                     productoId: det.Producto.Id
                 }
@@ -204,6 +206,7 @@
         ui.setTotal(total.toFixed(2));
     }
 
+    debugger
     const evtFormVenta = () => {
 
         ui.getFormVenta().addEventListener('submit', async (e) => {
@@ -214,7 +217,8 @@
                 Cliente: {
                     Id: cliSeleccionado.Id
                 },
-                Detalles: lstDetalles
+                Detalles: lstDetalles,
+                Descuento: descuento
             }
             try {
                 await service.crear(venta)

@@ -8,16 +8,13 @@
             lstVentas = await service.listar(filtros);
             ui.generarTabla(lstVentas.map(p => {
 
-                let importe = 0;
-
-                p.Detalles.forEach(d => importe += (d.Cantidad * d.Precio));
-
+               
                 return {
                     Id: p.Id,
                     Cliente: p.Cliente.Nombre + ' ' + p.Cliente.Apellido,
                     Colaborador: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
                     Fecha: AthenasNet.formatFecha(p.FFecha),
-                    Importe: AthenasNet.formatPrecio(importe)
+                    Importe: AthenasNet.formatPrecio(p.Total)
                 }
 
             }));

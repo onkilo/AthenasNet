@@ -32,16 +32,12 @@ var VentaController = function VentaController(service, ui) {
             case 4:
               lstVentas = _context.sent;
               ui.generarTabla(lstVentas.map(function (p) {
-                var importe = 0;
-                p.Detalles.forEach(function (d) {
-                  return importe += d.Cantidad * d.Precio;
-                });
                 return {
                   Id: p.Id,
                   Cliente: p.Cliente.Nombre + ' ' + p.Cliente.Apellido,
                   Colaborador: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
                   Fecha: AthenasNet.formatFecha(p.FFecha),
-                  Importe: AthenasNet.formatPrecio(importe)
+                  Importe: AthenasNet.formatPrecio(p.Total)
                 };
               }));
               _context.next = 11;

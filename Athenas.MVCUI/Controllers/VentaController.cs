@@ -78,6 +78,8 @@ namespace Athenas.MVCUI.Controllers
         [HttpPost]
         public ActionResult Crear(VentaViewModel venta)
         {
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+            venta.Trabajador = usuario;
 
             GenericResponseModel<String> responseModel = ApiRequests
                 .Post<GenericResponseModel<String>, VentaViewModel, GenericResponseModel<String>>(baseUrl, venta, out errorResponse);
