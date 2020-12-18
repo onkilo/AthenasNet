@@ -150,7 +150,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Trabajador/Info")]
+        [Route("api/Trabajador/InfoPrincipal")]
         [CustomAutenticacionFilter]
         public GenericResponse<InfoPrincipalModel> InfoPrincipal()
         {

@@ -243,6 +243,9 @@
     <Content Include="Scripts\es6\cliente\clienteController.js" />
     <Content Include="Scripts\es6\cliente\clienteService.js" />
     <Content Include="Scripts\es6\cliente\clienteUI.js" />
+    <Content Include="Scripts\es6\inicio\inicio.js" />
+    <Content Include="Scripts\es6\inicio\inicioController.js" />
+    <Content Include="Scripts\es6\inicio\inicioUI.js" />
     <Content Include="Scripts\es6\pedido\pedido.js" />
     <Content Include="Scripts\es6\pedido\pedidoLstController.js" />
     <Content Include="Scripts\es6\pedido\pedidoRecibirController.js" />

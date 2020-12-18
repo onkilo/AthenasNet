@@ -200,8 +200,8 @@ namespace Athenas.MVCUI.Controllers
         {
             String url = $"{baseUrl}/InfoPrincipal";
 
-            GenericResponseModel<IEnumerable<InfoPrincipalViewModel>> responseModel = ApiRequests
-                .Get<GenericResponseModel<IEnumerable<InfoPrincipalViewModel>>, GenericResponseModel<String>>(url, out errorResponse);
+            GenericResponseModel<InfoPrincipalViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<InfoPrincipalViewModel>, GenericResponseModel<String>>(url, out errorResponse);
 
             if (errorResponse == null)
             {

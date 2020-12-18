@@ -101,15 +101,46 @@
                 <table class="table" id="tb-producto">
                     <thead>
                         <tr>
-                            <th>Producto</th>
+                            <th >Producto</th>
                             <th>Stock actual</th>
                             <th>Stock mínimo</th>
                         </tr>
                     </thead>
                     <tbody>
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+
+<script id="tempPromoActual" type="text/template">
+    {{#each filas}}
+        <tr>
+            <td>{{Producto.Descripcion}}</td>
+            <td>{{Descuento}}</td>
+        </tr>
+    {{/each}}
+</script>
+
+
+<script id="tempProdBajoStock" type="text/template">
+    {{#each}}
+        <tr>
+            <td>{{Descripcion}}</td>
+            <td>{{StockActual}}</td>
+            <td>{{StockMin}}</td>
+        </tr>
+    {{/each}}
+</script>
+
+@section scripts {
+
+    @Scripts.Render("~/Scripts/es5/inicioController.js")
+    @Scripts.Render("~/Scripts/es5/inicioUI.js")
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/inicio.js")
+
+}

@@ -66,12 +66,25 @@ const UsuarioService = () => {
         return respuesta.Data;
     }
 
+    const infoPrincipal = async () => {
+
+        const respuesta = await AthenasNet.llamadaApi({
+            type: 'POST',
+            data: {},
+            url: 'Usuario/InfoPrincipal'
+        })
+
+        return respuesta;
+
+    }
+
     return {
         crear,
         actualizar,
         listar,
         eliminar,
         buscar,
-        roles
+        roles,
+        infoPrincipal
     }
 }
