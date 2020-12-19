@@ -213,5 +213,22 @@ namespace Athenas.MVCUI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        public ActionResult RolesActuales ()
+        {
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+
+            GenericResponseModel<IEnumerable<RolViewModel>> response = new GenericResponseModel<IEnumerable<RolViewModel>>();
+            response.Data = usuario.Roles;
+            response.Codigo = 200;
+            response.Error = false;
+            response.Mensaje = "Ok";
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

@@ -7,7 +7,7 @@ namespace Athenas.MVCUI.Models
 {
     public class InfoPrincipalViewModel
     {
-        public int CantProdcutos { get; set; }
+        public int CantProductos { get; set; }
 
         public int CantClientes { get; set; }
 

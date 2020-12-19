@@ -3,7 +3,7 @@ const InicioUI = () => {
 
     const setCantidades = (objCantidades = {}) => {
 
-        document.getElementById('txt-cant-producto').innerText = objCantidades.CantProdcutos;
+        document.getElementById('txt-cant-producto').innerText = objCantidades.CantProductos;
         document.getElementById('txt-cant-cliente').innerText = objCantidades.CantClientes;
         document.getElementById('txt-cant-venta').innerText = objCantidades.CantVentas;
         document.getElementById('txt-cant-usuario').innerText = objCantidades.CantUsuarios;
@@ -21,9 +21,18 @@ const InicioUI = () => {
         $('#tb-producto').DataTable();
     }
 
+    const muestraVendedor = () => {
+
+        const noDisplay = document.querySelectorAll('.no-vendedor');
+
+        Array.from(noDisplay).forEach(elemento => elemento.style.display = 'none');
+
+    }
+
     return {
         setCantidades,
         setProdBajoStockData,
-        setPromoActualData
+        setPromoActualData,
+        muestraVendedor
     }
 }

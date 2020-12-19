@@ -74,8 +74,18 @@ const UsuarioService = () => {
             url: 'Usuario/InfoPrincipal'
         })
 
-        return respuesta;
+        return respuesta.Data;
 
+    }
+
+    const rolesActuales = async () => {
+
+        const respuesta = await AthenasNet.llamadaApi({
+            data: {},
+            url: 'Usuario/RolesActuales'
+        })
+
+        return respuesta.Data;
     }
 
     return {
@@ -85,6 +95,7 @@ const UsuarioService = () => {
         eliminar,
         buscar,
         roles,
-        infoPrincipal
+        infoPrincipal,
+        rolesActuales
     }
 }

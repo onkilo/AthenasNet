@@ -8,7 +8,7 @@ namespace AthenasNet.Api.Models
 {
     public class InfoPrincipalModel
     {
-        public int CantProdcutos { get; set; }
+        public int CantProductos { get; set; }
 
         public int CantClientes { get; set; }
 

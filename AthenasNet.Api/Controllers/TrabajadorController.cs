@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
@@ -155,8 +156,15 @@ namespace AthenasNet.Api.Controllers
         public GenericResponse<InfoPrincipalModel> InfoPrincipal()
         {
             GenericResponse<InfoPrincipalModel> response = new GenericResponse<InfoPrincipalModel>();
+            JwtDecodeModel model = (JwtDecodeModel)Thread.CurrentPrincipal;
+
             try
             {
+                bool esVendedor = false;
+
+                esVendedor = model.Roles.Count() == 1 && model.IsInRole("Vendedor");
+                
+
                 ProductoServicio prodServicio = new ProductoServicio();
                 VentaServicio ventServicio = new VentaServicio();
                 ClienteServicio cliServicio = new ClienteServicio();
@@ -164,9 +172,9 @@ namespace AthenasNet.Api.Controllers
 
                 InfoPrincipalModel data = new InfoPrincipalModel();
                 data.CantClientes = cliServicio.Listar("").Count();
-                data.CantProdcutos = prodServicio.Listar("", 0).Count();
-                data.CantVentas = ventServicio.Listar("", 0).Count();
-                data.CantUsuarios = servicio.Listar("").Count();
+                data.CantProductos = prodServicio.Listar("", 0).Count();
+                data.CantVentas = esVendedor ? ventServicio.Listar("", model.Id).Count() :  ventServicio.Listar("", 0).Count();
+                data.CantUsuarios = esVendedor ? 0 :  servicio.Listar("").Count();
                 data.PromosActuales = promServicio.Listar("", 1);
                 data.ProdBajoStock = prodServicio.Listar("", 1);
 

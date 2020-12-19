@@ -52,7 +52,7 @@
             <a  href="@Url.Action("Index","Venta")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6" sec:authorize="hasRole('ROLE_Administrador')">
+    <div class="col-lg-3 col-6 no-vendedor" >
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
@@ -127,12 +127,12 @@
 
 
 <script id="tempProdBajoStock" type="text/template">
-    {{#each}}
-        <tr>
-            <td>{{Descripcion}}</td>
-            <td>{{StockActual}}</td>
-            <td>{{StockMin}}</td>
-        </tr>
+    {{#each filas}}
+    <tr>
+        <td>{{Descripcion}}</td>
+        <td>{{StockActual}}</td>
+        <td>{{StockMin}}</td>
+    </tr>
     {{/each}}
 </script>
 

@@ -9,7 +9,7 @@ namespace Athenas.MVCUI.Controllers
 {
     public class HomeController : Controller
     {
-        [CustomAutenticacionFilter(TipoResultado = "Vista")]
+        [CustomAutenticacionFilter(TipoResultado = "View")]
         public ActionResult Index()
         {
             return View();
