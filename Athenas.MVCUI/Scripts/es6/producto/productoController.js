@@ -48,9 +48,13 @@ const ProductoController = (service, ui, categoriaService) => {
 
     const manejaEnvioProd = () => {
 
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
-            evt.preventDefault();
+        Mant.getFormMantenedor().addEventListener('submit', envioProducto)
+        Mant.getBtnAceptar().addEventListener('click', envioProducto)
+    }
 
+    const envioProducto = async (evt) => {
+        evt.preventDefault();
+        if (Mant.getFormMantenedor().checkValidity() === true) {
             let producto = ui.getProducto();
             if (ui.getImgDisplay().src.startsWith('data')) {
                 producto.Base64Imagen = ui.getImgDisplay().src;
@@ -83,10 +87,11 @@ const ProductoController = (service, ui, categoriaService) => {
                 const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
                 AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
             }
-
-
-        })
-
+        }
+        else {
+            evt.stopPropagation();
+        }
+        Mant.getFormMantenedor().classList.add('was-validated');
     }
 
     const manejaEnvioConf = () => {
@@ -154,6 +159,7 @@ const ProductoController = (service, ui, categoriaService) => {
         manejaEnvioFiltro();
         manejaImgInput();
         manejaAbreModal();
+        ui.evtResetModalProducto();
     }
 
 

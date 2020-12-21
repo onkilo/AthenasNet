@@ -85,7 +85,7 @@
 
 
     <!-- Modal de Mantenedor -->
-    <div class="modal fade" id="modal-mantenedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-mantenedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,7 +100,8 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn btn-success" id="btn-modal-mant-guardar"><i class="far fa-save mr-1"></i> Guardar</button>
+                        <button type="button" class="btn btn-success" id="btn-modal-mant-guardar"><i class="far fa-save mr-1"></i> Guardar</button>
+                        <button type="submit" class="btn btn-success d-none"><i class="far fa-save mr-1"></i> Guardar</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
                     </div>
                 </form>
@@ -157,5 +158,6 @@
     @Scripts.Render("~/Scripts/es5/athenasNet.js")
     @Scripts.Render("~/Scripts/es5/athenasMantenedores.js")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

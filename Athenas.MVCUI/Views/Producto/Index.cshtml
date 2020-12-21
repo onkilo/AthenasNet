@@ -44,7 +44,7 @@
         <input type="hidden" name="Id" id="Id" value="0" />
         <input type="hidden" name="accion" id="accion" value="registrar" />
         <div class="col-lg-6">
-            <input type="hidden" name="id" th:field="*{id}">
+            <input type="hidden" name="id">
             <input type="hidden" name="tipo" value="agregar">
 
             <div class="form-group">
@@ -87,16 +87,23 @@
 
             <div class="form-group">
                 <label for="Categoria">Categoría</label>
-                <select name="Categoria" id="Categoria" class="form-control">
-                    <option value="0">Seleccione</option>
+                <select name="Categoria" id="Categoria" class="form-control custom-select" required>
+                    <option>Seleccione</option>
                     <option value="1">CategoriaSeleccionada</option>
                 </select>
+                <div class="invalid-feedback">Por favor seleccione una categoría</div>
             </div>
         </div>
         <div class="col-lg-6 ">
-            <div class="form-group" >
+            <div class="form-group">
                 <label for="Imagen">Imagen</label>
-                <input type="file" class="form-control-file mb-4" name="Imagen" id="Imagen" accept="image/*">
+                <div class="custom-file mb-4">
+
+                    <input type="file" class="custom-file-input" id="Imagen" name="Imagen" accept="image/*">
+                    <label class="custom-file-label" for="Imagen">Elija un archivo...</label>
+                </div>
+                @*<label for="Imagen">Imagen</label>
+                    <input type="file" class="form-control-file mb-4" name="Imagen" id="Imagen" accept="image/*">*@
                 <img src="" id="imgDisplay" class="img-fluid" style="max-height: 500px">
             </div>
         </div>
@@ -111,15 +118,22 @@
     @Scripts.Render("~/Scripts/es5/productoUI.js")
     @Scripts.Render("~/Scripts/es5/productoController.js")
     @Scripts.Render("~/Scripts/es5/producto.js")
+
+    <script >
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
+    </script>
 }
 
-    <script id="temp-lst-categoria" type="text/template">
-        <option value="0">Seleccione</option>
-        {{#each filas}}
-        {{#if selected}}
-        <option value="{{Id}}" selected>{{Descripcion}}</option>
-        {{else}}
-        <option value="{{Id}}">{{Descripcion}}</option>
-        {{/if}}
-        {{/each}}
-    </script>
+<script id="temp-lst-categoria" type="text/template">
+    <option value="">Seleccione</option>
+    {{#each filas}}
+    {{#if selected}}
+    <option value="{{Id}}" selected>{{Descripcion}}</option>
+    {{else}}
+    <option value="{{Id}}">{{Descripcion}}</option>
+    {{/if}}
+    {{/each}}
+</script>

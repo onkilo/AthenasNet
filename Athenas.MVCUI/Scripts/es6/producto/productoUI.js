@@ -52,6 +52,12 @@ const ProductoUI = () => {
         });
     }
 
+    const evtResetModalProducto = () => {
+        $('#modal-mantenedor').on('hidden.bs.modal', () => {
+            document.getElementById('imgDisplay').src = '';
+            document.querySelector('.custom-file-label').innerHTML = 'Elija un archivo...';
+        })
+    }
 
     return {
         getProducto,
@@ -61,6 +67,7 @@ const ProductoUI = () => {
         getBase64Data,
         getImgDisplay,
         ID_TEMP_CAT: 'temp-lst-categoria',
-        SEL_CBO_CAT: '#form-mantenedor #Categoria'
+        SEL_CBO_CAT: '#form-mantenedor #Categoria',
+        evtResetModalProducto
     }
 }

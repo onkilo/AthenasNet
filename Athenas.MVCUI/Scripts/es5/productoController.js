@@ -120,95 +120,114 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
   };
 
   var manejaEnvioProd = function manejaEnvioProd() {
-    Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
-        var producto, mensaje, titulo;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                evt.preventDefault();
-                producto = ui.getProducto();
-
-                if (ui.getImgDisplay().src.startsWith('data')) {
-                  producto.Base64Imagen = ui.getImgDisplay().src;
-                }
-
-                delete producto.Imagen;
-                producto = _objectSpread(_objectSpread({}, producto), {}, {
-                  Categoria: {
-                    Id: parseInt(producto.Categoria)
-                  }
-                });
-                console.log(producto);
-                _context3.prev = 6;
-
-                if (!(producto.accion === 'registrar')) {
-                  _context3.next = 14;
-                  break;
-                }
-
-                _context3.next = 10;
-                return service.crear(producto);
-
-              case 10:
-                Mant.cerrarModMant();
-                AthenasNet.muestraToast({
-                  mensaje: 'El producto se registró satisfactoriamente',
-                  titulo: 'Registro exitoso'
-                });
-                _context3.next = 19;
-                break;
-
-              case 14:
-                if (!(producto.accion === 'editar')) {
-                  _context3.next = 19;
-                  break;
-                }
-
-                _context3.next = 17;
-                return service.actualizar(producto);
-
-              case 17:
-                Mant.cerrarModMant();
-                AthenasNet.muestraToast({
-                  mensaje: 'El producto se actualizó satisfactoriamente',
-                  titulo: 'Actualización exitosa'
-                });
-
-              case 19:
-                _context3.next = 21;
-                return muestraProductos();
-
-              case 21:
-                _context3.next = 29;
-                break;
-
-              case 23:
-                _context3.prev = 23;
-                _context3.t0 = _context3["catch"](6);
-                console.error(_context3.t0);
-                mensaje = producto.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                titulo = producto.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({
-                  cssClass: 'bg-danger',
-                  mensaje: mensaje,
-                  titulo: titulo
-                });
-
-              case 29:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[6, 23]]);
-      }));
-
-      return function (_x2) {
-        return _ref3.apply(this, arguments);
-      };
-    }());
+    Mant.getFormMantenedor().addEventListener('submit', envioProducto);
+    Mant.getBtnAceptar().addEventListener('click', envioProducto);
   };
+
+  var envioProducto = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
+      var producto, mensaje, titulo;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              evt.preventDefault();
+
+              if (!(Mant.getFormMantenedor().checkValidity() === true)) {
+                _context3.next = 32;
+                break;
+              }
+
+              producto = ui.getProducto();
+
+              if (ui.getImgDisplay().src.startsWith('data')) {
+                producto.Base64Imagen = ui.getImgDisplay().src;
+              }
+
+              delete producto.Imagen;
+              producto = _objectSpread(_objectSpread({}, producto), {}, {
+                Categoria: {
+                  Id: parseInt(producto.Categoria)
+                }
+              });
+              console.log(producto);
+              _context3.prev = 7;
+
+              if (!(producto.accion === 'registrar')) {
+                _context3.next = 15;
+                break;
+              }
+
+              _context3.next = 11;
+              return service.crear(producto);
+
+            case 11:
+              Mant.cerrarModMant();
+              AthenasNet.muestraToast({
+                mensaje: 'El producto se registró satisfactoriamente',
+                titulo: 'Registro exitoso'
+              });
+              _context3.next = 20;
+              break;
+
+            case 15:
+              if (!(producto.accion === 'editar')) {
+                _context3.next = 20;
+                break;
+              }
+
+              _context3.next = 18;
+              return service.actualizar(producto);
+
+            case 18:
+              Mant.cerrarModMant();
+              AthenasNet.muestraToast({
+                mensaje: 'El producto se actualizó satisfactoriamente',
+                titulo: 'Actualización exitosa'
+              });
+
+            case 20:
+              _context3.next = 22;
+              return muestraProductos();
+
+            case 22:
+              _context3.next = 30;
+              break;
+
+            case 24:
+              _context3.prev = 24;
+              _context3.t0 = _context3["catch"](7);
+              console.error(_context3.t0);
+              mensaje = producto.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+              titulo = producto.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
+              AthenasNet.muestraToast({
+                cssClass: 'bg-danger',
+                mensaje: mensaje,
+                titulo: titulo
+              });
+
+            case 30:
+              _context3.next = 33;
+              break;
+
+            case 32:
+              evt.stopPropagation();
+
+            case 33:
+              Mant.getFormMantenedor().classList.add('was-validated');
+
+            case 34:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[7, 24]]);
+    }));
+
+    return function envioProducto(_x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
 
   var manejaEnvioConf = function manejaEnvioConf() {
     AthenasNet.getFormConfirmar().addEventListener('submit', /*#__PURE__*/function () {
@@ -385,6 +404,7 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
     manejaEnvioFiltro();
     manejaImgInput();
     manejaAbreModal();
+    ui.evtResetModalProducto();
   };
 
   return {

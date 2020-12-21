@@ -13,6 +13,8 @@
 
     const getFormFiltrar = () => document.getElementById(ID_FORM_FILTRAR);
 
+    const getBtnAceptar = () => document.getElementById('btn-modal-mant-guardar');
+
     const getFiltros = (arrFiltros) => {
         const elementosFormulario = getFormFiltrar().elements;
 
@@ -56,6 +58,7 @@
         }
 
         $(SEL_MODAL_CATE).modal('show');
+        getFormMantenedor().classList.remove('was-validated');
     }
 
     const evtMostrarModMant = (evt) => {
@@ -113,6 +116,12 @@
        
     }
 
+    window.addEventListener('load', () => {
+        $(SEL_MODAL_CATE).on('show.bs.modal', () => {
+            getFormMantenedor().classList.remove('was-validated')
+        })
+    })
+
     window.AthenasNet.Mant = {
         getFormFiltrar,
         getFiltros,
@@ -126,6 +135,7 @@
         getFormMantenedor,
         SEL_TBL_BODY,
         SEL_TBL_MANT,
-        configuraTamModal
+        configuraTamModal,
+        getBtnAceptar
     };
 })()

@@ -45,6 +45,13 @@ var ProductoUI = function ProductoUI() {
     });
   };
 
+  var evtResetModalProducto = function evtResetModalProducto() {
+    $('#modal-mantenedor').on('hidden.bs.modal', function () {
+      document.getElementById('imgDisplay').src = '';
+      document.querySelector('.custom-file-label').innerHTML = 'Elija un archivo...';
+    });
+  };
+
   return {
     getProducto: getProducto,
     generarTabla: generarTabla,
@@ -53,7 +60,8 @@ var ProductoUI = function ProductoUI() {
     getBase64Data: getBase64Data,
     getImgDisplay: getImgDisplay,
     ID_TEMP_CAT: 'temp-lst-categoria',
-    SEL_CBO_CAT: '#form-mantenedor #Categoria'
+    SEL_CBO_CAT: '#form-mantenedor #Categoria',
+    evtResetModalProducto: evtResetModalProducto
   };
 };
 //# sourceMappingURL=productoUI.js.map

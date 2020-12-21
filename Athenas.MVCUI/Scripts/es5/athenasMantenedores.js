@@ -26,6 +26,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return document.getElementById(ID_FORM_FILTRAR);
   };
 
+  var getBtnAceptar = function getBtnAceptar() {
+    return document.getElementById('btn-modal-mant-guardar');
+  };
+
   var getFiltros = function getFiltros(arrFiltros) {
     var elementosFormulario = getFormFiltrar().elements;
     var filtros = {};
@@ -69,6 +73,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     $(SEL_MODAL_CATE).modal('show');
+    getFormMantenedor().classList.remove('was-validated');
   };
 
   var evtMostrarModMant = function evtMostrarModMant(evt) {
@@ -120,6 +125,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     modal.addClass(clase);
   };
 
+  window.addEventListener('load', function () {
+    $(SEL_MODAL_CATE).on('show.bs.modal', function () {
+      getFormMantenedor().classList.remove('was-validated');
+    });
+  });
   window.AthenasNet.Mant = {
     getFormFiltrar: getFormFiltrar,
     getFiltros: getFiltros,
@@ -133,7 +143,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFormMantenedor: getFormMantenedor,
     SEL_TBL_BODY: SEL_TBL_BODY,
     SEL_TBL_MANT: SEL_TBL_MANT,
-    configuraTamModal: configuraTamModal
+    configuraTamModal: configuraTamModal,
+    getBtnAceptar: getBtnAceptar
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map
