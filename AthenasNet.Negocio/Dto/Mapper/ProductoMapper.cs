@@ -22,7 +22,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 StockActual = producto.StockActual,
                 StockMin = producto.StockMin,
                 Imagen = producto.Imagen,
-                //Descuento = producto.Descuento,
+                Descuento = producto.Descuento,
                 Activo = producto.Activo,
                 Categoria = CategoriaMapper.GetCategoriaDto(producto.Categoria)
             };
@@ -43,7 +43,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
                 StockActual = dto.StockActual,
                 StockMin = dto.StockMin,
                 Imagen = dto.Imagen,
-                //Descuento = dto.Descuento,
+                Descuento = dto.Descuento,
                 Activo = dto.Activo,
                 Categoria = CategoriaMapper.GetCategoria(dto.Categoria)
             };

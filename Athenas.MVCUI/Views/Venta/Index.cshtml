@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMantenedor.cshtml";
+}
+
+@section btnNuevo {
+    <a type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" href="@Url.Action("Create", "Venta")">
+        <i class="fas fa-plus mr-1"></i> Nuevo
+    </a>
+}
+
+@section cardTitulo {
+    Ventas Registradas
+}
+
+@section formFiltrar {
+    <input type="hidden" name="tipo" value="filtrar">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" name="Cliente" id="Cliente" class="form-control" placeholder="Ingrese el cliente para la venta">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section tblCabecera {
+    <tr>
+        <th>Código</th>
+        <th>Cliente</th>
+        <th>Colaborador</th>
+        <th>Fecha</th>
+        <th>Importe</th>
+        <th>Opciones</th>
+    </tr>
+}
+
+
+
+@section scripts {
+    @Scripts.Render("~/Scripts/es5/ventaService.js")
+    @Scripts.Render("~/Scripts/es5/ventaLstUI.js")
+    @Scripts.Render("~/Scripts/es5/ventaLstController.js")
+    @Scripts.Render("~/Scripts/es5/venta.js")
+}
+
+
+
+

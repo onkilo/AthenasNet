@@ -78,7 +78,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
             Venta venta = new Venta
             {
                 Id = dto.Id,
-                DescTotal = dto.DescTotal,
+                Descuento = dto.Descuento,
                 Fecha = dto.Fecha,
                 Trabajador = TrabajadorMapper.ToTrabajador(dto.Trabajador),
                 Cliente = ClienteMapper.ToCliente(dto.Cliente),
@@ -94,7 +94,7 @@ namespace AthenasNet.Negocio.Dto.Mapper
             VentaDto venta = new VentaDto
             {
                 Id = dto.Id,
-                DescTotal = dto.DescTotal,
+                Descuento = dto.Descuento,
                 Fecha = dto.Fecha,
                 Trabajador = TrabajadorMapper.ToTrabajadorDto(dto.Trabajador),
                 Cliente = ClienteMapper.ToClienteDto(dto.Cliente),
