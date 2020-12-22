@@ -28,7 +28,9 @@
 
             if (respuesta.Codigo === 401) {
 
-                window.location.href = MVC_URL_BASE + 'Usuario/Login';
+                const urlActual = window.location.href;
+
+                window.location.href = MVC_URL_BASE + 'Usuario/Login?redirectUrl=' + urlActual;
                 return null;
 
             }
@@ -119,6 +121,19 @@
         return `S/. ${precio.toFixed(2)}`;
     }
 
+    const formatCodigo = (id, iniFormato, cantNum) => {
+        let formato = iniFormato;
+        const cantCeros = cantNum - id.toString().length;
+
+        for (let i = 0; i < cantCeros; i++) {
+            formato += '0';
+        }
+
+        formato += id.toString();
+
+        return formato;
+    }
+
 
     window.AthenasNet = {
         llamadaApi,
@@ -130,7 +145,9 @@
         ocultarConfirmacion,
         ID_TEMP_TBL_BODY,
         formatFecha,
-        formatPrecio
+        formatPrecio,
+        MVC_URL_BASE,
+        formatCodigo
     };
 })()
 

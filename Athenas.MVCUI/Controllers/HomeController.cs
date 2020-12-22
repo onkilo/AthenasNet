@@ -1,3 +1,4 @@
+using Athenas.MVCUI.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace Athenas.MVCUI.Controllers
 {
     public class HomeController : Controller
     {
+        [CustomAutenticacionFilter(TipoResultado = "View")]
         public ActionResult Index()
         {
             return View();

@@ -1,4 +1,146 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Inicio";
 }
 
+
+<div class="row">
+    <div class="callout callout-info col-12 mt-4">
+        <h5><i class="fas fa-info"></i> Bienvenido <span style="font-weight: bolder;">@Session["usuarioActual"]</span> </h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3 id="txt-cant-producto"></h3>
+
+                <p>Productos</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-box-open"></i>
+            </div>
+            <a href="@Url.Action("Index","Producto")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3 id="txt-cant-cliente"></h3>
+
+                <p>Clientes</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-tag"></i>
+            </div>
+            <a href="@Url.Action("Index","Cliente")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3 id="txt-cant-venta"></h3>
+
+                <p>Ventas totales</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-comment-dollar"></i>
+            </div>
+            <a  href="@Url.Action("Index","Venta")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6 no-vendedor" >
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3 id="txt-cant-usuario"></h3>
+                <p>Usuarios</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-users-cog"></i>
+            </div>
+            <a  href="@Url.Action("Index","Usuario")" class="small-box-footer btn-loader">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-6 col-12">
+        <div class="card  card-info">
+            <div class="card-header">
+                <div class="card-title">
+                    <h6>Promociones actuales</h6>
+                </div>
+            </div>
+            <div class="card-body ">
+                <table class="table" id="tb-promocion">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Descuento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-12">
+        <div class="card  card-info">
+            <div class="card-header">
+                <div class="card-title">
+                    <h6>Productos bajos en stock</h6>
+                </div>
+            </div>
+            <div class="card-body ">
+                <table class="table" id="tb-producto">
+                    <thead>
+                        <tr>
+                            <th >Producto</th>
+                            <th>Stock actual</th>
+                            <th>Stock mínimo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="tempPromoActual" type="text/template">
+    {{#each filas}}
+        <tr>
+            <td>{{Producto.Descripcion}}</td>
+            <td>{{Descuento}}</td>
+        </tr>
+    {{/each}}
+</script>
+
+
+<script id="tempProdBajoStock" type="text/template">
+    {{#each filas}}
+    <tr>
+        <td>{{Descripcion}}</td>
+        <td>{{StockActual}}</td>
+        <td>{{StockMin}}</td>
+    </tr>
+    {{/each}}
+</script>
+
+@section scripts {
+
+    @Scripts.Render("~/Scripts/es5/inicioController.js")
+    @Scripts.Render("~/Scripts/es5/inicioUI.js")
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/inicio.js")
+
+}

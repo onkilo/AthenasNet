@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
@@ -148,5 +149,46 @@ namespace AthenasNet.Api.Controllers
             return response;
 
         }
+
+        [HttpGet]
+        [Route("api/Trabajador/InfoPrincipal")]
+        [CustomAutenticacionFilter]
+        public GenericResponse<InfoPrincipalModel> InfoPrincipal()
+        {
+            GenericResponse<InfoPrincipalModel> response = new GenericResponse<InfoPrincipalModel>();
+            JwtDecodeModel model = (JwtDecodeModel)Thread.CurrentPrincipal;
+
+            try
+            {
+                bool esVendedor = false;
+
+                esVendedor = model.Roles.Count() == 1 && model.IsInRole("Vendedor");
+                
+
+                ProductoServicio prodServicio = new ProductoServicio();
+                VentaServicio ventServicio = new VentaServicio();
+                ClienteServicio cliServicio = new ClienteServicio();
+                PromocionServicio promServicio = new PromocionServicio();
+
+                InfoPrincipalModel data = new InfoPrincipalModel();
+                data.CantClientes = cliServicio.Listar("").Count();
+                data.CantProductos = prodServicio.Listar("", 0).Count();
+                data.CantVentas = esVendedor ? ventServicio.Listar("", model.Id).Count() :  ventServicio.Listar("", 0).Count();
+                data.CantUsuarios = esVendedor ? 0 :  servicio.Listar("").Count();
+                data.PromosActuales = promServicio.Listar("", 1);
+                data.ProdBajoStock = prodServicio.Listar("", 1);
+
+                response.Data = data;
+                response.Codigo = 200; // OK
+                response.Error = false;
+                response.Mensaje = "OK";
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+            return response;
+        }
+
     }
 }

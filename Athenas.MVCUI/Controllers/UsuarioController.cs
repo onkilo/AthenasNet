@@ -1,4 +1,5 @@
 using Athenas.MVCUI.ClienteHttp;
+using Athenas.MVCUI.Filters;
 using Athenas.MVCUI.Models;
 using System;
 using System.Collections.Generic;
@@ -144,9 +145,13 @@ namespace Athenas.MVCUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string redirectUrl = "")
         {
-            return View(new LoginViewModel());
+            LoginViewModel login = new LoginViewModel();
+
+            login.RedirectUrl = redirectUrl;
+
+            return View(login);
         }
 
         [HttpPost]
@@ -164,7 +169,13 @@ namespace Athenas.MVCUI.Controllers
                 Session["token"] = usuario.Token;
                 Session["usuarioActual"] = usuario.Nombre + " " + usuario.Apellido;
 
-                return RedirectToAction("Index", "Home");
+                if (login.RedirectUrl != null && login.RedirectUrl != "") {
+
+                    return Redirect(login.RedirectUrl);//primera redireccion
+
+                } 
+
+                return RedirectToAction("Index", "Home");//segunda redireccion
             }
             else
             {
@@ -181,6 +192,42 @@ namespace Athenas.MVCUI.Controllers
             Session["usuarioActual"] = null;
 
             return RedirectToAction("Login");
+        }
+
+
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        public ActionResult InfoPrincipal()
+        {
+            String url = $"{baseUrl}/InfoPrincipal";
+
+            GenericResponseModel<InfoPrincipalViewModel> responseModel = ApiRequests
+                .Get<GenericResponseModel<InfoPrincipalViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        public ActionResult RolesActuales ()
+        {
+            UsuarioViewModel usuario = (UsuarioViewModel)Session["usuario"];
+
+            GenericResponseModel<IEnumerable<RolViewModel>> response = new GenericResponseModel<IEnumerable<RolViewModel>>();
+            response.Data = usuario.Roles;
+            response.Codigo = 200;
+            response.Error = false;
+            response.Mensaje = "Ok";
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+
         }
 
     }

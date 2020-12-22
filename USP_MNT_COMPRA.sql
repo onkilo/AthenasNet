@@ -38,6 +38,8 @@ BEGIN
 			pv.RzSocial as Proveedor,
 			pv.Representante as Representante,
 			pv.RUC as RUC,
+			pv.Direccion as Direccion,
+			pv.Telefono as Telefono,
 			t.Nombre as NomTrabajador,
 			t.Apellido as ApeTrabajador,
 			c.Fecha,
@@ -45,7 +47,7 @@ BEGIN
 			c.Activo,
 			c.TrabajadorId
 		FROM Compra c JOIN Trabajador t on c.TrabajadorId = t.Id
-		JOIN Proveedor pv ON c.ProveedorId = c.Id 
+		JOIN Proveedor pv ON c.ProveedorId = pv.Id 
 		WHERE (@Id = 0 OR c.Id = @Id) 
 		AND (@RzProveedor = '' OR pv.RzSocial LIKE ('%' + @RzProveedor +  '%'))
 		AND c.Activo = '1'

@@ -1,4 +1,4 @@
-﻿using Athenas.Data.Conexion;
+using Athenas.Data.Conexion;
 using Athenas.Data.Entidades;
 using Athenas.Data.Repositorio;
 using System;
@@ -93,7 +93,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         StockActual = Convert.ToInt32(dr["StockActual"]),
                         StockMin = Convert.ToInt32(dr["StockMin"]),
                         Imagen = dr["Imagen"].ToString(),
-                        //Descuento = Convert.ToDouble(dr["Descuento"]),
+                        Descuento = Convert.ToDouble(dr["Descuento"]),
                         Activo = dr["Activo"].ToString(),
                         Categoria = new Categoria
                         {
@@ -194,8 +194,13 @@ namespace Athenas.Data.MSSQLRepositorio
 
         public IEnumerable<Producto> Listar(string Criterio)
         {
+            return Listar(Criterio, 0);
+        }
+
+        public IEnumerable<Producto> Listar(string Criterio, int BajoStock)
+        {
             List<Producto> productos = new List<Producto>();
-            
+
 
             try
             {
@@ -207,6 +212,7 @@ namespace Athenas.Data.MSSQLRepositorio
                 cmd.Parameters.AddWithValue("@Opcion", "4");
                 cmd.Parameters.AddWithValue("@Descripcion", Criterio);
                 cmd.Parameters.AddWithValue("@Activo", "1");
+                cmd.Parameters.AddWithValue("@BajoStock", BajoStock);
 
                 cn.Open();
 
@@ -222,7 +228,7 @@ namespace Athenas.Data.MSSQLRepositorio
                         StockActual = Convert.ToInt32(dr["StockActual"]),
                         StockMin = Convert.ToInt32(dr["StockMin"]),
                         Imagen = dr["Imagen"].ToString(),
-                        //Descuento = Convert.ToDouble(dr["Descuento"]),
+                        Descuento = Convert.ToDouble(dr["Descuento"]),
                         Activo = dr["Activo"].ToString(),
                         Categoria = new Categoria
                         {

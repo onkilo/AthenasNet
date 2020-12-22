@@ -96,7 +96,7 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
                   PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
                   PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
                   Categoria: prodSeleccionado.Categoria.Id
-                }), ['Imagen', 'Activo', 'Base64Imagen']);
+                }), ['Descuento', 'Imagen', 'Activo', 'Base64Imagen']);
                 ui.getImgDisplay().src = prodSeleccionado.Imagen;
                 _context2.next = 12;
                 break;

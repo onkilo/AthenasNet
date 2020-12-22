@@ -1,4 +1,4 @@
-﻿using Athenas.Data.MSSQLRepositorio;
+using Athenas.Data.MSSQLRepositorio;
 using Athenas.Data.Repositorio;
 using AthenasNet.Negocio.Dto;
 using AthenasNet.Negocio.Dto.Mapper;
@@ -41,9 +41,9 @@ namespace AthenasNet.Negocio.Servicio
         }
 
         
-        public IEnumerable<ProductoDto> Listar(string Criterio)
+        public IEnumerable<ProductoDto> Listar(string Criterio, int BajoStock)
         {
-            return ProductoMapper.ToProductosDto(repositorio.Listar(Criterio));
+            return ProductoMapper.ToProductosDto(repositorio.Listar(Criterio, BajoStock));
         }
     }
 }
