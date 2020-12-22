@@ -111,5 +111,26 @@ namespace AthenasNet.Api.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        [Route("api/Promocion/TienePromociones")]
+        public GenericResponse<Boolean> TienePromociones(int Producto, string FechaInicio, string FechaFin, int Promocion = 0)
+        {
+            GenericResponse<Boolean> response = new GenericResponse<Boolean>();
+
+            try
+            {
+                response.Data = servicio.TienePromociones(Producto, DateTime.Parse(FechaInicio), DateTime.Parse(FechaFin), Promocion);
+                response.Codigo = 200; // OK
+                response.Error = false;
+                response.Mensaje = "OK";
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+            return response;
+        }
     }
 }

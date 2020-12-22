@@ -44,5 +44,10 @@ namespace AthenasNet.Negocio.Servicio
             return PromocionMapper.ToPromocionesDto(repositorio.Listar(producto, estado));
         }
 
+        public bool TienePromociones (int ProductoId, DateTime FechaInicio, DateTime FechaFin, int PromocionId = 0)
+        {
+            return repositorio.TienePromociones(ProductoId, FechaInicio, FechaFin, PromocionId);
+        }
+
     }
 }

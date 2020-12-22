@@ -54,11 +54,29 @@ const PromocionService = () => {
         return respuesta;
     }
 
+    const tienePromociones = async (producto, fechaInicio, fechaFin, promocion) => {
+
+        const urlParametros = {
+            Producto: producto,
+            FechaInicio: fechaInicio,
+            FechaFin: fechaFin,
+            Promocion: promocion
+        }
+
+        const respuesta = await AthenasNet.llamadaApi({
+            data: urlParametros,
+            url: 'Promocion/TienePromociones'
+        })
+
+        return respuesta.Data;
+    }
+
     return {
         crear,
         actualizar,
         listar,
         eliminar,
-        buscar
+        buscar,
+        tienePromociones
     }
 }

@@ -17,6 +17,8 @@ const ProductoUI = () => {
             iniCodigo: 'PD'
         }
 
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
+
         AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
         $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
     }
