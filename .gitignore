@@ -18,4 +18,5 @@
 /AthenasNet.Api/obj/Release/
 /AthenasNet.Api/Properties/PublishProfiles
 /AthenasNet.Api/AppSettings.secret
+/Athenas.MVCUI/AppSettingsMVC.secret
 /AthenasNet.Api/obj/Debug
