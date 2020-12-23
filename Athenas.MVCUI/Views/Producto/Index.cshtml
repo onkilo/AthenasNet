@@ -87,6 +87,7 @@
 
             <div class="form-group">
                 <label for="Categoria">Categoría</label>
+                <input type="text" id="CategoriaText" class="form-control d-none" readonly />
                 <select name="Categoria" id="Categoria" class="form-control">
                     <option value="0">Seleccione</option>
                     <option value="1">CategoriaSeleccionada</option>
@@ -106,6 +107,7 @@
 
 
 @section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
     @Scripts.Render("~/Scripts/es5/categoriaService.js")
     @Scripts.Render("~/Scripts/es5/productoService.js")
     @Scripts.Render("~/Scripts/es5/productoUI.js")

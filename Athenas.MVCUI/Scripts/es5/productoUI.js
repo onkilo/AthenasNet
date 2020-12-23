@@ -6,13 +6,8 @@ var ProductoUI = function ProductoUI() {
     return AthenasNet.Mant.getFiltros(arrFiltros);
   };
 
-  var generarTabla = function generarTabla(lstProductos) {
-    var data = {
-      filas: lstProductos,
-      edita: true,
-      elimina: true,
-      iniCodigo: 'PD'
-    };
+  var generarTabla = function generarTabla(data) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     AthenasNet.compilaTemplate(AthenasNet.ID_TEMP_TBL_BODY, data, AthenasNet.Mant.SEL_TBL_BODY);
     $(AthenasNet.Mant.SEL_TBL_MANT).DataTable();
   };
@@ -45,6 +40,17 @@ var ProductoUI = function ProductoUI() {
     });
   };
 
+  var muestraVendedor = function muestraVendedor() {
+    document.querySelector(AthenasNet.Mant.SEL_BTN_NUEVO).style.display = 'none';
+  };
+
+  var muestraDetalle = function muestraDetalle(Categoria) {
+    getImgInput().style.display = 'none';
+    document.getElementById('CategoriaText').classList.remove('d-none');
+    document.getElementById('Categoria').classList.add('d-none');
+    document.getElementById('CategoriaText').value = Categoria.Descripcion;
+  };
+
   return {
     getProducto: getProducto,
     generarTabla: generarTabla,
@@ -53,7 +59,9 @@ var ProductoUI = function ProductoUI() {
     getBase64Data: getBase64Data,
     getImgDisplay: getImgDisplay,
     ID_TEMP_CAT: 'temp-lst-categoria',
-    SEL_CBO_CAT: '#form-mantenedor #Categoria'
+    SEL_CBO_CAT: '#form-mantenedor #Categoria',
+    muestraVendedor: muestraVendedor,
+    muestraDetalle: muestraDetalle
   };
 };
 //# sourceMappingURL=productoUI.js.map

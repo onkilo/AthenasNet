@@ -159,6 +159,7 @@
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Models\VentaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilitarios\UsuarioUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\adminlte\adminlte.css" />

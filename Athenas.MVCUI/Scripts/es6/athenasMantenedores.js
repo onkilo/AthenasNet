@@ -35,15 +35,20 @@
 
     const getFormEleValue = (ele) => getFormMantElements()[ele].value;
 
-    const setFormEleValue = (ele, value) => { getFormMantElements()[ele].value = value; }
+    const setFormEleValue = (ele, value, readonly = false) => {
+        debugger
+        const elemento = getFormMantElements()[ele]
+        elemento.value = value;
+        elemento.readOnly = readonly;
+    }
 
-    const setFormMantenedor = (entidad, arrExcepciones = []) => {
+    const setFormMantenedor = (entidad, arrExcepciones = [], readonly = false) => {
         const elementos = Object.keys(entidad);
 
         elementos.forEach(ele => {
             if (arrExcepciones.includes(ele)) return; 
 
-            setFormEleValue(ele, entidad[ele]);
+            setFormEleValue(ele, entidad[ele], readonly);
         })
 
 
@@ -116,6 +121,7 @@
         getFormMantenedor,
         SEL_TBL_BODY,
         SEL_TBL_MANT,
-        configuraTamModal
+        configuraTamModal,
+        SEL_BTN_NUEVO
     };
 })()

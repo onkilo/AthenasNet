@@ -1,21 +1,30 @@
 
-const ProductoController = (service, ui, categoriaService) => {
+const ProductoController = (service, ui, categoriaService, usuarioService) => {
     let lstProductos = [];
     let prodSeleccionado = {};
     const { Mant } = AthenasNet;
+    let rolesActuales = [];
 
     const muestraProductos = async (filtros = {}) => {
         try {
             lstProductos = await service.listar(filtros);
-            ui.generarTabla(lstProductos.map(p => ({
-                Id: p.Id,
-                Descripcion: p.Descripcion,
-                PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
-                PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
-                StockActual: p.StockActual,
-                StockMin: p.StockMin,
-                Categoria: p.Categoria.Descripcion
-            })));
+            const esVendedor = (rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor')
+
+            const data = {
+                filas: lstProductos.map(p => ({
+                    Id: p.Id,
+                    Descripcion: p.Descripcion,
+                    PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
+                    PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
+                    StockActual: p.StockActual,
+                    StockMin: p.StockMin,
+                    Categoria: p.Categoria.Descripcion
+                })),
+                edita: !esVendedor,
+                elimina: !esVendedor,
+                iniCodigo: 'PD'
+            }
+            ui.generarTabla(data);
         }
         catch (err) {
             console.error(err);
@@ -38,12 +47,23 @@ const ProductoController = (service, ui, categoriaService) => {
                         PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
                         PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
                         Categoria: prodSeleccionado.Categoria.Id
-                    }, ['Descuento','Imagen', 'Activo', 'Base64Imagen']);
+                    }, ['Descuento', 'Imagen', 'Activo', 'Base64Imagen']);
                     ui.getImgDisplay().src = prodSeleccionado.Imagen;
                 }
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
                     AthenasNet.mostrarConfirmacion();
+                }
+                else if (accion === 'detalle') {
+                    await muestraCategorias();
+                    Mant.setFormMantenedor({
+                        ...prodSeleccionado,
+                        PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
+                        PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
+                        Categoria: prodSeleccionado.Categoria.Id
+                    }, ['Descuento', 'Imagen', 'Activo', 'Base64Imagen'], true);
+                    ui.getImgDisplay().src = prodSeleccionado.Imagen;
+                    ui.muestraDetalle(prodSeleccionado.Categoria);
                 }
             }
 
@@ -149,7 +169,25 @@ const ProductoController = (service, ui, categoriaService) => {
         })
     }
 
-    const iniciar = () => {
+    const getRolesActuales = async () => {
+        try {
+            rolesActuales = await usuarioService.rolesActuales();
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+
+    const validacionUI = () => {
+        if (rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor') {
+            ui.muestraVendedor();
+        }
+
+    }
+
+    const iniciar = async () => {
+        await getRolesActuales();
+        validacionUI();
         Mant.configuraTamModal('modal-lg');
         muestraProductos();
         Mant.evtMostrarModMant();

@@ -134,6 +134,10 @@
                         <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="editar">
                             <i class="fas fa-edit"></i>
                         </button>
+                        {{else}}
+                        <button type="button" class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" data-accion="detalle">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
                         {{/if}}
                         {{#if ../recibe}}
                         <a class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" href="{{../urlRecibir}}/{{Id}}" >

@@ -10,15 +10,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var ProductoController = function ProductoController(service, ui, categoriaService) {
+var ProductoController = function ProductoController(service, ui, categoriaService, usuarioService) {
   var lstProductos = [];
   var prodSeleccionado = {};
   var _AthenasNet = AthenasNet,
       Mant = _AthenasNet.Mant;
+  var rolesActuales = [];
 
   var muestraProductos = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var filtros,
+          esVendedor,
+          data,
           _args = arguments;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -31,31 +34,38 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
 
             case 4:
               lstProductos = _context.sent;
-              ui.generarTabla(lstProductos.map(function (p) {
-                return {
-                  Id: p.Id,
-                  Descripcion: p.Descripcion,
-                  PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
-                  PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
-                  StockActual: p.StockActual,
-                  StockMin: p.StockMin,
-                  Categoria: p.Categoria.Descripcion
-                };
-              }));
-              _context.next = 11;
+              esVendedor = rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor';
+              data = {
+                filas: lstProductos.map(function (p) {
+                  return {
+                    Id: p.Id,
+                    Descripcion: p.Descripcion,
+                    PrecioCompra: AthenasNet.formatPrecio(p.PrecioCompra),
+                    PrecioVenta: AthenasNet.formatPrecio(p.PrecioVenta),
+                    StockActual: p.StockActual,
+                    StockMin: p.StockMin,
+                    Categoria: p.Categoria.Descripcion
+                  };
+                }),
+                edita: !esVendedor,
+                elimina: !esVendedor,
+                iniCodigo: 'PD'
+              };
+              ui.generarTabla(data);
+              _context.next = 13;
               break;
 
-            case 8:
-              _context.prev = 8;
+            case 10:
+              _context.prev = 10;
               _context.t0 = _context["catch"](1);
               console.error(_context.t0);
 
-            case 11:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee, null, [[1, 10]]);
     }));
 
     return function muestraProductos() {
@@ -73,7 +83,7 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!evt.target.dataset.id) {
-                  _context2.next = 12;
+                  _context2.next = 22;
                   break;
                 }
 
@@ -98,16 +108,39 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
                   Categoria: prodSeleccionado.Categoria.Id
                 }), ['Descuento', 'Imagen', 'Activo', 'Base64Imagen']);
                 ui.getImgDisplay().src = prodSeleccionado.Imagen;
-                _context2.next = 12;
+                _context2.next = 22;
                 break;
 
               case 11:
-                if (accion === 'eliminar') {
-                  console.log('eliminar');
-                  AthenasNet.mostrarConfirmacion();
+                if (!(accion === 'eliminar')) {
+                  _context2.next = 16;
+                  break;
                 }
 
-              case 12:
+                console.log('eliminar');
+                AthenasNet.mostrarConfirmacion();
+                _context2.next = 22;
+                break;
+
+              case 16:
+                if (!(accion === 'detalle')) {
+                  _context2.next = 22;
+                  break;
+                }
+
+                _context2.next = 19;
+                return muestraCategorias();
+
+              case 19:
+                Mant.setFormMantenedor(_objectSpread(_objectSpread({}, prodSeleccionado), {}, {
+                  PrecioCompra: parseFloat(prodSeleccionado.PrecioCompra).toFixed(2),
+                  PrecioVenta: parseFloat(prodSeleccionado.PrecioVenta).toFixed(2),
+                  Categoria: prodSeleccionado.Categoria.Id
+                }), ['Descuento', 'Imagen', 'Activo', 'Base64Imagen'], true);
+                ui.getImgDisplay().src = prodSeleccionado.Imagen;
+                ui.muestraDetalle(prodSeleccionado.Categoria);
+
+              case 22:
               case "end":
                 return _context2.stop();
             }
@@ -377,17 +410,78 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
     })));
   };
 
-  var iniciar = function iniciar() {
-    Mant.configuraTamModal('modal-lg');
-    muestraProductos();
-    Mant.evtMostrarModMant();
-    manejaEvtTabla();
-    manejaEnvioProd();
-    manejaEnvioConf();
-    manejaEnvioFiltro();
-    manejaImgInput();
-    manejaAbreModal();
+  var getRolesActuales = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+      return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.prev = 0;
+              _context9.next = 3;
+              return usuarioService.rolesActuales();
+
+            case 3:
+              rolesActuales = _context9.sent;
+              _context9.next = 9;
+              break;
+
+            case 6:
+              _context9.prev = 6;
+              _context9.t0 = _context9["catch"](0);
+              console.error(_context9.t0);
+
+            case 9:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9, null, [[0, 6]]);
+    }));
+
+    return function getRolesActuales() {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+
+  var validacionUI = function validacionUI() {
+    if (rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor') {
+      ui.muestraVendedor();
+    }
   };
+
+  var iniciar = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+      return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              _context10.next = 2;
+              return getRolesActuales();
+
+            case 2:
+              validacionUI();
+              Mant.configuraTamModal('modal-lg');
+              muestraProductos();
+              Mant.evtMostrarModMant();
+              manejaEvtTabla();
+              manejaEnvioProd();
+              manejaEnvioConf();
+              manejaEnvioFiltro();
+              manejaImgInput();
+              manejaAbreModal();
+
+            case 12:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10);
+    }));
+
+    return function iniciar() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
 
   return {
     iniciar: iniciar

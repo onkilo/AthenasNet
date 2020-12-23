@@ -1,3 +1,5 @@
+@using Athenas.MVCUI.Utilitarios
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4 nav-legacy">
     <!-- Brand Logo -->
@@ -55,18 +57,23 @@
                                 <p>Promociones</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Proveedor")" class="nav-link ">
-                                <i class="fas fa-boxes"></i>
-                                <p>Proveedores</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Usuario")" class="nav-link ">
-                                <i class="fas fa-users-cog"></i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
+                        @if (!UsuarioUtil.EsVendedor())
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Proveedor")" class="nav-link ">
+                                    <i class="fas fa-boxes"></i>
+                                    <p>Proveedores</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Usuario")" class="nav-link ">
+                                    <i class="fas fa-users-cog"></i>
+                                    <p>Usuarios</p>
+                                </a>
+                            </li>
+                        }
+
+
                     </ul>
                 </li>
                 <li class="nav-item has-treeview menu-open">
@@ -84,12 +91,16 @@
                                 <p>Ventas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Pedido")" class="nav-link ">
-                                <i class="fas fa-balance-scale"></i>
-                                <p>Pedidos</p>
-                            </a>
-                        </li>
+                        @if (!UsuarioUtil.EsVendedor())
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Pedido")" class="nav-link ">
+                                    <i class="fas fa-balance-scale"></i>
+                                    <p>Pedidos</p>
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </li>
 
