@@ -30,7 +30,38 @@ namespace AthenasNet.Negocio.Servicio
 
         public void Actualizar(TrabajadorDto trabajador)
         {
-            if(trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
+            Trabajador trabajadorActual = repositorio.BuscarPorId(trabajador.Id);
+
+
+            trabajadorActual.Nombre = (trabajador.Nombre != null && trabajador.Nombre.Trim() != "")
+                ? trabajador.Nombre
+                : trabajadorActual.Nombre;
+            trabajadorActual.Apellido = (trabajador.Apellido != null && trabajador.Apellido.Trim() != "")
+                ? trabajador.Apellido
+                : trabajadorActual.Apellido;
+            trabajadorActual.Telefono = (trabajador.Telefono != null && trabajador.Telefono.Trim() != "")
+                ? trabajador.Telefono
+                : trabajadorActual.Telefono;
+            trabajadorActual.Dni = (trabajador.Dni != null && trabajador.Dni.Trim() != "")
+                ? trabajador.Dni
+                : trabajadorActual.Dni;
+            trabajadorActual.Email = (trabajador.Email != null && trabajador.Email.Trim() != "")
+               ? trabajador.Email
+               : trabajadorActual.Email;
+            trabajadorActual.Direccion = (trabajador.Direccion != null && trabajador.Direccion.Trim() != "")
+               ? trabajador.Direccion
+               : trabajadorActual.Direccion;
+            trabajadorActual.Sexo = (trabajador.Sexo != null && trabajador.Sexo.Trim() != "")
+               ? trabajador.Sexo
+               : trabajadorActual.Sexo;
+            trabajadorActual.Usuario = (trabajador.Usuario != null && trabajador.Usuario.Trim() != "")
+               ? trabajador.Usuario
+               : trabajadorActual.Usuario;
+            trabajadorActual.Roles = (trabajador.Roles != null && trabajador.Roles.Count() > 0)
+               ? RolMapper.ToRoles(trabajador.Roles)
+               : trabajadorActual.Roles;
+
+            if (trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
             {
                 string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
                 trabajador.Contrasenia = hash;
@@ -43,7 +74,7 @@ namespace AthenasNet.Negocio.Servicio
                 //trabajador.Nombre = (trabajador.Nombre == null || trabajador.Nombre == "") ? trabActual.Nombre : trabajador.Nombre;
             }
 
-            repositorio.Actualizar(TrabajadorMapper.ToTrabajador(trabajador));
+            repositorio.Actualizar(trabajadorActual);
         }
 
         public TrabajadorDto BuscarPorId(int id)

@@ -1,14 +1,12 @@
 
-const ProductoController = (service, ui, categoriaService, usuarioService) => {
+const ProductoController = (service, ui, categoriaService, { esVendedor }) => {
     let lstProductos = [];
     let prodSeleccionado = {};
     const { Mant } = AthenasNet;
-    let rolesActuales = [];
 
     const muestraProductos = async (filtros = {}) => {
         try {
             lstProductos = await service.listar(filtros);
-            const esVendedor = (rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor')
 
             const data = {
                 filas: lstProductos.map(p => ({
@@ -77,37 +75,43 @@ const ProductoController = (service, ui, categoriaService, usuarioService) => {
             evt.preventDefault();
 
             let producto = ui.getProducto();
-            if (ui.getImgDisplay().src.startsWith('data')) {
-                producto.Base64Imagen = ui.getImgDisplay().src;
+
+            if (producto.accion !== 'detalle') {
+                if (ui.getImgDisplay().src.startsWith('data')) {
+                    producto.Base64Imagen = ui.getImgDisplay().src;
+                }
+
+                delete producto.Imagen;
+                producto = {
+                    ...producto,
+                    Categoria: {
+                        Id: parseInt(producto.Categoria)
+                    }
+                }
+                console.log(producto);
+                try {
+                    if (producto.accion === 'registrar') {
+                        await service.crear(producto);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'El producto se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    }
+                    else if (producto.accion === 'editar') {
+                        await service.actualizar(producto);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'El producto se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    }
+
+                    await muestraProductos();
+                }
+                catch (err) {
+                    console.error(err);
+                    const mensaje = (producto.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                    const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                    AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+                }
             }
 
-            delete producto.Imagen;
-            producto = {
-                ...producto,
-                Categoria: {
-                    Id: parseInt(producto.Categoria)
-                }
-            }
-            console.log(producto);
-            try {
-                if (producto.accion === 'registrar') {
-                    await service.crear(producto);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'El producto se registró satisfactoriamente', titulo: 'Registro exitoso' })
-                }
-                else if (producto.accion === 'editar') {
-                    await service.actualizar(producto);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'El producto se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
-                }
-                await muestraProductos();
-            }
-            catch (err) {
-                console.error(err);
-                const mensaje = (producto.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
-            }
+            
 
 
         })
@@ -169,24 +173,16 @@ const ProductoController = (service, ui, categoriaService, usuarioService) => {
         })
     }
 
-    const getRolesActuales = async () => {
-        try {
-            rolesActuales = await usuarioService.rolesActuales();
-        }
-        catch (err) {
-            console.error(err)
-        }
-    }
+
 
     const validacionUI = () => {
-        if (rolesActuales.length === 1 && rolesActuales[0].Nombre === 'Vendedor') {
+        if (esVendedor) {
             ui.muestraVendedor();
         }
 
     }
 
     const iniciar = async () => {
-        await getRolesActuales();
         validacionUI();
         Mant.configuraTamModal('modal-lg');
         muestraProductos();

@@ -6,6 +6,7 @@
     const SEL_TBL_BODY = '#tb-mantenedor tbody';
     const ID_FORM_CATEGORIA = 'form-mantenedor';
     const SEL_MODAL_CATE = '#modal-mantenedor';
+    const ID_BTN_MANT_GUARDAR = 'btn-mant-guardar';
 
     const getTblMantenedor = () => document.querySelector(SEL_TBL_MANT);
 
@@ -36,10 +37,9 @@
     const getFormEleValue = (ele) => getFormMantElements()[ele].value;
 
     const setFormEleValue = (ele, value, readonly = false) => {
-        debugger
         const elemento = getFormMantElements()[ele]
         elemento.value = value;
-        elemento.readOnly = readonly;
+        elemento.disabled = readonly;
     }
 
     const setFormMantenedor = (entidad, arrExcepciones = [], readonly = false) => {
@@ -122,6 +122,7 @@
         SEL_TBL_BODY,
         SEL_TBL_MANT,
         configuraTamModal,
-        SEL_BTN_NUEVO
+        SEL_BTN_NUEVO,
+        ID_BTN_MANT_GUARDAR
     };
 })()

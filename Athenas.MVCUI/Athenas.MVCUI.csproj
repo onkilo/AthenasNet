@@ -255,6 +255,7 @@
     <Content Include="Scripts\es6\cliente\clienteController.js" />
     <Content Include="Scripts\es6\cliente\clienteService.js" />
     <Content Include="Scripts\es6\cliente\clienteUI.js" />
+    <Content Include="Scripts\es6\fao\validacionRoles.js" />
     <Content Include="Scripts\es6\inicio\inicio.js" />
     <Content Include="Scripts\es6\inicio\inicioController.js" />
     <Content Include="Scripts\es6\inicio\inicioUI.js" />
@@ -493,6 +494,7 @@
     <Content Include="Views\Pedido\Recibir.cshtml" />
     <Content Include="Views\Venta\Index.cshtml" />
     <Content Include="Views\Venta\Create.cshtml" />
+    <Content Include="Views\Usuario\EditarCuenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

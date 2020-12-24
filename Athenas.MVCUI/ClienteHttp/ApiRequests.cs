@@ -96,6 +96,29 @@ namespace Athenas.MVCUI.ClienteHttp
             return responseData.Result;
         }
 
+        public static T Patch<T, E, K>(string url, E entidad, out K errorResponse)
+        {
+
+            errorResponse = default(K); // null
+
+            var request = CreaPeticion(new HttpMethod("PATCH"), url, entidad);
+
+            var response = ApiRequests.Cliente.SendAsync(request).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorData = response.Content.ReadAsAsync<K>();
+
+                errorResponse = errorData.Result;
+
+                return default(T);//null
+            }
+
+            var responseData = response.Content.ReadAsAsync<T>();
+
+            return responseData.Result;
+        }
+
         public static T Delete<T, K>(string url, out K errorResponse)
         {
 

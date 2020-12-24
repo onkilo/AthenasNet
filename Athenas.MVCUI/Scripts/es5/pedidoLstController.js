@@ -10,14 +10,15 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var PedidoController = function PedidoController(service, ui) {
+var PedidoController = function PedidoController(service, ui, arg3, arg4, _ref) {
+  var esVendedor = _ref.esVendedor;
   var lstPedidos = [];
   var pedidoSeleccionado = {};
   var _AthenasNet = AthenasNet,
       Mant = _AthenasNet.Mant;
 
   var muesraPedidos = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var filtros,
           _args = arguments;
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -62,13 +63,13 @@ var PedidoController = function PedidoController(service, ui) {
     }));
 
     return function muesraPedidos() {
-      return _ref.apply(this, arguments);
+      return _ref2.apply(this, arguments);
     };
   }();
 
   var manejaEvtTabla = function manejaEvtTabla() {
     Mant.getTblMantenedor().addEventListener('click', /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
         var _evt$target$dataset, id, accion;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -119,14 +120,14 @@ var PedidoController = function PedidoController(service, ui) {
       }));
 
       return function (_x) {
-        return _ref2.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       };
     }());
   };
 
   var manejaEnvioConf = function manejaEnvioConf() {
     AthenasNet.getFormConfirmar().addEventListener('submit', /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -169,14 +170,14 @@ var PedidoController = function PedidoController(service, ui) {
       }));
 
       return function (_x2) {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     }());
   };
 
   var manejaEnvioFiltro = function manejaEnvioFiltro() {
     Mant.getFormFiltrar().addEventListener('submit', /*#__PURE__*/function () {
-      var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(evt) {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(evt) {
         var filtros;
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
@@ -197,7 +198,7 @@ var PedidoController = function PedidoController(service, ui) {
       }));
 
       return function (_x3) {
-        return _ref4.apply(this, arguments);
+        return _ref5.apply(this, arguments);
       };
     }());
   };
@@ -215,7 +216,7 @@ var PedidoController = function PedidoController(service, ui) {
   };
 
   var iniciar = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
@@ -238,7 +239,7 @@ var PedidoController = function PedidoController(service, ui) {
     }));
 
     return function iniciar() {
-      return _ref5.apply(this, arguments);
+      return _ref6.apply(this, arguments);
     };
   }();
 

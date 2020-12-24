@@ -1,5 +1,5 @@
 
-const PedidoController = (service, ui) => {
+const PedidoController = (service, ui, arg3, arg4, { esVendedor }) => {
     let lstPedidos = [];
     let pedidoSeleccionado = {};
     const { Mant } = AthenasNet;

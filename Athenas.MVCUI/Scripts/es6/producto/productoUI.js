@@ -47,6 +47,7 @@ const ProductoUI = () => {
 
     const muestraVendedor = () => {
         document.querySelector(AthenasNet.Mant.SEL_BTN_NUEVO).style.display = 'none';
+        document.getElementById(AthenasNet.Mant.ID_BTN_MANT_GUARDAR).style.display = 'none';
     }
 
     const muestraDetalle = (Categoria) => {

@@ -95,6 +95,29 @@ namespace AthenasNet.Api.Controllers
             return response;
         }
 
+        // PUT: api/Trabajador/5
+        [HttpPatch]
+        [CustomAutenticacionFilter]
+        [Route("api/Trabajador/EditarCuenta")]
+        public GenericResponse<String> EditarCuenta([FromBody]TrabajadorDto trabajador)
+        {
+            JwtDecodeModel model = (JwtDecodeModel)Thread.CurrentPrincipal;
+            GenericResponse<String> response = new GenericResponse<String>();
+            try
+            {
+                trabajador.Id = model.Id;
+                trabajador.Roles = null;
+                servicio.Actualizar(trabajador);
+                response = ResponseUtil.CrearRespuestaOk(dataMsg: "El trabajador se actualizado satisfactoriamente");
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+            return response;
+        }
+
         // DELETE: api/Trabajador/5
         public GenericResponse<String> Delete(int id)
         {

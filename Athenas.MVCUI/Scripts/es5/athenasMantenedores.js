@@ -13,6 +13,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var SEL_TBL_BODY = '#tb-mantenedor tbody';
   var ID_FORM_CATEGORIA = 'form-mantenedor';
   var SEL_MODAL_CATE = '#modal-mantenedor';
+  var ID_BTN_MANT_GUARDAR = 'btn-mant-guardar';
 
   var getTblMantenedor = function getTblMantenedor() {
     return document.querySelector(SEL_TBL_MANT);
@@ -49,10 +50,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var setFormEleValue = function setFormEleValue(ele, value) {
     var readonly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    debugger;
     var elemento = getFormMantElements()[ele];
     elemento.value = value;
-    elemento.readOnly = readonly;
+    elemento.disabled = readonly;
   };
 
   var setFormMantenedor = function setFormMantenedor(entidad) {
@@ -123,7 +123,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SEL_TBL_BODY: SEL_TBL_BODY,
     SEL_TBL_MANT: SEL_TBL_MANT,
     configuraTamModal: configuraTamModal,
-    SEL_BTN_NUEVO: SEL_BTN_NUEVO
+    SEL_BTN_NUEVO: SEL_BTN_NUEVO,
+    ID_BTN_MANT_GUARDAR: ID_BTN_MANT_GUARDAR
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map

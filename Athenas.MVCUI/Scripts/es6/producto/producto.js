@@ -1,14 +1,12 @@
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
 
     const service = ProductoService();
-
-    const usuarioService = UsuarioService();
 
     const ui = ProductoUI();
 
     const categoriaService = CategoriaService();
-
-    const controller = ProductoController(service, ui, categoriaService, usuarioService);
+    const controller = await conValidacionRoles(ProductoController, [service, ui, categoriaService]);
+    
 
     controller.iniciar();
 
