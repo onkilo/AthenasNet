@@ -14,7 +14,7 @@
                 <h5>Datos de la cuenta</h5>
             </div>
             <div class="card-body">
-                <form class="form col-md-12" novalidate id="form-usuario">
+                <form class="form col-md-12" novalidate id="form-editar-cuenta" >
                     <input type="hidden" name="Id" id="Id" value="0" />
                     <input type="hidden" name="accion" id="accion" value="registrar" />
                     <div class="form-group">
@@ -60,14 +60,14 @@
                     <div class="form-group">
                         <label for="cbo-sexo">Sexo</label>
                         <select name="Sexo" class="form-control" id="cbo-sexo">
-                            <option value="M" @((Model.Sexo == "M") ? "selected" : "") >Masculino</option>
-                            <option value="F"  @((Model.Sexo == "F") ? "selected": "")>Femenino</option>
+                            <option value="M" @((Model.Sexo == "M") ? "selected" : "")>Masculino</option>
+                            <option value="F" @((Model.Sexo == "F") ? "selected" : "")>Femenino</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="cbo-roles">Roles</label>
                         <ul>
-                            @foreach(RolViewModel rol in Model.Roles)
+                            @foreach (RolViewModel rol in Model.Roles)
                             {
                                 <li>@rol.Nombre</li>
                             }
@@ -82,4 +82,13 @@
     </div>
 
 </div>
+
+
+@section scripts {
+
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/editarCuentaUI.js")
+    @Scripts.Render("~/Scripts/es5/editarCuentaController.js")
+    @Scripts.Render("~/Scripts/es5/editarCuenta.js")
+}
 

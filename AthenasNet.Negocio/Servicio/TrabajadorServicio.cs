@@ -64,7 +64,7 @@ namespace AthenasNet.Negocio.Servicio
             if (trabajador.Contrasenia != null && trabajador.Contrasenia.Trim() != "")
             {
                 string hash = BCrypt.Net.BCrypt.HashPassword(trabajador.Contrasenia, 10);
-                trabajador.Contrasenia = hash;
+                trabajadorActual.Contrasenia = hash;
             }
             else
             {

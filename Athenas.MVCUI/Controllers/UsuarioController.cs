@@ -254,7 +254,20 @@ namespace Athenas.MVCUI.Controllers
 
             if (errorResponse == null)
             {
-                return Json(responseModel, JsonRequestBehavior.AllowGet);
+                //Volver a poner en session el usuario actual
+                url = $"{baseUrl}/{usuarioLogeado.Id}";
+
+                GenericResponseModel<UsuarioViewModel> nuevoUsuarioResponseModel = ApiRequests
+                    .Get<GenericResponseModel<UsuarioViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+                if(errorResponse == null)
+                {
+                    nuevoUsuarioResponseModel.Data.Token = usuarioLogeado.Token;
+                    Session["usuario"] = nuevoUsuarioResponseModel.Data;
+                    return Json(responseModel, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
             }
             else
             {

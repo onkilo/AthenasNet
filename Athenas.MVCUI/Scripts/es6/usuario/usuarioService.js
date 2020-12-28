@@ -88,6 +88,16 @@ const UsuarioService = () => {
         return respuesta.Data;
     }
 
+    const editarCuenta = async (cuenta) => {
+        const respuesta = await AthenasNet.llamadaApi({
+            type: 'POST',
+            data: JSON.stringify(cuenta),
+            url: 'Usuario/EditarCuenta'
+        })
+
+        return respuesta.Data;
+    }
+
     return {
         crear,
         actualizar,
@@ -96,6 +106,7 @@ const UsuarioService = () => {
         buscar,
         roles,
         infoPrincipal,
-        rolesActuales
+        rolesActuales,
+        editarCuenta
     }
 }
