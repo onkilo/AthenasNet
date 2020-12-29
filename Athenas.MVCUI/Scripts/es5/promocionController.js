@@ -123,7 +123,8 @@ var ProductoController = function ProductoController(service, ui, productoServic
   var manejaEnvioProm = function manejaEnvioProm() {
     Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
-        var promocion, mensaje, titulo;
+        var promocion, tienePromociones, _tienePromociones, mensaje, titulo;
+
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -135,52 +136,97 @@ var ProductoController = function ProductoController(service, ui, productoServic
                     Id: parseInt(promocion.Producto)
                   }
                 });
-                console.log(promocion);
+                console.log(promocion); //validacion de promocion existente
+
                 _context3.prev = 4;
 
                 if (!(promocion.accion === 'registrar')) {
-                  _context3.next = 12;
+                  _context3.next = 20;
                   break;
                 }
 
                 _context3.next = 8;
-                return service.crear(promocion);
+                return service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin);
 
               case 8:
+                tienePromociones = _context3.sent;
+                console.log(tienePromociones);
+
+                if (tienePromociones) {
+                  _context3.next = 17;
+                  break;
+                }
+
+                _context3.next = 13;
+                return service.crear(promocion);
+
+              case 13:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La promoción se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context3.next = 17;
+                _context3.next = 18;
                 break;
 
-              case 12:
+              case 17:
+                AthenasNet.muestraToast({
+                  cssClass: 'bg-danger',
+                  mensaje: 'El producto seleccionado ya posee promociones para el rango de fechas elegido',
+                  titulo: 'Promociones existentes'
+                });
+
+              case 18:
+                _context3.next = 33;
+                break;
+
+              case 20:
                 if (!(promocion.accion === 'editar')) {
-                  _context3.next = 17;
+                  _context3.next = 33;
                   break;
                 }
 
-                _context3.next = 15;
+                _context3.next = 23;
+                return service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin, promocion.Id);
+
+              case 23:
+                _tienePromociones = _context3.sent;
+                console.log(_tienePromociones);
+
+                if (_tienePromociones) {
+                  _context3.next = 32;
+                  break;
+                }
+
+                _context3.next = 28;
                 return service.actualizar(promocion);
 
-              case 15:
+              case 28:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La promoción se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
-
-              case 17:
-                _context3.next = 19;
-                return muestraPromociones();
-
-              case 19:
-                _context3.next = 27;
+                _context3.next = 33;
                 break;
 
-              case 21:
-                _context3.prev = 21;
+              case 32:
+                AthenasNet.muestraToast({
+                  cssClass: 'bg-danger',
+                  mensaje: 'El producto seleccionado ya posee promociones para el rango de fechas elegido',
+                  titulo: 'Promociones existentes'
+                });
+
+              case 33:
+                _context3.next = 35;
+                return muestraPromociones();
+
+              case 35:
+                _context3.next = 43;
+                break;
+
+              case 37:
+                _context3.prev = 37;
                 _context3.t0 = _context3["catch"](4);
                 console.error(_context3.t0);
                 mensaje = promocion.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
@@ -191,12 +237,12 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   titulo: titulo
                 });
 
-              case 27:
+              case 43:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[4, 21]]);
+        }, _callee3, null, [[4, 37]]);
       }));
 
       return function (_x2) {

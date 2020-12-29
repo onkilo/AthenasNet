@@ -65,16 +65,42 @@ const ProductoController = (service, ui, productoService) => {
                 }
             }
             console.log(promocion);
+            //validacion de promocion existente
+            
+
             try {
                 if (promocion.accion === 'registrar') {
-                    await service.crear(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    const tienePromociones = await service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin);
+                    console.log(tienePromociones);
+                    if (!tienePromociones) {
+                        await service.crear(promocion);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    }
+                    else {
+                        AthenasNet.muestraToast({
+                            cssClass: 'bg-danger',
+                            mensaje: 'El producto seleccionado ya posee promociones para el rango de fechas elegido',
+                            titulo: 'Promociones existentes'
+                        })
+                    }
                 }
                 else if (promocion.accion === 'editar') {
-                    await service.actualizar(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    const tienePromociones = await service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin, promocion.Id)
+                    console.log(tienePromociones);
+                    if (!tienePromociones) {
+                        await service.actualizar(promocion);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    }
+                    else {
+                        AthenasNet.muestraToast({
+                            cssClass: 'bg-danger',
+                            mensaje: 'El producto seleccionado ya posee promociones para el rango de fechas elegido',
+                            titulo: 'Promociones existentes'
+                        })
+                    }
+                    
                 }
                 await muestraPromociones();
             }
