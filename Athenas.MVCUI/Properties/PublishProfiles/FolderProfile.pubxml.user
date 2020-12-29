@@ -10,43 +10,43 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>09/10/2013 16:29:20</publishTime>
+      <publishTime>10/09/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.pdb">
-      <publishTime>09/10/2013 16:29:20</publishTime>
+      <publishTime>10/09/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Athenas.MVCUI.dll">
-      <publishTime>12/22/2020 18:05:28</publishTime>
+      <publishTime>12/22/2020 18:26:25</publishTime>
     </File>
     <File Include="bin/Athenas.MVCUI.pdb">
-      <publishTime>12/22/2020 18:05:28</publishTime>
+      <publishTime>12/22/2020 18:26:25</publishTime>
     </File>
     <File Include="bin/es/System.Web.Helpers.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.Http.resources.dll">
-      <publishTime>02/01/2018 12:17:50</publishTime>
+      <publishTime>01/02/2018 12:17:50</publishTime>
     </File>
     <File Include="bin/es/System.Web.Http.WebHost.resources.dll">
-      <publishTime>02/01/2018 12:19:34</publishTime>
+      <publishTime>01/02/2018 12:19:34</publishTime>
     </File>
     <File Include="bin/es/System.Web.Mvc.resources.dll">
-      <publishTime>02/01/2018 12:16:42</publishTime>
+      <publishTime>01/02/2018 12:16:42</publishTime>
     </File>
     <File Include="bin/es/System.Web.Optimization.resources.dll">
-      <publishTime>02/11/2014 15:28:40</publishTime>
+      <publishTime>11/02/2014 15:28:40</publishTime>
     </File>
     <File Include="bin/es/System.Web.Razor.resources.dll">
-      <publishTime>02/01/2018 12:17:04</publishTime>
+      <publishTime>01/02/2018 12:17:04</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.Deployment.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.Razor.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/es/System.Web.WebPages.resources.dll">
-      <publishTime>02/01/2018 12:21:06</publishTime>
+      <publishTime>01/02/2018 12:21:06</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -55,7 +55,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>11/09/2019 00:56:44</publishTime>
+      <publishTime>09/11/2019 00:56:44</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -199,31 +199,31 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/28/2018 13:00:36</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
-      <publishTime>02/01/2018 12:17:40</publishTime>
+      <publishTime>01/02/2018 12:17:40</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
-      <publishTime>02/01/2018 12:19:26</publishTime>
+      <publishTime>01/02/2018 12:19:26</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>02/01/2018 12:16:32</publishTime>
+      <publishTime>01/02/2018 12:16:32</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>02/11/2014 15:26:04</publishTime>
+      <publishTime>11/02/2014 15:26:04</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>02/01/2018 12:16:56</publishTime>
+      <publishTime>01/02/2018 12:16:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
-      <publishTime>02/01/2018 12:20:56</publishTime>
+      <publishTime>01/02/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -364,13 +364,13 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>10/15/2020 11:16:47</publishTime>
     </File>
     <File Include="Content/select2/select2-bootstrap4.min.css">
-      <publishTime>12/08/2020 10:46:51</publishTime>
+      <publishTime>08/12/2020 10:46:51</publishTime>
     </File>
     <File Include="Content/select2/select2.css">
-      <publishTime>12/08/2020 10:46:51</publishTime>
+      <publishTime>08/12/2020 10:46:51</publishTime>
     </File>
     <File Include="Content/select2/select2.min.css">
-      <publishTime>12/08/2020 10:46:51</publishTime>
+      <publishTime>08/12/2020 10:46:51</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>10/16/2020 16:58:46</publishTime>
@@ -442,10 +442,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:44:20</publishTime>
     </File>
     <File Include="Scripts/es5/athenasNet.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/athenasNet.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/categoria.js">
       <publishTime>12/22/2020 17:44:20</publishTime>
@@ -495,41 +495,59 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <File Include="Scripts/es5/clienteUI.js.map">
       <publishTime>12/22/2020 17:44:20</publishTime>
     </File>
+    <File Include="Scripts/es5/inicio.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/inicio.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/inicioController.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/inicioController.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/inicioUI.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/inicioUI.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
     <File Include="Scripts/es5/pedido.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedido.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoLstController.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoLstController.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoLstUI.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoLstUI.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoRecibirController.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoRecibirController.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoRegistrarController.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoRegistrarController.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoService.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/pedidoService.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/producto.js">
       <publishTime>12/22/2020 17:44:20</publishTime>
@@ -538,10 +556,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:44:20</publishTime>
     </File>
     <File Include="Scripts/es5/productoController.js">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/productoController.js.map">
-      <publishTime>12/22/2020 17:44:20</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/productoService.js">
       <publishTime>12/22/2020 17:44:20</publishTime>
@@ -616,10 +634,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:44:21</publishTime>
     </File>
     <File Include="Scripts/es5/usuarioService.js">
-      <publishTime>12/22/2020 17:44:21</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/usuarioService.js.map">
-      <publishTime>12/22/2020 17:44:21</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es5/usuarioUI.js">
       <publishTime>12/22/2020 17:44:21</publishTime>
@@ -627,11 +645,41 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <File Include="Scripts/es5/usuarioUI.js.map">
       <publishTime>12/22/2020 17:44:21</publishTime>
     </File>
+    <File Include="Scripts/es5/venta.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/venta.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaLstController.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaLstController.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaLstUI.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaLstUI.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaRegistrarController.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaRegistrarController.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaService.js">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
+    <File Include="Scripts/es5/ventaService.js.map">
+      <publishTime>12/22/2020 18:09:41</publishTime>
+    </File>
     <File Include="Scripts/es6/athenasMantenedores.js">
       <publishTime>12/22/2020 17:35:30</publishTime>
     </File>
     <File Include="Scripts/es6/athenasNet.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/categoria/categoria.js">
       <publishTime>12/22/2020 17:35:30</publishTime>
@@ -658,37 +706,37 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/20/2020 10:23:57</publishTime>
     </File>
     <File Include="Scripts/es6/inicio/inicio.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/inicio/inicioController.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/inicio/inicioUI.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedido.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedidoLstController.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedidoLstUI.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedidoRecibirController.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedidoRegistrarController.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/pedido/pedidoService.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/producto/producto.js">
       <publishTime>10/30/2020 17:35:07</publishTime>
     </File>
     <File Include="Scripts/es6/producto/productoController.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/producto/productoService.js">
       <publishTime>10/30/2020 17:35:07</publishTime>
@@ -721,31 +769,31 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/20/2020 10:23:57</publishTime>
     </File>
     <File Include="Scripts/es6/usuario/usuario.js">
-      <publishTime>12/08/2020 10:46:52</publishTime>
+      <publishTime>08/12/2020 10:46:52</publishTime>
     </File>
     <File Include="Scripts/es6/usuario/usuarioController.js">
       <publishTime>12/22/2020 17:35:30</publishTime>
     </File>
     <File Include="Scripts/es6/usuario/usuarioService.js">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/usuario/usuarioUI.js">
       <publishTime>12/22/2020 17:35:30</publishTime>
     </File>
     <File Include="Scripts/es6/venta/venta.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/venta/ventaLstController.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/venta/ventaLstUI.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/venta/ventaRegistrarController.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/es6/venta/ventaService.js">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js">
       <publishTime>10/15/2020 11:16:47</publishTime>
@@ -841,10 +889,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>10/15/2020 11:16:47</publishTime>
     </File>
     <File Include="Scripts/select2/select2.full.min.js">
-      <publishTime>12/08/2020 10:46:52</publishTime>
+      <publishTime>08/12/2020 10:46:52</publishTime>
     </File>
     <File Include="Scripts/select2/select2.min.js">
-      <publishTime>12/08/2020 10:46:52</publishTime>
+      <publishTime>08/12/2020 10:46:52</publishTime>
     </File>
     <File Include="Scripts/src/index.js">
       <publishTime>10/15/2020 11:16:47</publishTime>
@@ -1075,16 +1123,16 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>10/15/2020 11:16:47</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Pedido/Create.cshtml">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Pedido/Index.cshtml">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Pedido/Recibir.cshtml">
-      <publishTime>12/22/2020 17:35:30</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Producto/Index.cshtml">
       <publishTime>12/22/2020 17:35:30</publishTime>
@@ -1105,7 +1153,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:35:30</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutMantenedor.cshtml">
-      <publishTime>12/22/2020 17:35:31</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Shared/_ModalConfirmacion.cshtml">
       <publishTime>10/27/2020 13:08:36</publishTime>
@@ -1114,7 +1162,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:35:31</publishTime>
     </File>
     <File Include="Views/Shared/_Sidebar.cshtml">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Shared/_Toast.cshtml">
       <publishTime>10/27/2020 13:08:36</publishTime>
@@ -1123,13 +1171,13 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>12/22/2020 17:35:31</publishTime>
     </File>
     <File Include="Views/Usuario/Login.cshtml">
-      <publishTime>12/22/2020 17:35:31</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Venta/Create.cshtml">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Venta/Index.cshtml">
-      <publishTime>12/22/2020 17:43:26</publishTime>
+      <publishTime>12/22/2020 18:09:41</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/15/2020 11:16:47</publishTime>
@@ -1138,7 +1186,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>10/15/2020 11:16:47</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/22/2020 18:05:28</publishTime>
+      <publishTime>12/22/2020 18:26:25</publishTime>
     </File>
   </ItemGroup>
 </Project>

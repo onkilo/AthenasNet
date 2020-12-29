@@ -82,6 +82,18 @@ const PedidoUI = () => {
         AthenasNet.compilaTemplate('tempDetalle', data, '#tb-detalle #det-body')
     }
 
+    const abreModalPedido = () => {
+        $('#modalDetPedido').modal('show');
+    }
+
+    const setModalPedidoData = (pedido) => {
+        AthenasNet.compilaTemplate('tempModalPedidoBody', pedido, '#modalDetPedido .modal-body')
+    }
+
+    const setModalPedidoDetData = (pedido) => {
+        AthenasNet.compilaTemplate('tempDetPedidoTbl', pedido, '#modalDetPedido .modal-body #det-body')
+    }
+
     return {
         generarTabla,
         getFiltros,
@@ -99,6 +111,15 @@ const PedidoUI = () => {
         getInputCantidad,
         setTotal,
         getTblDetalle,
-        getFormPedido
+        getFormPedido,
+        abreModalPedido,
+        setModalPedidoData
     }
+
 }
+
+window.addEventListener('load', () => {
+
+    Handlebars.registerPartial('tblDetPedido', document.getElementById('tempDetPedidoTbl').innerHTML);
+
+})

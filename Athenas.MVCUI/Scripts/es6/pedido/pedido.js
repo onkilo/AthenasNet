@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     const service = PedidoService();
 
     const ui = PedidoUI();
@@ -13,8 +13,19 @@ window.addEventListener('load', () => {
         productoService = ProductoService();
     }
 
-    const controller = PedidoController(service, ui, proveedorService, productoService);
+    let controller = null
 
+    //if (window.conValidacionRoles) {
+    //    controller = await conValidacionRoles(PedidoController, [ui, proveedorService, productoService])
+    //}
+    //else {
+    //    controller = PedidoController(service, ui, proveedorService, productoService);
+    //}
+
+    controller = (window.conValidacionRoles)
+        ? await conValidacionRoles(PedidoController, [service, ui, proveedorService, productoService])
+        : await PedidoController(service, ui, proveedorService, productoService);
+    
     controller.iniciar();
 
 })

@@ -1,5 +1,5 @@
 
-const PedidoController = (service, ui) => {
+const PedidoController = (service, ui, arg3, arg4, { esVendedor }) => {
     let lstPedidos = [];
     let pedidoSeleccionado = {};
     const { Mant } = AthenasNet;
@@ -54,6 +54,37 @@ const PedidoController = (service, ui) => {
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
                     AthenasNet.mostrarConfirmacion();
+                }
+                else if (accion === 'detalle') {
+                    ui.abreModalPedido();
+
+                    let total = 0;
+
+                    pedidoSeleccionado.Detalles.forEach(det => {
+                        total += parseInt(det.Cantidad) * parseFloat(det.Precio)
+                    })
+
+                    const pedidoMostrado = {
+                        Codigo: AthenasNet.formatCodigo(pedidoSeleccionado.Id, 'PED', 4),
+                        FFecha: pedidoSeleccionado.FFecha,
+                        Colaborador: pedidoSeleccionado.Trabajador.Nombre + ' ' + pedidoSeleccionado.Trabajador.Apellido,
+                        Proveedor: {
+                            RzSocial: pedidoSeleccionado.Proveedor.RzSocial,
+                            Direccion: pedidoSeleccionado.Proveedor.Direccion,
+                            Telefono: pedidoSeleccionado.Proveedor.Telefono
+                        },
+                        Detalles: pedidoSeleccionado.Detalles.map(det => ({
+                            Codigo: AthenasNet.formatCodigo(det.Producto.Id, 'PRD', 4),
+                            Descripcion: det.Producto.Descripcion,
+                            Precio: AthenasNet.formatPrecio(det.Precio),
+                            Cantidad: det.Cantidad,
+                            Subtotal: AthenasNet.formatPrecio(det.Cantidad * det.Precio)
+                        })),
+                        Total: total.toFixed(2)
+                    }
+
+                    ui.setModalPedidoData(pedidoMostrado);
+
                 }
             }
 

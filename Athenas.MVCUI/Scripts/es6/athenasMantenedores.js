@@ -6,6 +6,7 @@
     const SEL_TBL_BODY = '#tb-mantenedor tbody';
     const ID_FORM_CATEGORIA = 'form-mantenedor';
     const SEL_MODAL_CATE = '#modal-mantenedor';
+    const ID_BTN_MANT_GUARDAR = 'btn-mant-guardar';
 
     const getTblMantenedor = () => document.querySelector(SEL_TBL_MANT);
 
@@ -35,15 +36,19 @@
 
     const getFormEleValue = (ele) => getFormMantElements()[ele].value;
 
-    const setFormEleValue = (ele, value) => { getFormMantElements()[ele].value = value; }
+    const setFormEleValue = (ele, value, readonly = false) => {
+        const elemento = getFormMantElements()[ele]
+        elemento.value = value;
+        elemento.disabled = readonly;
+    }
 
-    const setFormMantenedor = (entidad, arrExcepciones = []) => {
+    const setFormMantenedor = (entidad, arrExcepciones = [], readonly = false) => {
         const elementos = Object.keys(entidad);
 
         elementos.forEach(ele => {
             if (arrExcepciones.includes(ele)) return; 
 
-            setFormEleValue(ele, entidad[ele]);
+            setFormEleValue(ele, entidad[ele], readonly);
         })
 
 
@@ -116,6 +121,8 @@
         getFormMantenedor,
         SEL_TBL_BODY,
         SEL_TBL_MANT,
-        configuraTamModal
+        configuraTamModal,
+        SEL_BTN_NUEVO,
+        ID_BTN_MANT_GUARDAR
     };
 })()

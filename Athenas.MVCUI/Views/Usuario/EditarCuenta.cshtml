@@ -1,0 +1,94 @@
+@model Athenas.MVCUI.Models.UsuarioViewModel
+@using Athenas.MVCUI.Models
+
+@{
+    ViewBag.Title = "Editar Cuenta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card card-outline card-primary mt-4">
+            <div class="card-header">
+                <h5>Datos de la cuenta</h5>
+            </div>
+            <div class="card-body">
+                <form class="form col-md-12" novalidate id="form-editar-cuenta" >
+                    <input type="hidden" name="Id" id="Id" value="0" />
+                    <input type="hidden" name="accion" id="accion" value="registrar" />
+                    <div class="form-group">
+                        <label for="txt-nombre">Nombre</label>
+                        <input type="text" class="form-control" name="Nombre" id="txt-nombre" required value="@Model.Nombre">
+                        <div class="invalid-feedback">Por favor ingrese el nombre del usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" class="form-control" name="Apellido" id="txt-apellido" required value="@Model.Apellido">
+                        <div class="invalid-feedback">Por favor ingrese el apellido del usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-telefono">Teléfono</label>
+                        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9" value="@Model.Telefono">
+                        <div class="invalid-feedback">Por favor ingrese número de teléfono para el usuario, debe ser tener entre 7 y 9 caracteres</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-direccion">Dirección</label>
+                        <input type="text" class="form-control" name="Direccion" id="txt-direccion" required value="@Model.Direccion">
+                        <div class="invalid-feedback">Por favor ingrese una dirección para el usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-email">Email</label>
+                        <input type="email" class="form-control" name="Email" id="txt-email" required value="@Model.Email">
+                        <div class="invalid-feedback">Por favor ingrese email válido </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-userName">Usuario</label>
+                        <input type="text" class="form-control" name="Usuario" id="txt-userName" required value="@Model.Usuario">
+                        <div class="invalid-feedback">Por favor ingrese un nombre de usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-userPass">Contraseña</label>
+                        <input type="password" class="form-control" name="Contrasenia" id="txt-userPass">
+                        <div class="invalid-feedback">Por favor ingrese una contraseña para el usuario</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-dni">DNI</label>
+                        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8" value="@Model.Dni">
+                        <div class="invalid-feedback">Por favor ingrese un número de DNI para el usuario, debe tener 8 caracteres</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cbo-sexo">Sexo</label>
+                        <select name="Sexo" class="form-control" id="cbo-sexo">
+                            <option value="M" @((Model.Sexo == "M") ? "selected" : "")>Masculino</option>
+                            <option value="F" @((Model.Sexo == "F") ? "selected" : "")>Femenino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cbo-roles">Roles</label>
+                        <ul>
+                            @foreach (RolViewModel rol in Model.Roles)
+                            {
+                                <li>@rol.Nombre</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-success col-lg-2 mr-lg-4"><i class="far fa-save mr-1"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts {
+
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/editarCuentaUI.js")
+    @Scripts.Render("~/Scripts/es5/editarCuentaController.js")
+    @Scripts.Render("~/Scripts/es5/editarCuenta.js")
+}
+

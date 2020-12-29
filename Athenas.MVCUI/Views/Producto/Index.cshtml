@@ -87,6 +87,7 @@
 
             <div class="form-group">
                 <label for="Categoria">Categoría</label>
+                <input type="text" id="CategoriaText" class="form-control d-none" readonly />
                 <select name="Categoria" id="Categoria" class="form-control">
                     <option value="0">Seleccione</option>
                     <option value="1">CategoriaSeleccionada</option>
@@ -95,7 +96,7 @@
         </div>
         <div class="col-lg-6 ">
             <div class="form-group">
-                <label for="Imagen">Imagen</label>
+                <label class="d-block">Imagen</label>
                 <input type="file" class="form-control-file mb-4" name="Imagen" id="Imagen" accept="image/*">
                 <img src="" id="imgDisplay" class="img-fluid" style="max-height: 500px">
             </div>
@@ -106,6 +107,8 @@
 
 
 @section scripts {
+    @Scripts.Render("~/Scripts/es5/usuarioService.js")
+    @Scripts.Render("~/Scripts/es5/validacionRoles.js")
     @Scripts.Render("~/Scripts/es5/categoriaService.js")
     @Scripts.Render("~/Scripts/es5/productoService.js")
     @Scripts.Render("~/Scripts/es5/productoUI.js")

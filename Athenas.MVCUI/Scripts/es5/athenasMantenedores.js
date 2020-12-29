@@ -13,6 +13,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var SEL_TBL_BODY = '#tb-mantenedor tbody';
   var ID_FORM_CATEGORIA = 'form-mantenedor';
   var SEL_MODAL_CATE = '#modal-mantenedor';
+  var ID_BTN_MANT_GUARDAR = 'btn-mant-guardar';
 
   var getTblMantenedor = function getTblMantenedor() {
     return document.querySelector(SEL_TBL_MANT);
@@ -48,15 +49,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   };
 
   var setFormEleValue = function setFormEleValue(ele, value) {
-    getFormMantElements()[ele].value = value;
+    var readonly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var elemento = getFormMantElements()[ele];
+    elemento.value = value;
+    elemento.disabled = readonly;
   };
 
   var setFormMantenedor = function setFormMantenedor(entidad) {
     var arrExcepciones = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var readonly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     var elementos = Object.keys(entidad);
     elementos.forEach(function (ele) {
       if (arrExcepciones.includes(ele)) return;
-      setFormEleValue(ele, entidad[ele]);
+      setFormEleValue(ele, entidad[ele], readonly);
     });
     $(SEL_MODAL_CATE).modal('show');
   };
@@ -117,7 +122,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFormMantenedor: getFormMantenedor,
     SEL_TBL_BODY: SEL_TBL_BODY,
     SEL_TBL_MANT: SEL_TBL_MANT,
-    configuraTamModal: configuraTamModal
+    configuraTamModal: configuraTamModal,
+    SEL_BTN_NUEVO: SEL_BTN_NUEVO,
+    ID_BTN_MANT_GUARDAR: ID_BTN_MANT_GUARDAR
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map

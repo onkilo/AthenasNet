@@ -21,6 +21,15 @@ namespace Athenas.MVCUI.Controllers
             return View();
         }
 
+        [CustomAutenticacionFilter(TipoResultado = "View")]
+        public ActionResult EditarCuenta()
+        {
+
+            UsuarioViewModel usuarioLogeado = (UsuarioViewModel)Session["usuario"];
+
+            return View(usuarioLogeado);
+        }
+
         [HttpGet]
         public ActionResult Listar(string Nombre = "")
         {
@@ -227,6 +236,43 @@ namespace Athenas.MVCUI.Controllers
             response.Mensaje = "Ok";
 
             return Json(response, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        public ActionResult EditarCuenta(UsuarioViewModel newUsuario)
+        {
+
+            String url = $"{baseUrl}/EditarCuenta";
+
+            UsuarioViewModel usuarioLogeado = (UsuarioViewModel)Session["usuario"];
+            newUsuario.Id = usuarioLogeado.Id;
+
+            GenericResponseModel<String> responseModel = ApiRequests
+                .Patch<GenericResponseModel<String>, UsuarioViewModel, GenericResponseModel<String>>(url, newUsuario, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                //Volver a poner en session el usuario actual
+                url = $"{baseUrl}/{usuarioLogeado.Id}";
+
+                GenericResponseModel<UsuarioViewModel> nuevoUsuarioResponseModel = ApiRequests
+                    .Get<GenericResponseModel<UsuarioViewModel>, GenericResponseModel<String>>(url, out errorResponse);
+
+                if(errorResponse == null)
+                {
+                    nuevoUsuarioResponseModel.Data.Token = usuarioLogeado.Token;
+                    Session["usuario"] = nuevoUsuarioResponseModel.Data;
+                    return Json(responseModel, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
 
         }
 
