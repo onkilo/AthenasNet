@@ -93,6 +93,18 @@ var PedidoUI = function PedidoUI() {
     AthenasNet.compilaTemplate('tempDetalle', data, '#tb-detalle #det-body');
   };
 
+  var abreModalPedido = function abreModalPedido() {
+    $('#modalDetPedido').modal('show');
+  };
+
+  var setModalPedidoData = function setModalPedidoData(pedido) {
+    AthenasNet.compilaTemplate('tempModalPedidoBody', pedido, '#modalDetPedido .modal-body');
+  };
+
+  var setModalPedidoDetData = function setModalPedidoDetData(pedido) {
+    AthenasNet.compilaTemplate('tempDetPedidoTbl', pedido, '#modalDetPedido .modal-body #det-body');
+  };
+
   return {
     generarTabla: generarTabla,
     getFiltros: getFiltros,
@@ -110,7 +122,13 @@ var PedidoUI = function PedidoUI() {
     getInputCantidad: getInputCantidad,
     setTotal: setTotal,
     getTblDetalle: getTblDetalle,
-    getFormPedido: getFormPedido
+    getFormPedido: getFormPedido,
+    abreModalPedido: abreModalPedido,
+    setModalPedidoData: setModalPedidoData
   };
 };
+
+window.addEventListener('load', function () {
+  Handlebars.registerPartial('tblDetPedido', document.getElementById('tempDetPedidoTbl').innerHTML);
+});
 //# sourceMappingURL=pedidoLstUI.js.map

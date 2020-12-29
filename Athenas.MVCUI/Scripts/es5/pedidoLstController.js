@@ -70,7 +70,7 @@ var PedidoController = function PedidoController(service, ui, arg3, arg4, _ref) 
   var manejaEvtTabla = function manejaEvtTabla() {
     Mant.getTblMantenedor().addEventListener('click', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
-        var _evt$target$dataset, id, accion;
+        var _evt$target$dataset, id, accion, total, pedidoMostrado;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -109,6 +109,33 @@ var PedidoController = function PedidoController(service, ui, arg3, arg4, _ref) 
                 if (accion === 'eliminar') {
                   console.log('eliminar');
                   AthenasNet.mostrarConfirmacion();
+                } else if (accion === 'detalle') {
+                  ui.abreModalPedido();
+                  total = 0;
+                  pedidoSeleccionado.Detalles.forEach(function (det) {
+                    total += parseInt(det.Cantidad) * parseFloat(det.Precio);
+                  });
+                  pedidoMostrado = {
+                    Codigo: AthenasNet.formatCodigo(pedidoSeleccionado.Id, 'PED', 4),
+                    FFecha: pedidoSeleccionado.FFecha,
+                    Colaborador: pedidoSeleccionado.Trabajador.Nombre + ' ' + pedidoSeleccionado.Trabajador.Apellido,
+                    Proveedor: {
+                      RzSocial: pedidoSeleccionado.Proveedor.RzSocial,
+                      Direccion: pedidoSeleccionado.Proveedor.Direccion,
+                      Telefono: pedidoSeleccionado.Proveedor.Telefono
+                    },
+                    Detalles: pedidoSeleccionado.Detalles.map(function (det) {
+                      return {
+                        Codigo: AthenasNet.formatCodigo(det.Producto.Id, 'PRD', 4),
+                        Descripcion: det.Producto.Descripcion,
+                        Precio: AthenasNet.formatPrecio(det.Precio),
+                        Cantidad: det.Cantidad,
+                        Subtotal: AthenasNet.formatPrecio(det.Cantidad * det.Precio)
+                      };
+                    }),
+                    Total: total.toFixed(2)
+                  };
+                  ui.setModalPedidoData(pedidoMostrado);
                 }
 
               case 11:

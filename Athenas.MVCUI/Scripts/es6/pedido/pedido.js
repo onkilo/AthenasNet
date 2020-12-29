@@ -25,7 +25,7 @@ window.addEventListener('load', async () => {
     controller = (window.conValidacionRoles)
         ? await conValidacionRoles(PedidoController, [service, ui, proveedorService, productoService])
         : await PedidoController(service, ui, proveedorService, productoService);
-    debugger
+    
     controller.iniciar();
 
 })

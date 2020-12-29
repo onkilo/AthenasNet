@@ -5,7 +5,7 @@
 }
 
 @section btnNuevo {
-    <a type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" href="@Url.Action("Create", "Pedido")" >
+    <a type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" href="@Url.Action("Create", "Pedido")">
         <i class="fas fa-plus mr-1"></i> Nuevo
     </a>
 }
@@ -42,10 +42,137 @@
 
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetPedido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos del pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/template" id="tempModalPedidoBody">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label for="codigo-pedido">Código del pedido</label>
+                <input type="text" class="form-control" readonly name="" id="modal-pedido-codigo" value="{{Codigo}}" />
+            </div>
+        </div>
+        <div class="col-lg-3 ">
+            <div class="form-group">
+                <label for="fecha-pedido">Fecha</label>
+                <input type="date" name="fecha" id="fecha-pedido" readonly class="form-control" value="{{FFecha}}">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="txt-trab">Colaborador</label>
+                <input type="text" class="form-control" readonly name="" id="modal-pedido-colaborador" value="{{Colaborador}}" />
+            </div>
+        </div>
+    </div>
+    <!--DATOS DEL PROVEEDOR-->
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Proveedor</label>
+                <input type="text" class="form-control" readonly name="" id="modal-pedido-proveedor-rzsocial" value="{{Proveedor.RzSocial}}" />
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" class="form-control" readonly name="" id="modal-pedido-proveedor-direccion" value="{{Proveedor.Direccion}}" />
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" class="form-control" readonly name="" id="modal-pedido-proveedor-telefono" value="{{Proveedor.Telefono}}" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!--Card del detalle-->
+            <div class="card" style="border:1px solid rgba(0,0,0,0.4)">
+                <div class="card-header p-1 pl-4 bg-success text-white">
+                    Detalle
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm" id="tb-detalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Descripción</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="det-body">
+                                        {{> tblDetPedido}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 d-flex justify-content-end">
+                            <div class="form-group">
+                                <label for="total">Total</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">S/ </span>
+                                    </div>
+                                    <input type="text" readonly="readonly" class="form-control" name="total" id="modal-pedido-total" value="{{Total}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tempDetPedidoTbl">
+    {{#each Detalles}}
+    <tr>
+        <td>{{Codigo}}</td>
+        <td>{{Descripcion}}</td>
+        <td>{{Precio}}</td>
+        <td>{{Cantidad}}</td>
+        <td>{{Subtotal}}</td>
+    </tr>
+    {{/each}}
+</script>
+
 @section scripts {
     @Scripts.Render("~/Scripts/es5/pedidoService.js")
     @Scripts.Render("~/Scripts/es5/usuarioService.js")
     @Scripts.Render("~/Scripts/es5/validacionRoles.js")
+
+
     @Scripts.Render("~/Scripts/es5/pedidoLstUI.js")
     @Scripts.Render("~/Scripts/es5/pedidoLstController.js")
     @Scripts.Render("~/Scripts/es5/pedido.js")

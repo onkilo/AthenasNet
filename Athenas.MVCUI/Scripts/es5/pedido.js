@@ -51,10 +51,9 @@ window.addEventListener('load', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/reg
 
         case 15:
           controller = _context.t0;
-          debugger;
           controller.iniciar();
 
-        case 18:
+        case 17:
         case "end":
           return _context.stop();
       }
