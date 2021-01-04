@@ -64,7 +64,7 @@ var VentaController = function VentaController(service, ui) {
   var manejaEvtTabla = function manejaEvtTabla() {
     Mant.getTblMantenedor().addEventListener('click', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
-        var _evt$target$dataset, id, accion;
+        var _evt$target$dataset, id, accion, subtotal, descuento, total, ventaMostrada;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -102,6 +102,38 @@ var VentaController = function VentaController(service, ui) {
                 if (accion === 'eliminar') {
                   console.log('eliminar');
                   AthenasNet.mostrarConfirmacion();
+                } else if (accion === 'detalle') {
+                  ui.abreModalVenta();
+                  subtotal = 0;
+                  descuento = 0;
+                  total = 0;
+                  ventaSeleccionada.Detalles.forEach(function (det) {
+                    subtotal += parseInt(det.Cantidad) * parseFloat(det.Precio), descuento += parseInt(det.Cantidad) * parseFloat(det.DesctUni), total += parseInt(det.Cantidad) * parseFloat(det.Precio) - parseInt(det.Cantidad) * parseFloat(det.DesctUni);
+                  });
+                  ventaMostrada = {
+                    Codigo: AthenasNet.formatCodigo(ventaSeleccionada.Id, 'VEN', 4),
+                    FFecha: ventaSeleccionada.FFecha,
+                    Colaborador: ventaSeleccionada.Trabajador.Nombre + ' ' + ventaSeleccionada.Trabajador.Apellido,
+                    Cliente: {
+                      Nombre: ventaSeleccionada.Cliente.Nombre,
+                      Dni: ventaSeleccionada.Cliente.Dni,
+                      Telefono: ventaSeleccionada.Cliente.Telefono
+                    },
+                    Detalles: ventaSeleccionada.Detalles.map(function (det) {
+                      return {
+                        Codigo: AthenasNet.formatCodigo(det.Producto.Id, 'PRD', 4),
+                        Descripcion: det.Producto.Descripcion,
+                        Precio: AthenasNet.formatPrecio(det.Precio),
+                        Cantidad: det.Cantidad,
+                        SubTotal: AthenasNet.formatPrecio(det.Cantidad * det.Precio),
+                        Descuento: AthenasNet.formatPrecio(det.Cantidad * det.DesctUni)
+                      };
+                    }),
+                    SubTotal: subtotal.toFixed(2),
+                    Descuento: descuento.toFixed(2),
+                    Total: total.toFixed(2)
+                  };
+                  ui.setModalVentaData(ventaMostrada);
                 }
 
               case 11:

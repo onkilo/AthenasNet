@@ -293,6 +293,8 @@ namespace Athenas.Data.MSSQLRepositorio
                         Nombre = drVenta["NomCliente"].ToString(),
                         Apellido = drVenta["ApeCliente"].ToString(),
                         Dni = drVenta["DNICliente"].ToString(),
+                        Telefono = drVenta["TelCliente"].ToString()
+                        
                     };
                     venta.Trabajador = new Trabajador
                     {

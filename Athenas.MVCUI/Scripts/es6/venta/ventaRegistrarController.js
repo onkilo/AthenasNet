@@ -206,7 +206,7 @@
         ui.setTotal(total.toFixed(2));
     }
 
-    debugger
+    
     const evtFormVenta = () => {
 
         ui.getFormVenta().addEventListener('submit', async (e) => {
@@ -222,7 +222,13 @@
             }
             try {
                 await service.crear(venta)
-                console.log('registrado');
+                const mensaje = {
+                    color: 'bg-success',
+                    titulo: 'Registro exitoso',
+                    texto: 'La venta fue registrado exitosamente'
+                }
+                localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                window.location.href = AthenasNet.MVC_URL_BASE + 'Venta';
             }
             catch (err) {
                 console.error(err);

@@ -48,6 +48,44 @@
                 else if (accion === 'eliminar') {
                     console.log('eliminar')
                     AthenasNet.mostrarConfirmacion();
+
+                } else if (accion === 'detalle') {
+                    ui.abreModalVenta();
+
+                    let subtotal = 0;
+                    let descuento = 0;
+                    let total = 0;
+
+                    ventaSeleccionada.Detalles.forEach(det => {
+                        subtotal += parseInt(det.Cantidad) * parseFloat(det.Precio),
+                        descuento += parseInt(det.Cantidad) * parseFloat(det.DesctUni),
+                        total += parseInt(det.Cantidad) * parseFloat(det.Precio) - parseInt(det.Cantidad) * parseFloat(det.DesctUni)
+                    })
+
+                    const ventaMostrada = {
+                        Codigo: AthenasNet.formatCodigo(ventaSeleccionada.Id, 'VEN', 4),
+                        FFecha: ventaSeleccionada.FFecha,
+                        Colaborador: ventaSeleccionada.Trabajador.Nombre + ' ' + ventaSeleccionada.Trabajador.Apellido,
+                        Cliente: {
+                            Nombre: ventaSeleccionada.Cliente.Nombre,
+                            Dni: ventaSeleccionada.Cliente.Dni,
+                            Telefono: ventaSeleccionada.Cliente.Telefono
+                        },
+                        Detalles: ventaSeleccionada.Detalles.map(det => ({
+                            Codigo: AthenasNet.formatCodigo(det.Producto.Id, 'PRD', 4),
+                            Descripcion: det.Producto.Descripcion,
+                            Precio: AthenasNet.formatPrecio(det.Precio),
+                            Cantidad: det.Cantidad,
+                            SubTotal: AthenasNet.formatPrecio(det.Cantidad * det.Precio),
+                            Descuento: AthenasNet.formatPrecio(det.Cantidad * det.DesctUni)
+                        })),
+                        SubTotal: subtotal.toFixed(2),
+                        Descuento: descuento.toFixed(2),
+                        Total: total.toFixed(2)
+                    }
+
+                    ui.setModalVentaData(ventaMostrada);
+
                 }
             }
 
