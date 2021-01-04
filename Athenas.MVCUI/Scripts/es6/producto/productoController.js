@@ -1,3 +1,4 @@
+/// <reference path="../../jquery-3.5.1.slim.js" />
 
 const ProductoController = (service, ui, categoriaService, { esVendedor }) => {
     let lstProductos = [];

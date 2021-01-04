@@ -216,7 +216,7 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                 Detalles: lstDetalles
             }
             try {
-                debugger
+                
                 await service.crear(pedido)
                 const mensaje = {
                     color: 'bg-success',

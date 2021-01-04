@@ -81,6 +81,17 @@
         AthenasNet.compilaTemplate('tempDetalle', data, '#tb-detalle #det-body')
     }
 
+    const abreModalVenta = () => {
+        $('#modalDetVenta').modal('show');
+    }
+
+    const setModalVentaData = (venta) => {
+        AthenasNet.compilaTemplate('tempModalVentaBody', venta, '#modalDetVenta .modal-body')
+    }
+
+    const setModalVentaDetData = (venta) => {
+        AthenasNet.compilaTemplate('tempDetVentaTbl', venta, '#modalDetVenta .modal-body #det-body')
+    }
     return {
         generarTabla,
         getFiltros,
@@ -99,6 +110,14 @@
         setDescuento,
         setTotal,
         getTblDetalle,
-        getFormVenta
+        getFormVenta,
+        abreModalVenta,
+        setModalVentaData
     }
 }
+
+window.addEventListener('load', () => {
+
+    Handlebars.registerPartial('tblDetVenta', document.getElementById('tempDetVentaTbl').innerHTML);
+
+})

@@ -233,11 +233,10 @@ var PedidoController = function PedidoController(service, ui, proveedorService, 
                   Detalles: lstDetalles
                 };
                 _context3.prev = 2;
-                debugger;
-                _context3.next = 6;
+                _context3.next = 5;
                 return service.crear(pedido);
 
-              case 6:
+              case 5:
                 mensaje = {
                   color: 'bg-success',
                   titulo: 'Registro exitoso',
@@ -245,20 +244,20 @@ var PedidoController = function PedidoController(service, ui, proveedorService, 
                 };
                 localStorage.setItem('mensaje', JSON.stringify(mensaje));
                 window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
-                _context3.next = 14;
+                _context3.next = 13;
                 break;
 
-              case 11:
-                _context3.prev = 11;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](2);
                 console.error(_context3.t0);
 
-              case 14:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 11]]);
+        }, _callee3, null, [[2, 10]]);
       }));
 
       return function (_x) {

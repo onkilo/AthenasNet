@@ -219,12 +219,10 @@ var VentaController = function VentaController(service, ui, clienteService, prod
     ui.setTotal(total.toFixed(2));
   };
 
-  debugger;
-
   var evtFormVenta = function evtFormVenta() {
     ui.getFormVenta().addEventListener('submit', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
-        var venta;
+        var venta, mensaje;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -242,21 +240,27 @@ var VentaController = function VentaController(service, ui, clienteService, prod
                 return service.crear(venta);
 
               case 5:
-                console.log('registrado');
-                _context3.next = 11;
+                mensaje = {
+                  color: 'bg-success',
+                  titulo: 'Registro exitoso',
+                  texto: 'La venta fue registrado exitosamente'
+                };
+                localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                window.location.href = AthenasNet.MVC_URL_BASE + 'Venta';
+                _context3.next = 13;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](2);
                 console.error(_context3.t0);
 
-              case 11:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 8]]);
+        }, _callee3, null, [[2, 10]]);
       }));
 
       return function (_x) {

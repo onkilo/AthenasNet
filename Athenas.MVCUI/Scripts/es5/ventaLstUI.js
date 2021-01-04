@@ -96,6 +96,18 @@ var VentaUI = function VentaUI() {
     AthenasNet.compilaTemplate('tempDetalle', data, '#tb-detalle #det-body');
   };
 
+  var abreModalVenta = function abreModalVenta() {
+    $('#modalDetVenta').modal('show');
+  };
+
+  var setModalVentaData = function setModalVentaData(venta) {
+    AthenasNet.compilaTemplate('tempModalVentaBody', venta, '#modalDetVenta .modal-body');
+  };
+
+  var setModalVentaDetData = function setModalVentaDetData(venta) {
+    AthenasNet.compilaTemplate('tempDetVentaTbl', venta, '#modalDetVenta .modal-body #det-body');
+  };
+
   return {
     generarTabla: generarTabla,
     getFiltros: getFiltros,
@@ -114,7 +126,13 @@ var VentaUI = function VentaUI() {
     setDescuento: setDescuento,
     setTotal: setTotal,
     getTblDetalle: getTblDetalle,
-    getFormVenta: getFormVenta
+    getFormVenta: getFormVenta,
+    abreModalVenta: abreModalVenta,
+    setModalVentaData: setModalVentaData
   };
 };
+
+window.addEventListener('load', function () {
+  Handlebars.registerPartial('tblDetVenta', document.getElementById('tempDetVentaTbl').innerHTML);
+});
 //# sourceMappingURL=ventaLstUI.js.map

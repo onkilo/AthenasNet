@@ -32,6 +32,7 @@ BEGIN
 			c.Nombre as NomCliente,
 			c.Apellido as ApeCliente,
 			c.DNI as DNICliente,
+			c.Telefono as TelCliente,
 			v.TrabajadorId,
 			t.Nombre as NomTrabajador,
 			t.Apellido as ApeTrabajador,
