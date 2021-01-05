@@ -1,4 +1,5 @@
 using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
@@ -12,6 +13,9 @@ using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
+    [CustomAutorizacionFilter("Administrador,Supervisor")]
     public class RolController : ApiController
     {
         private readonly RolServicio servicio = new RolServicio();

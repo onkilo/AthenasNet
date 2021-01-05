@@ -1,4 +1,4 @@
-﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
@@ -14,6 +14,7 @@ using System.Web.Http;
 namespace AthenasNet.Api.Controllers
 {
     [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
     public class ClienteController : ApiController
     {
         private readonly ClienteServicio servicio = new ClienteServicio();

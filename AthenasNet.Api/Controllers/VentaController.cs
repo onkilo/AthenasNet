@@ -1,5 +1,6 @@
 using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Filters;
+using AthenasNet.Api.Models;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
@@ -9,11 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
     [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
     public class VentaController : ApiController
     {
         private readonly VentaServicio servicio = new VentaServicio();
@@ -26,7 +29,13 @@ namespace AthenasNet.Api.Controllers
 
             try
             {
-                IEnumerable<VentaDto> data = servicio.Listar(Cliente, 0);
+                bool esVendedor = false;
+
+                esVendedor = UsuarioUtil.EsVendedor();
+
+                int usuarioId = esVendedor ? UsuarioUtil.GetUsuarioActual().Id : 0;
+
+                IEnumerable<VentaDto> data = servicio.Listar(Cliente, usuarioId);
                 response = ResponseUtil.GetListaPaginada<VentaDto>(data, pagina, registros);
             }
             catch (Exception ex)
@@ -45,7 +54,18 @@ namespace AthenasNet.Api.Controllers
 
             try
             {
+                JwtDecodeModel usuarioActual = UsuarioUtil.GetUsuarioActual();
+
+                bool esVendedor = UsuarioUtil.EsVendedor();
+
+                
                 response.Data = servicio.BuscarPorId(id);
+
+                if (esVendedor && response.Data.Trabajador.Id != usuarioActual.Id)
+                {
+                    throw new CustomResponseException("No estas autorizado para realizar esta acción", 400);
+                }
+
                 if (response.Data == null)
                 {
                     throw new CustomResponseException("No se encontró la venta", 404);
@@ -103,6 +123,18 @@ namespace AthenasNet.Api.Controllers
 
             try
             {
+                JwtDecodeModel usuarioActual = UsuarioUtil.GetUsuarioActual();
+
+                bool esVendedor = UsuarioUtil.EsVendedor();
+
+
+                VentaDto venta = servicio.BuscarPorId(id);
+
+                if (esVendedor && venta.Trabajador.Id != usuarioActual.Id)
+                {
+                    throw new CustomResponseException("No estas autorizado para realizar esta acción", 400);
+                }
+
                 servicio.Eliminar(id);
                 response = ResponseUtil.CrearRespuestaOk();
             }

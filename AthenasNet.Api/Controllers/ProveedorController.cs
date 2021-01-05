@@ -1,4 +1,4 @@
-﻿using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Excepciones;
 using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
@@ -14,6 +14,8 @@ using System.Web.Http;
 namespace AthenasNet.Api.Controllers
 {
     [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
+    [CustomAutorizacionFilter("Administrador,Supervisor")]
     public class ProveedorController : ApiController
     {
         private readonly ProveedorServicio servicio = new ProveedorServicio();

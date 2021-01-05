@@ -16,6 +16,8 @@ using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
     public class ProductoController : ApiController
     {
         private ProductoServicio servicio = new ProductoServicio();
@@ -23,7 +25,6 @@ namespace AthenasNet.Api.Controllers
 
 
         // GET: api/Producto
-        [CustomExceptionFilter]
         public GenericResponse<IEnumerable<ProductoDto>> Get(int pagina = 1, int registros = 10, string Descripcion = "", int BajoStock = 0)
         {
             GenericResponse<IEnumerable<ProductoDto>> response = new GenericResponse<IEnumerable<ProductoDto>>();
@@ -63,12 +64,14 @@ namespace AthenasNet.Api.Controllers
         }
 
         // POST: api/Producto
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Post([FromBody]ProductoDto producto)
         {
             GenericResponse<String> response = new GenericResponse<String>();
 
             try
             {
+                ValidaProducto(producto);
                 producto.Imagen = cloudinaryUtil.SubeImagen(producto.Base64Imagen, producto.Descripcion);
 
                 servicio.Crear(producto);
@@ -83,6 +86,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // PUT: api/Producto/5
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Put(int id, [FromBody]ProductoDto producto)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -115,6 +119,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // DELETE: api/Producto/5
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Delete(int id)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -130,6 +135,19 @@ namespace AthenasNet.Api.Controllers
             }
 
             return response;
+
+        }
+
+        private void ValidaProducto(ProductoDto producto)
+        {
+            if (producto.StockActual <= 0)
+            {
+                throw new CustomResponseException("El producto no puede tener un stock menor 1", 400);
+            }
+            if (producto.PrecioCompra > producto.PrecioVenta)
+            {
+                throw new CustomResponseException("El producto no puede tener un precio de venta menor al de compra", 400);
+            }
 
         }
     }

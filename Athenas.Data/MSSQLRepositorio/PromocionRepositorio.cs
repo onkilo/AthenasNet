@@ -240,5 +240,49 @@ namespace Athenas.Data.MSSQLRepositorio
 
             return promociones;
         }
+
+        public bool TienePromociones(int ProductoId, DateTime FechaInicio, DateTime FechaFin, int PromocionId = 0)
+        {
+            int cantidadPromociones = 0;
+           
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "USP_VALIDAPROMO";
+
+                cmd.Parameters.AddWithValue("@ProductoId", ProductoId);
+                cmd.Parameters.AddWithValue("@FechaInicio", FechaInicio);
+                cmd.Parameters.AddWithValue("@FechaFin", FechaFin);
+                cmd.Parameters.AddWithValue("@PromocionId", PromocionId);
+
+                cn.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    cantidadPromociones = Int32.Parse(dr["Promociones"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+
+            }
+
+            bool tienePromociones = (cantidadPromociones > 0);
+
+            return tienePromociones;
+
+        }
     }
 }

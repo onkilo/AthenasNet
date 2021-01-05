@@ -14,6 +14,8 @@ using System.Web.Http;
 namespace AthenasNet.Api.Controllers
 {
     [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
+    [CustomAutorizacionFilter("Supervisor,Administrador")]
     public class CompraController : ApiController
     {
         private readonly CompraServicio servicio = new CompraServicio();

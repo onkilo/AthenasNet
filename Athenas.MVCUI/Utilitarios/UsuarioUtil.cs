@@ -14,11 +14,15 @@ namespace Athenas.MVCUI.Utilitarios
         {
             bool esVendedor = true;
             UsuarioViewModel usuario = (UsuarioViewModel) HttpContext.Current.Session["usuario"];
-            List<RolViewModel> rolesActuales = usuario.Roles.ToList();
 
-            string rolVendedorDescripcion = ConfigurationManager.AppSettings["ROL_VENDEDOR"];
+            if(usuario != null)
+            {
+                List<RolViewModel> rolesActuales = usuario.Roles.ToList();
 
-            esVendedor = rolesActuales.Count() == 1 && rolesActuales.Exists(rol => rol.Nombre == rolVendedorDescripcion);
+                string rolVendedorDescripcion = ConfigurationManager.AppSettings["ROL_VENDEDOR"];
+
+                esVendedor = rolesActuales.Count() == 1 && rolesActuales.Exists(rol => rol.Nombre == rolVendedorDescripcion);
+            }
 
             return esVendedor;
         }

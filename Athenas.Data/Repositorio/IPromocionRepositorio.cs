@@ -10,5 +10,7 @@ namespace Athenas.Data.Repositorio
     public interface IPromocionRepositorio : IGenericRepositorio<Promocion>
     {
         IEnumerable<Promocion> Listar(string Criterio, int Estado);
+
+        bool TienePromociones(int ProductoId, DateTime FechaInicio, DateTime FechaFin, int PromocionId = 0);
     }
 }
