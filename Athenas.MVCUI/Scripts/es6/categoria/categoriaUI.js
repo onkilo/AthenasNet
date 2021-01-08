@@ -24,6 +24,8 @@ const CategoriaUI = () => {
         return AthenasNet.Mant.getEntidad(['Descripcion', 'Id', 'accion']);
     }
 
+
+
     return {
         getCategoria,
         generarTabla,

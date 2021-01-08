@@ -154,7 +154,8 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
   };
 
   var manejaEnvioProd = function manejaEnvioProd() {
-    Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
+    var formMantenedor = Mant.getFormMantenedor();
+    formMantenedor.addEventListener('submit', /*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
         var producto, mensaje, titulo;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -162,10 +163,16 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
             switch (_context3.prev = _context3.next) {
               case 0:
                 evt.preventDefault();
+
+                if (!formMantenedor.checkValidity()) {
+                  _context3.next = 33;
+                  break;
+                }
+
                 producto = ui.getProducto();
 
                 if (!(producto.accion !== 'detalle')) {
-                  _context3.next = 30;
+                  _context3.next = 31;
                   break;
                 }
 
@@ -180,52 +187,52 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
                   }
                 });
                 console.log(producto);
-                _context3.prev = 7;
+                _context3.prev = 8;
 
                 if (!(producto.accion === 'registrar')) {
-                  _context3.next = 15;
+                  _context3.next = 16;
                   break;
                 }
 
-                _context3.next = 11;
+                _context3.next = 12;
                 return service.crear(producto);
 
-              case 11:
+              case 12:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context3.next = 20;
+                _context3.next = 21;
                 break;
 
-              case 15:
+              case 16:
                 if (!(producto.accion === 'editar')) {
-                  _context3.next = 20;
+                  _context3.next = 21;
                   break;
                 }
 
-                _context3.next = 18;
+                _context3.next = 19;
                 return service.actualizar(producto);
 
-              case 18:
+              case 19:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El producto se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 20:
-                _context3.next = 22;
+              case 21:
+                _context3.next = 23;
                 return muestraProductos();
 
-              case 22:
-                _context3.next = 30;
+              case 23:
+                _context3.next = 31;
                 break;
 
-              case 24:
-                _context3.prev = 24;
-                _context3.t0 = _context3["catch"](7);
+              case 25:
+                _context3.prev = 25;
+                _context3.t0 = _context3["catch"](8);
                 console.error(_context3.t0);
                 mensaje = producto.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = producto.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -235,12 +242,19 @@ var ProductoController = function ProductoController(service, ui, categoriaServi
                   titulo: titulo
                 });
 
-              case 30:
+              case 31:
+                _context3.next = 34;
+                break;
+
+              case 33:
+                Mant.esFormularioValido(false);
+
+              case 34:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[7, 24]]);
+        }, _callee3, null, [[8, 25]]);
       }));
 
       return function (_x2) {

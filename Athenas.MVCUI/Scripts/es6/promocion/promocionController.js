@@ -54,38 +54,62 @@ const ProductoController = (service, ui, productoService) => {
     }
 
     const manejaEnvioProm = () => {
-
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
+        const formMantenedor = Mant.getFormMantenedor();
+        formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
+            if (formMantenedor.checkValidity()) {
+                let promocion = ui.getPromocion();
+                promocion = {
+                    ...promocion,
+                    Producto: {
+                        Id: parseInt(promocion.Producto)
+                    }
+                }
+                console.log(promocion);
+                try {
+                    if (promocion.accion === 'registrar') {
+                        const tienePromociones = await service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin);
+                        console.log(tienePromociones)
 
-            let promocion = ui.getPromocion();
-            promocion = {
-                ...promocion,
-                Producto: {
-                    Id: parseInt(promocion.Producto)
-                }
-            }
-            console.log(promocion);
-            try {
-                if (promocion.accion === 'registrar') {
-                    await service.crear(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
-                }
-                else if (promocion.accion === 'editar') {
-                    await service.actualizar(promocion);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
-                }
-                await muestraPromociones();
-            }
-            catch (err) {
-                console.error(err);
-                const mensaje = (promocion.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (promocion.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
-            }
+                        if (!tienePromociones) {
+                            ui.muestraMsjTienePromo(false);
+                            await service.crear(promocion);
+                            Mant.cerrarModMant();
+                            AthenasNet.muestraToast({ mensaje: 'La promoción se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                            await muestraPromociones();
+                        }
+                        else {
+                            ui.muestraMsjTienePromo(true);
+                        }
 
+                    }
+                    else if (promocion.accion === 'editar') {
+                        const tienePromociones = await service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin, promocion.Id);
+                        if (!tienePromociones) {
+                            ui.muestraMsjTienePromo(false);
+                            await service.actualizar(promocion);
+                            Mant.cerrarModMant();
+                            AthenasNet.muestraToast({ mensaje: 'La promoción se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                            await muestraPromociones();
+                        }
+                        else {
+                            ui.muestraMsjTienePromo(true);
+                        }
+                    }
+
+                }
+                catch (err) {
+                    console.error(err);
+                    const mensaje = (promocion.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                    const titulo = (promocion.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                    AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+                }
+
+            }
+            else {
+                Mant.esFormularioValido(false);
+            }
+            
 
         })
 

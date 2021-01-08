@@ -170,12 +170,59 @@ var PromocionService = function PromocionService() {
     };
   }();
 
+  var tienePromociones = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+      var producto,
+          fechaInicio,
+          fechaFin,
+          promocion,
+          data,
+          respuesta,
+          _args6 = arguments;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              producto = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : 0;
+              fechaInicio = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : '';
+              fechaFin = _args6.length > 2 && _args6[2] !== undefined ? _args6[2] : '';
+              promocion = _args6.length > 3 && _args6[3] !== undefined ? _args6[3] : 0;
+              data = {
+                Producto: producto,
+                FechaInicio: fechaInicio,
+                FechaFin: fechaFin,
+                Promocion: promocion
+              };
+              _context6.next = 7;
+              return AthenasNet.llamadaApi({
+                data: data,
+                url: 'Promocion/TienePromociones'
+              });
+
+            case 7:
+              respuesta = _context6.sent;
+              return _context6.abrupt("return", respuesta.Data);
+
+            case 9:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    return function tienePromociones() {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+
   return {
     crear: crear,
     actualizar: actualizar,
     listar: listar,
     eliminar: eliminar,
-    buscar: buscar
+    buscar: buscar,
+    tienePromociones: tienePromociones
   };
 };
 //# sourceMappingURL=promocionService.js.map

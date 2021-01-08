@@ -41,28 +41,29 @@
 @section modalMantenedorCuerpo {
     <input type="hidden" name="Id" id="Id" value="0" />
     <input type="hidden" name="accion" id="accion" value="registrar" />
-
+    <div class="alert alert-danger d-none" role="alert" id="msj-tiene-promo">
+        El producto seleccionado ya tiene una promoción en el rango de fechas
+    </div>
     <div class="form-group">
         <label for="Producto">Producto</label>
-        <select name="Producto" id="Producto" class="form-control">
-            
-        </select>
+        <select name="Producto" id="Producto" class="form-control" required></select>
+        <div class="invalid-feedback">Por favor seleccione un producto</div>
     </div>
     <div class="form-group">
         <label for="Tipo">Tipo de descuento</label>
-        <select name="Tipo" id="Tipo" class="form-control" >
+        <select name="Tipo" id="Tipo" class="form-control">
             <option value="0">Fijo</option>
             <option value="1">Porcentual</option>
         </select>
     </div>
     <div class="form-group">
         <label for="Valor">Valor</label>
-        <input type="number" class="form-control" name="Valor" id="Valor" required min="0.01" step=".1" max="80">
-        <div class="invalid-feedback">Por favor ingrese un valor para el descuento de la promoción, el valor máximo es 80 para cualquiera de los tipos</div>
+        <input type="number" class="form-control" name="Valor" id="Valor" required min="0.01" step=".1" >
+        <div class="invalid-feedback">Por favor ingrese un valor para el descuento de la promoción</div>
     </div>
     <div class="form-group">
         <label for="FechaInicio">Fecha de inicio</label>
-        <input type="date" class="form-control" name="FechaInicio" id="FechaInicio"  required>
+        <input type="date" class="form-control" name="FechaInicio" id="FechaInicio" required>
         <div class="invalid-feedback">Por favor ingrese una fecha de inicio</div>
     </div>
     <div class="form-group">
@@ -83,7 +84,7 @@
 }
 
 <script id="temp-lst-productos" type="text/template">
-    <option value="0">Seleccione</option>
+    <option value="">Seleccione</option>
     {{#each filas}}
     {{#if selected}}
     <option value="{{Id}}" selected>{{Descripcion}} - {{PrecioVenta}}</option>

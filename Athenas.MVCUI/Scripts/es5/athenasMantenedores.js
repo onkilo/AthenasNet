@@ -69,6 +69,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var evtMostrarModMant = function evtMostrarModMant(evt) {
     $(SEL_MODAL_CATE).on('hide.bs.modal', function () {
       limpiarFormMant();
+      esFormularioValido(true);
+      ocultaMsjTienePromo();
     });
   };
 
@@ -109,6 +111,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     $(SEL_MODAL_CATE + " .modal-dialog").addClass(clase);
   };
 
+  var esFormularioValido = function esFormularioValido(esValido) {
+    if (esValido) {
+      getFormMantenedor().classList.remove('was-validated');
+    } else {
+      getFormMantenedor().classList.add('was-validated');
+    }
+  };
+
+  var ocultaMsjTienePromo = function ocultaMsjTienePromo() {
+    var msj = document.getElementById('msj-tiene-promo');
+
+    if (msj) {
+      msj.classList.add('d-none');
+    }
+  };
+
   window.AthenasNet.Mant = {
     getFormFiltrar: getFormFiltrar,
     getFiltros: getFiltros,
@@ -124,7 +142,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SEL_TBL_MANT: SEL_TBL_MANT,
     configuraTamModal: configuraTamModal,
     SEL_BTN_NUEVO: SEL_BTN_NUEVO,
-    ID_BTN_MANT_GUARDAR: ID_BTN_MANT_GUARDAR
+    ID_BTN_MANT_GUARDAR: ID_BTN_MANT_GUARDAR,
+    esFormularioValido: esFormularioValido
   };
 })();
 //# sourceMappingURL=athenasMantenedores.js.map

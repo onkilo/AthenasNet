@@ -39,29 +39,34 @@ const CategoriaController = (service, ui) => {
     }
 
     const manejaEnvioCat = () => {
-
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
+        const formMantenedor = Mant.getFormMantenedor();
+        formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
-
-            const categoria = ui.getCategoria();
-            try {
-                if (categoria.accion === 'registrar') {
-                    await service.crearCategoria(categoria);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La categoría se registró satisfactoriamente', titulo: 'Registro exitoso' })
+            debugger
+            if (formMantenedor.checkValidity()) {
+                const categoria = ui.getCategoria();
+                try {
+                    if (categoria.accion === 'registrar') {
+                        await service.crearCategoria(categoria);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'La categoría se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    }
+                    else if (categoria.accion === 'editar') {
+                        await service.actualizarCategoria(categoria);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'La categoría se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    }
+                    await muestraCategorias();
                 }
-                else if (categoria.accion === 'editar') {
-                    await service.actualizarCategoria(categoria);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'La categoría se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                catch (err) {
+                    console.error(err);
+                    const mensaje = (categoria.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                    const titulo = (categoria.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                    AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
                 }
-                await muestraCategorias();
             }
-            catch (err) {
-                console.error(err);
-                const mensaje = (categoria.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (categoria.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+            else {
+                Mant.esFormularioValido(false);
             }
 
 

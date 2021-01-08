@@ -2,7 +2,7 @@
 
 window.addEventListener('load', function () {
   var service = PromocionService();
-  var ui = ProductoUI();
+  var ui = PromocionUI();
   var productoService = ProductoService();
   var controller = ProductoController(service, ui, productoService);
   controller.iniciar();

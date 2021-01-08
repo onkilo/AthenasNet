@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     const service = PromocionService();
 
-    const ui = ProductoUI();
+    const ui = PromocionUI();
 
     const productoService = ProductoService();
 

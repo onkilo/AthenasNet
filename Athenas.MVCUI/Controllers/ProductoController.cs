@@ -16,6 +16,7 @@ namespace Athenas.MVCUI.Controllers
 
         // GET: Producto
         [CustomAutenticacionFilter(TipoResultado = "View")]
+        [CustomAutorizacionFilter(TipoResultado = "View", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Index()
         {
             ViewBag.Title = "Producto";
@@ -24,6 +25,7 @@ namespace Athenas.MVCUI.Controllers
 
         [HttpGet]
         [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Listar(string Descripcion = "")
         {
 
@@ -50,6 +52,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Obtener(int Id)
         {
 
@@ -70,6 +74,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Supervisor,Administrador")]
         public ActionResult Crear(ProductoViewModel producto)
         {
 
@@ -90,6 +96,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Supervisor,Administrador")]
         public ActionResult Actualizar(ProductoViewModel producto)
         {
 
@@ -110,6 +118,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Eliminar(int Id)
         {
 

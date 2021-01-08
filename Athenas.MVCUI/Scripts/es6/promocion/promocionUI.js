@@ -1,5 +1,5 @@
 
-const ProductoUI = () => {
+const PromocionUI = () => {
 
     const getFiltros = () => {
         const arrFiltros = ['Producto'];
@@ -32,12 +32,21 @@ const ProductoUI = () => {
             'FechaFin']);
     }
 
+    const muestraMsjTienePromo = (tienePromociones) => {
+        if (!tienePromociones) {
+            document.getElementById('msj-tiene-promo').classList.add('d-none');
+        }
+        else {
+            document.getElementById('msj-tiene-promo').classList.remove('d-none');
+        }
+    }
 
     return {
         getPromocion,
         generarTabla,
         getFiltros,
         ID_TEMP_PROD: 'temp-lst-productos',
-        SEL_CBO_PROD: '#form-mantenedor #Producto'
+        SEL_CBO_PROD: '#form-mantenedor #Producto',
+        muestraMsjTienePromo
     }
 }
