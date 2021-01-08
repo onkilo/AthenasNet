@@ -14,13 +14,12 @@ using AthenasNet.Api.Excepciones;
 namespace AthenasNet.Api.Controllers
 {
     [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
     public class CategoriaController : ApiController
     {
         private readonly CategoriaServicio servicio = new CategoriaServicio();
 
         // GET: api/Categoria
-        //[CustomAutenticacionFilter]
-        //[CustomAutorizacionFilter("Administrador, Supervisor")]
         public GenericResponse<IEnumerable<CategoriaDto>> Get(int pagina = 1, int registros = 10, string Descripcion = "")
         {
             GenericResponse<IEnumerable<CategoriaDto>> response = new GenericResponse<IEnumerable<CategoriaDto>>();
@@ -68,6 +67,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // POST: api/Categoria
+        [CustomAutorizacionFilter("Administrador, Supervisor")]
         public GenericResponse<String> Post([FromBody]CategoriaDto categoria)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -91,6 +91,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // PUT: api/Categoria/5
+        [CustomAutorizacionFilter("Administrador, Supervisor")]
         public GenericResponse<String> Put(int id, [FromBody]CategoriaDto categoria)
         {
             
@@ -116,6 +117,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // DELETE: api/Categoria/5
+        [CustomAutorizacionFilter("Administrador, Supervisor")]
         public GenericResponse<String> Delete(int id)
         {
             GenericResponse<String> response = new GenericResponse<String>();

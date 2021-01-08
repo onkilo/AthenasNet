@@ -22,6 +22,8 @@ namespace AthenasNet.Api.Controllers
 
 
         // GET: api/Trabajador
+        [CustomAutenticacionFilter]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<IEnumerable<TrabajadorDto>> Get(int pagina = 1, int registros = 10, string Nombre = "")
         {
             GenericResponse<IEnumerable<TrabajadorDto>> response = new GenericResponse<IEnumerable<TrabajadorDto>>();
@@ -39,6 +41,8 @@ namespace AthenasNet.Api.Controllers
         }
 
         // GET: api/Trabajador/5
+        [CustomAutenticacionFilter]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<TrabajadorDto> Get(int id)
         {
             GenericResponse<TrabajadorDto> response = new GenericResponse<TrabajadorDto>();
@@ -58,6 +62,8 @@ namespace AthenasNet.Api.Controllers
         }
 
         // POST: api/Trabajador
+        [CustomAutenticacionFilter]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Post([FromBody]TrabajadorDto trabajador)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -76,6 +82,8 @@ namespace AthenasNet.Api.Controllers
         }
 
         // PUT: api/Trabajador/5
+        [CustomAutenticacionFilter]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Put(int id, [FromBody]TrabajadorDto trabajador)
         {
             
@@ -119,6 +127,8 @@ namespace AthenasNet.Api.Controllers
         }
 
         // DELETE: api/Trabajador/5
+        [CustomAutenticacionFilter]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Delete(int id)
         {
             GenericResponse<String> response = new GenericResponse<String>();

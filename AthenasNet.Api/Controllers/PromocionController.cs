@@ -1,4 +1,5 @@
 using AthenasNet.Api.Excepciones;
+using AthenasNet.Api.Filters;
 using AthenasNet.Api.Response;
 using AthenasNet.Api.Utilitarios;
 using AthenasNet.Negocio.Dto;
@@ -12,6 +13,8 @@ using System.Web.Http;
 
 namespace AthenasNet.Api.Controllers
 {
+    [CustomExceptionFilter]
+    [CustomAutenticacionFilter]
     public class PromocionController : ApiController
     {
         private readonly PromocionServicio servicio = new PromocionServicio();
@@ -55,6 +58,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // POST: api/Promocion
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Post([FromBody]PromocionDto promocion)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -75,6 +79,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // PUT: api/Promocion/5
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Put(int id, [FromBody]PromocionDto promocion)
         {
             GenericResponse<String> response = new GenericResponse<String>();
@@ -94,6 +99,7 @@ namespace AthenasNet.Api.Controllers
         }
 
         // DELETE: api/Promocion/5
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
         public GenericResponse<String> Delete(int id)
         {
             
@@ -103,6 +109,28 @@ namespace AthenasNet.Api.Controllers
             {
                 servicio.Eliminar(id);
                 response = ResponseUtil.CrearRespuestaOk(dataMsg: "La promoción se eliminó satisfactoriamente");
+            }
+            catch (Exception ex)
+            {
+                throw new CustomResponseException(ex.Message, 500);
+            }
+
+            return response;
+        }
+
+        [HttpGet]
+        [Route("api/Promocion/TienePromociones")]
+        [CustomAutorizacionFilter("Administrador,Supervisor")]
+        public GenericResponse<Boolean> TienePromociones(int Producto = 0, string FechaInicio = "", string FechaFin = "", int Promocion = 0)
+        {
+            GenericResponse<Boolean> response = new GenericResponse<Boolean>();
+
+            try
+            {
+                response.Data = servicio.TienePromociones(Producto, DateTime.Parse(FechaInicio), DateTime.Parse(FechaFin), Promocion);
+                response.Codigo = 200; // OK
+                response.Error = false;
+                response.Mensaje = "OK";
             }
             catch (Exception ex)
             {
