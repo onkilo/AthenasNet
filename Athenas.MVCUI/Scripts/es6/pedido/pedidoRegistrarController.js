@@ -104,12 +104,14 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                         PrecioCompra: AthenasNet.formatPrecio(prodSeleccionado.PrecioCompra),
                         Codigo: AthenasNet.formatCodigo(prodSeleccionado.Id, 'PRD', 4)
                     });
+                    ui.validaProdSeleccionado(true);
                     ui.getModalBuscar().modal('hide');
                 }
                 else {
                     provSeleccionado = lstProveedores.find(prov => prov.Id === id);
 
                     ui.setProveedor(provSeleccionado);
+                    ui.validaProvSeleccionado(true);
                     ui.getModalBuscar().modal('hide');
                 }
 
@@ -122,38 +124,66 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
     const evtBtnAgregarDet = () => {
 
         ui.getBtnAgregarDet().addEventListener('click', () => {
-
+            debugger
             const cantidad = ui.getInputCantidad().value;
+            console.log(cantidad);
+            if (!cantidad || parseInt(cantidad) <= 0) {
+                ui.validaCantidadDetalle(false);
+            }
+            else {
+                ui.validaCantidadDetalle(true);
+            }
+            
+            
 
-            let encontrado = false;
+            if (!prodSeleccionado.Id) {
+                ui.validaProdSeleccionado(false);
+            }
+            
 
-            for (let i = 0; i < lstDetalles.length; i++) {
+            if (prodSeleccionado.Id && (cantidad && parseInt(cantidad) > 0)) {
+                
+                let encontrado = false;
 
-                if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
+                for (let i = 0; i < lstDetalles.length; i++) {
 
-                    lstDetalles[i].Cantidad = parseInt(cantidad);
+                    if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
 
-                    encontrado = true;
-                    break;
+                        lstDetalles[i].Cantidad = parseInt(cantidad);
+
+                        encontrado = true;
+                        break;
+                    }
+
                 }
 
+                if (!encontrado) {
+                    lstDetalles.push({
+
+                        Producto: {
+                            Id: prodSeleccionado.Id,
+                            Descripcion: prodSeleccionado.Descripcion
+                        },
+                        Cantidad: parseInt(cantidad),
+                        Precio: prodSeleccionado.PrecioCompra
+
+                    });
+                }
+
+
+                muestraDetalle();
+                ui.validaDetalle(true);
+                ui.setProducto({
+                    Codigo: '',
+                    Descripcion: '',
+                    PrecioCompra: '',
+                    StockActual: ''
+                })
+
+                prodSeleccionado = {};
+                ui.getInputCantidad().value = '';
             }
-
-            if (!encontrado) {
-                lstDetalles.push({
-
-                    Producto: {
-                        Id: prodSeleccionado.Id,
-                        Descripcion: prodSeleccionado.Descripcion
-                    },
-                    Cantidad: parseInt(cantidad),
-                    Precio: prodSeleccionado.PrecioCompra
-
-                });
-            }
-           
-
-            muestraDetalle();
+            
         })
 
     }
@@ -204,31 +234,41 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
     }
 
     const evtFormPedido = () => {
-
-        ui.getFormPedido().addEventListener('submit', async (e) => {
+        const formPedido = ui.getFormPedido();
+        formPedido.addEventListener('submit', async (e) => {
 
             e.preventDefault();
-
+            debugger
             const pedido = {
                 Proveedor: {
                     Id: provSeleccionado.Id
                 },
                 Detalles: lstDetalles
             }
-            try {
-                
-                await service.crear(pedido)
-                const mensaje = {
-                    color: 'bg-success',
-                    titulo: 'Registro exitoso',
-                    texto: 'El pedido fue registrado exitosamente'
+            if (!pedido.Proveedor.Id) {
+                ui.validaProvSeleccionado(false);
+            }
+
+            if (lstDetalles.length <= 0) {
+                ui.validaDetalle(false);
+            }
+            if (pedido.Proveedor.Id && lstDetalles.length > 0) {
+                try {
+
+                    await service.crear(pedido)
+                    const mensaje = {
+                        color: 'bg-success',
+                        titulo: 'Registro exitoso',
+                        texto: 'El pedido fue registrado exitosamente'
+                    }
+                    localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                    window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
                 }
-                localStorage.setItem('mensaje', JSON.stringify(mensaje));
-                window.location.href = AthenasNet.MVC_URL_BASE + 'Pedido';
+                catch (err) {
+                    console.error(err);
+                }
             }
-            catch (err) {
-                console.error(err);
-            }
+            
             
         })
 
