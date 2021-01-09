@@ -7,6 +7,7 @@ var CategoriaUI = function CategoriaUI() {
   };
 
   var generarTabla = function generarTabla(lstCategorias) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstCategorias,
       //=> item

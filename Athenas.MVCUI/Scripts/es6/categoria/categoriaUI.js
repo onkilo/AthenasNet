@@ -8,7 +8,7 @@ const CategoriaUI = () => {
     }
 
     const generarTabla = (lstCategorias) => {
-
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
         const data = {
             filas: lstCategorias,//=> item
             edita: true,

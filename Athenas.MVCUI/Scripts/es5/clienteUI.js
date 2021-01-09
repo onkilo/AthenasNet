@@ -7,6 +7,7 @@ var ClienteUI = function ClienteUI() {
   };
 
   var generarTabla = function generarTabla(lstClientes) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstClientes,
       //=> item

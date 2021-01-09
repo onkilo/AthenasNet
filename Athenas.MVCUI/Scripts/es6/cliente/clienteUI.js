@@ -1,4 +1,4 @@
-﻿const ClienteUI = () => {
+const ClienteUI = () => {
 
     const getFiltros = () => {
         const arrFiltros = ['Nombre'];
@@ -8,7 +8,7 @@
     }
 
     const generarTabla = (lstClientes) => {
-
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
         const data = {
             filas: lstClientes,//=> item
             edita: true,

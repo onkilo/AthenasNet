@@ -1,4 +1,4 @@
-﻿const ProveedorUI = () => {
+const ProveedorUI = () => {
 
     const getFiltros = () => {
         const arrFiltros = ['RzSocial'];
@@ -8,7 +8,7 @@
     }
 
     const generarTabla = (lstProveedores) => {
-
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
         const data = {
             filas: lstProveedores,//=> item
             edita: true,

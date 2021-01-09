@@ -8,6 +8,7 @@ var VentaUI = function VentaUI() {
   };
 
   var generarTabla = function generarTabla(lstVentas) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstVentas,
       elimina: true,

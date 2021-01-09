@@ -43,7 +43,8 @@ var PedidoController = function PedidoController(service, ui, arg3, arg4, _ref) 
                   Colaborador: p.Trabajador.Nombre + ' ' + p.Trabajador.Apellido,
                   Proveedor: p.Proveedor.RzSocial,
                   Importe: AthenasNet.formatPrecio(importe),
-                  Estado: p.Estado === 0 ? 'Por Recibir' : 'Recibido'
+                  Estado: p.Estado === 0 ? 'Por Recibir' : 'Recibido',
+                  recibe: p.Estado === 0
                 };
               }));
               _context.next = 11;
