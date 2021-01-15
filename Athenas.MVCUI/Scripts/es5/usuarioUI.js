@@ -7,6 +7,7 @@ var UsuarioUI = function UsuarioUI() {
   };
 
   var generarTabla = function generarTabla(lstUsuarios) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstUsuarios,
       edita: true,

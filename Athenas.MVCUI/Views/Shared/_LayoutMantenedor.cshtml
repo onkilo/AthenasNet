@@ -94,7 +94,7 @@
 
 
     <!-- Modal de Mantenedor -->
-    <div class="modal fade" id="modal-mantenedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-mantenedor"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -139,7 +139,7 @@
                             <i class="fas fa-info-circle"></i>
                         </button>
                         {{/if}}
-                        {{#if ../recibe}}
+                        {{#if recibe}}
                         <a class="btn btn-success btn-sm btn-sin-click" data-id="{{Id}}" href="{{../urlRecibir}}/{{Id}}" >
                             <i class="fa fa-check"></i>
                         </a>

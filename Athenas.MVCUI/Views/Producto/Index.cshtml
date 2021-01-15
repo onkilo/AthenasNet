@@ -44,7 +44,7 @@
         <input type="hidden" name="Id" id="Id" value="0" />
         <input type="hidden" name="accion" id="accion" value="registrar" />
         <div class="col-lg-6">
-            <input type="hidden" name="id" th:field="*{id}">
+            <input type="hidden" name="id" >
             <input type="hidden" name="tipo" value="agregar">
 
             <div class="form-group">
@@ -75,8 +75,7 @@
             </div>
             <div class="form-group">
                 <label for="StockActual">Stock actual</label>
-                <input type="number" class="form-control" name="StockActual" id="StockActual" min="1"
-                       required>
+                <input type="number" class="form-control" name="StockActual" id="StockActual" min="1" required>
                 <div class="invalid-feedback">Por favor ingrese una cantidad mayor a 0</div>
             </div>
             <div class="form-group">
@@ -88,10 +87,10 @@
             <div class="form-group">
                 <label for="Categoria">Categoría</label>
                 <input type="text" id="CategoriaText" class="form-control d-none" readonly />
-                <select name="Categoria" id="Categoria" class="form-control">
-                    <option value="0">Seleccione</option>
-                    <option value="1">CategoriaSeleccionada</option>
+                <select name="Categoria" id="Categoria" class="form-control" required>
+                    <option value="">Seleccione</option>
                 </select>
+                <div class="invalid-feedback">Por favor seleccione una categoría</div>
             </div>
         </div>
         <div class="col-lg-6 ">
@@ -117,7 +116,7 @@
 }
 
     <script id="temp-lst-categoria" type="text/template">
-        <option value="0">Seleccione</option>
+        <option value="">Seleccione</option>
         {{#each filas}}
         {{#if selected}}
         <option value="{{Id}}" selected>{{Descripcion}}</option>

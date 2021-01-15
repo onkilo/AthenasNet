@@ -46,7 +46,9 @@ namespace Athenas.MVCUI.Filters
                                 {
                                       { "controller", "Usuario" },
                                       { "action", "Login" },
-                                      { "redirectUrl", filterContext.HttpContext.Request.Url }
+                                      { "redirectUrl", filterContext.HttpContext.Request.Url },
+                                       { "mensajeError", "Debe estar logueado para relizar esta acción"}
+
                                 });
                     }
                     else

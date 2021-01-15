@@ -7,6 +7,7 @@ var ProveedorUI = function ProveedorUI() {
   };
 
   var generarTabla = function generarTabla(lstProveedores) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstProveedores,
       //=> item

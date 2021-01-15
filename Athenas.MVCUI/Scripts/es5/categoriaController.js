@@ -74,7 +74,8 @@ var CategoriaController = function CategoriaController(service, ui) {
   };
 
   var manejaEnvioCat = function manejaEnvioCat() {
-    Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
+    var formMantenedor = Mant.getFormMantenedor();
+    formMantenedor.addEventListener('submit', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
         var categoria, mensaje, titulo;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -82,53 +83,60 @@ var CategoriaController = function CategoriaController(service, ui) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 evt.preventDefault();
-                categoria = ui.getCategoria();
-                _context2.prev = 2;
+                debugger;
 
-                if (!(categoria.accion === 'registrar')) {
-                  _context2.next = 10;
+                if (!formMantenedor.checkValidity()) {
+                  _context2.next = 29;
                   break;
                 }
 
-                _context2.next = 6;
+                categoria = ui.getCategoria();
+                _context2.prev = 4;
+
+                if (!(categoria.accion === 'registrar')) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                _context2.next = 8;
                 return service.crearCategoria(categoria);
 
-              case 6:
+              case 8:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La categoría se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context2.next = 15;
+                _context2.next = 17;
                 break;
 
-              case 10:
+              case 12:
                 if (!(categoria.accion === 'editar')) {
-                  _context2.next = 15;
+                  _context2.next = 17;
                   break;
                 }
 
-                _context2.next = 13;
+                _context2.next = 15;
                 return service.actualizarCategoria(categoria);
 
-              case 13:
+              case 15:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La categoría se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 15:
-                _context2.next = 17;
+              case 17:
+                _context2.next = 19;
                 return muestraCategorias();
 
-              case 17:
-                _context2.next = 25;
+              case 19:
+                _context2.next = 27;
                 break;
 
-              case 19:
-                _context2.prev = 19;
-                _context2.t0 = _context2["catch"](2);
+              case 21:
+                _context2.prev = 21;
+                _context2.t0 = _context2["catch"](4);
                 console.error(_context2.t0);
                 mensaje = categoria.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = categoria.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -138,12 +146,19 @@ var CategoriaController = function CategoriaController(service, ui) {
                   titulo: titulo
                 });
 
-              case 25:
+              case 27:
+                _context2.next = 30;
+                break;
+
+              case 29:
+                Mant.esFormularioValido(false);
+
+              case 30:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 19]]);
+        }, _callee2, null, [[4, 21]]);
       }));
 
       return function (_x) {

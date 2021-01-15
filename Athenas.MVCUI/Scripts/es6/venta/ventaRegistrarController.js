@@ -97,12 +97,14 @@
                         Descuento: AthenasNet.formatPrecio(prodSeleccionado.Descuento),
                         Codigo: AthenasNet.formatCodigo(prodSeleccionado.Id, 'PRD', 4)
                     });
+                    ui.validaProdSeleccionado(true);
                     ui.getModalBuscar().modal('hide');
                 }
                 else {
                     cliSeleccionado = lstClientes.find(cli => cli.Id === id);
 
                     ui.setCliente(cliSeleccionado);
+                    ui.validaCliSeleccionado(true);
                     ui.getModalBuscar().modal('hide');
                 }
 
@@ -117,19 +119,33 @@
         ui.getBtnAgregarDet().addEventListener('click', () => {
 
             const cantidad = ui.getInputCantidad().value;
+            console.log(cantidad);
 
-            let encontrado = false;
+            if (!cantidad || parseInt(cantidad) <= 0) {
+                ui.validaCantidadDetalle(false);
+            }
+            else {
+                ui.validaCantidadDetalle(true);
+            }
 
-            for (let i = 0; i < lstDetalles.length; i++) {
+            if (!prodSeleccionado.Id) {
+                ui.validaProdSeleccionado(false);
+            }
 
-                if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
+            if (prodSeleccionado.Id && (cantidad && parseInt(cantidad) > 0)) {
 
-                    lstDetalles[i].Cantidad = parseInt(cantidad);
+                let encontrado = false;
 
-                    encontrado = true;
-                    break;
-                }
+                for (let i = 0; i < lstDetalles.length; i++) {
 
+                    if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
+
+                        lstDetalles[i].Cantidad = parseInt(cantidad);
+
+                        encontrado = true;
+                        break;
+                    }
+                    
             }
 
             if (!encontrado) {
@@ -145,9 +161,21 @@
 
                 });
             }
-
-
+            
             muestraDetalle();
+            ui.validaDetalle(true);
+            ui.setProducto({
+                Codigo: '',
+                Descripcion: '',
+                PrecioVenta: '',
+                StockActual: '',
+                Descuento: ''
+            })
+
+            prodSeleccionado = {};
+            ui.getInputCantidad().value = '';
+
+            }
         })
 
     }
@@ -209,7 +237,8 @@
     
     const evtFormVenta = () => {
 
-        ui.getFormVenta().addEventListener('submit', async (e) => {
+        const formVenta = ui.getFormVenta();
+        formVenta.addEventListener('submit', async (e) => {
 
             e.preventDefault();
 
@@ -220,18 +249,28 @@
                 Detalles: lstDetalles,
                 Descuento: descuento
             }
-            try {
-                await service.crear(venta)
-                const mensaje = {
-                    color: 'bg-success',
-                    titulo: 'Registro exitoso',
-                    texto: 'La venta fue registrado exitosamente'
-                }
-                localStorage.setItem('mensaje', JSON.stringify(mensaje));
-                window.location.href = AthenasNet.MVC_URL_BASE + 'Venta';
+            if (!venta.Cliente.Id) {
+                ui.validaCliSeleccionado(false);
             }
-            catch (err) {
-                console.error(err);
+
+            if (lstDetalles.length <= 0) {
+                ui.validaDetalle(false);
+            }
+            if (pedido.Cliente.Id && lstDetalles.length > 0) {
+            
+                try {
+                    await service.crear(venta)
+                    const mensaje = {
+                        color: 'bg-success',
+                        titulo: 'Registro exitoso',
+                        texto: 'La venta fue registrada exitosamente'
+                    }
+                    localStorage.setItem('mensaje', JSON.stringify(mensaje));
+                    window.location.href = AthenasNet.MVC_URL_BASE + 'Venta';
+                }   
+                catch (err) {
+                    console.error(err);
+                }
             }
 
         })

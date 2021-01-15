@@ -71,50 +71,51 @@ const ProductoController = (service, ui, categoriaService, { esVendedor }) => {
     }
 
     const manejaEnvioProd = () => {
-
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
+        const formMantenedor = Mant.getFormMantenedor();
+        formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
+            if (formMantenedor.checkValidity()) {
+                let producto = ui.getProducto();
 
-            let producto = ui.getProducto();
-
-            if (producto.accion !== 'detalle') {
-                if (ui.getImgDisplay().src.startsWith('data')) {
-                    producto.Base64Imagen = ui.getImgDisplay().src;
-                }
-
-                delete producto.Imagen;
-                producto = {
-                    ...producto,
-                    Categoria: {
-                        Id: parseInt(producto.Categoria)
-                    }
-                }
-                console.log(producto);
-                try {
-                    if (producto.accion === 'registrar') {
-                        await service.crear(producto);
-                        Mant.cerrarModMant();
-                        AthenasNet.muestraToast({ mensaje: 'El producto se registró satisfactoriamente', titulo: 'Registro exitoso' })
-                    }
-                    else if (producto.accion === 'editar') {
-                        await service.actualizar(producto);
-                        Mant.cerrarModMant();
-                        AthenasNet.muestraToast({ mensaje: 'El producto se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                if (producto.accion !== 'detalle') {
+                    if (ui.getImgDisplay().src.startsWith('data')) {
+                        producto.Base64Imagen = ui.getImgDisplay().src;
                     }
 
-                    await muestraProductos();
-                }
-                catch (err) {
-                    console.error(err);
-                    const mensaje = (producto.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                    const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                    AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+                    delete producto.Imagen;
+                    producto = {
+                        ...producto,
+                        Categoria: {
+                            Id: parseInt(producto.Categoria)
+                        }
+                    }
+                    console.log(producto);
+                    try {
+                        if (producto.accion === 'registrar') {
+                            await service.crear(producto);
+                            Mant.cerrarModMant();
+                            AthenasNet.muestraToast({ mensaje: 'El producto se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                        }
+                        else if (producto.accion === 'editar') {
+                            await service.actualizar(producto);
+                            Mant.cerrarModMant();
+                            AthenasNet.muestraToast({ mensaje: 'El producto se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                        }
+
+                        await muestraProductos();
+                    }
+                    catch (err) {
+                        console.error(err);
+                        const mensaje = (producto.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                        const titulo = (producto.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                        AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+                    }
                 }
             }
-
+            else {
+                Mant.esFormularioValido(false);
+            }
             
-
-
         })
 
     }

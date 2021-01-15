@@ -72,7 +72,11 @@ namespace AthenasNet.Api.Controllers
             try
             {
                 ValidaProducto(producto);
-                producto.Imagen = cloudinaryUtil.SubeImagen(producto.Base64Imagen, producto.Descripcion);
+                if (producto.Base64Imagen != null && producto.Base64Imagen != "")
+                {
+                    producto.Imagen = cloudinaryUtil.SubeImagen(producto.Base64Imagen, producto.Descripcion);
+                }
+                    
 
                 servicio.Crear(producto);
                 response = ResponseUtil.CrearRespuestaOk(dataMsg: "El producto se creó satisfactoriamente");

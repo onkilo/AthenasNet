@@ -15,6 +15,8 @@ namespace Athenas.MVCUI.Controllers
         GenericResponseModel<String> errorResponse;
         string baseUrl = "Trabajador";
         // GET: Usuario
+        [CustomAutenticacionFilter(TipoResultado = "View")]
+        [CustomAutorizacionFilter(RolesPermitidos = "Supervisor,Administrador", TipoResultado = "View")]
         public ActionResult Index()
         {
             ViewBag.Title = "Usuario";
@@ -154,11 +156,16 @@ namespace Athenas.MVCUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Login(string redirectUrl = "")
+        public ActionResult Login(string redirectUrl = "", string mensajeError = "")
         {
             LoginViewModel login = new LoginViewModel();
 
             login.RedirectUrl = redirectUrl;
+
+            if(mensajeError != "")
+            {
+                ViewBag.MensajeError = mensajeError;
+            }
 
             return View(login);
         }
@@ -188,7 +195,7 @@ namespace Athenas.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", new { mensajeError = "Credenciales incorrectas, intente nuevamente" });
             }
 
         }

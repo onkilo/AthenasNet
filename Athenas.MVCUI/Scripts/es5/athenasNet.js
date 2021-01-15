@@ -48,7 +48,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }
 
               urlActual = window.location.href;
-              window.location.href = MVC_URL_BASE + 'Usuario/Login?redirectUrl=' + urlActual;
+              window.location.href = MVC_URL_BASE + 'Usuario/Login?redirectUrl=' + urlActual + "&mensajeError=Debe estar logueado para relizar esta acción";
               return _context.abrupt("return", null);
 
             case 9:

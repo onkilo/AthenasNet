@@ -46,7 +46,8 @@ namespace Athenas.MVCUI.Filters
                                 {
                                       { "controller", "Usuario" },
                                      { "action", "Login" },
-                                     { "redirectUrl", filterContext.HttpContext.Request.Url }
+                                     { "redirectUrl", filterContext.HttpContext.Request.Url },
+                                      { "mensajeError", "No tienes permisos suficientes para realizar esta acción"}
                                 });
                     }
                     else

@@ -1,4 +1,4 @@
-﻿const VentaUI = () => {
+const VentaUI = () => {
     //Para el listado
     const getFiltros = () => {
         const arrFiltros = ['Cliente'];
@@ -8,7 +8,7 @@
     }
 
     const generarTabla = (lstVentas) => {
-
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
         const data = {
             filas: lstVentas,
             elimina: true,
@@ -92,6 +92,60 @@
     const setModalVentaDetData = (venta) => {
         AthenasNet.compilaTemplate('tempDetVentaTbl', venta, '#modalDetVenta .modal-body #det-body')
     }
+
+    const validaEnvioVenta = (esValido) => {
+        if (!esValido) {
+            getFormVenta().classList.add('was-validated')
+        }
+        else {
+            getFormVenta().classList.remove('was-validated')
+        }
+    }
+
+    const validaCliSeleccionado = (esValido) => {
+
+        if (!esValido) {
+            document.getElementById('Cliente.Nombre').classList.add('is-invalid')
+        }
+        else {
+            document.getElementById('Cliente.Nombre').classList.remove('is-invalid')
+        }
+
+    }
+
+    const validaProdSeleccionado = (esValido) => {
+        debugger
+        if (!esValido) {
+            document.getElementById('Producto.Codigo').classList.add('is-invalid')
+        }
+        else {
+            document.getElementById('Producto.Codigo').classList.remove('is-invalid')
+        }
+
+    }
+
+    const validaCantidadDetalle = (esValido) => {
+
+        if (!esValido) {
+            document.getElementById('Producto.Cantidad').classList.add('is-invalid');
+        }
+        else {
+            document.getElementById('Producto.Cantidad').classList.remove('is-invalid');
+        }
+
+    }
+
+    const validaDetalle = (esValido) => {
+
+        if (!esValido) {
+            document.getElementById('msj-error').classList.remove('d-none');
+        }
+        else {
+            document.getElementById('msj-error').classList.add('d-none');
+        }
+
+    }
+
     return {
         generarTabla,
         getFiltros,
@@ -112,12 +166,23 @@
         getTblDetalle,
         getFormVenta,
         abreModalVenta,
-        setModalVentaData
+        setModalVentaData,
+        validaEnvioVenta,
+        validaCliSeleccionado,
+        validaProdSeleccionado,
+        validaCantidadDetalle,
+        validaDetalle
     }
 }
 
 window.addEventListener('load', () => {
 
-    Handlebars.registerPartial('tblDetVenta', document.getElementById('tempDetVentaTbl').innerHTML);
+    const tempDetVentaTbl = document.getElementById('tempDetVentaTbl');
+
+    if (tempDetVentaTbl) {
+
+        Handlebars.registerPartial('tblDetVenta', tempDetVentaTbl.innerHTML);
+    }
+    
 
 })

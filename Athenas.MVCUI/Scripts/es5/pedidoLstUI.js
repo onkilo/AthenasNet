@@ -105,6 +105,48 @@ var PedidoUI = function PedidoUI() {
     AthenasNet.compilaTemplate('tempDetPedidoTbl', pedido, '#modalDetPedido .modal-body #det-body');
   };
 
+  var validaEnvioPedido = function validaEnvioPedido(esValido) {
+    if (!esValido) {
+      getFormPedido().classList.add('was-validated');
+    } else {
+      getFormPedido().classList.remove('was-validated');
+    }
+  };
+
+  var validaProvSeleccionado = function validaProvSeleccionado(esValido) {
+    if (!esValido) {
+      document.getElementById('Proveedor.RzSocial').classList.add('is-invalid');
+    } else {
+      document.getElementById('Proveedor.RzSocial').classList.remove('is-invalid');
+    }
+  };
+
+  var validaProdSeleccionado = function validaProdSeleccionado(esValido) {
+    debugger;
+
+    if (!esValido) {
+      document.getElementById('Producto.Codigo').classList.add('is-invalid');
+    } else {
+      document.getElementById('Producto.Codigo').classList.remove('is-invalid');
+    }
+  };
+
+  var validaCantidadDetalle = function validaCantidadDetalle(esValido) {
+    if (!esValido) {
+      document.getElementById('Producto.Cantidad').classList.add('is-invalid');
+    } else {
+      document.getElementById('Producto.Cantidad').classList.remove('is-invalid');
+    }
+  };
+
+  var validaDetalle = function validaDetalle(esValido) {
+    if (!esValido) {
+      document.getElementById('msj-error').classList.remove('d-none');
+    } else {
+      document.getElementById('msj-error').classList.add('d-none');
+    }
+  };
+
   return {
     generarTabla: generarTabla,
     getFiltros: getFiltros,
@@ -124,11 +166,20 @@ var PedidoUI = function PedidoUI() {
     getTblDetalle: getTblDetalle,
     getFormPedido: getFormPedido,
     abreModalPedido: abreModalPedido,
-    setModalPedidoData: setModalPedidoData
+    setModalPedidoData: setModalPedidoData,
+    validaEnvioPedido: validaEnvioPedido,
+    validaProvSeleccionado: validaProvSeleccionado,
+    validaProdSeleccionado: validaProdSeleccionado,
+    validaCantidadDetalle: validaCantidadDetalle,
+    validaDetalle: validaDetalle
   };
 };
 
 window.addEventListener('load', function () {
-  Handlebars.registerPartial('tblDetPedido', document.getElementById('tempDetPedidoTbl').innerHTML);
+  var tempDetPedidoTbl = document.getElementById('tempDetPedidoTbl');
+
+  if (tempDetPedidoTbl) {
+    Handlebars.registerPartial('tblDetPedido', tempDetPedidoTbl.innerHTML);
+  }
 });
 //# sourceMappingURL=pedidoLstUI.js.map

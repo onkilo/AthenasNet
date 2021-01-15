@@ -8,6 +8,7 @@ var VentaUI = function VentaUI() {
   };
 
   var generarTabla = function generarTabla(lstVentas) {
+    $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
     var data = {
       filas: lstVentas,
       elimina: true,
@@ -108,6 +109,48 @@ var VentaUI = function VentaUI() {
     AthenasNet.compilaTemplate('tempDetVentaTbl', venta, '#modalDetVenta .modal-body #det-body');
   };
 
+  var validaEnvioVenta = function validaEnvioVenta(esValido) {
+    if (!esValido) {
+      getFormVenta().classList.add('was-validated');
+    } else {
+      getFormVenta().classList.remove('was-validated');
+    }
+  };
+
+  var validaCliSeleccionado = function validaCliSeleccionado(esValido) {
+    if (!esValido) {
+      document.getElementById('Cliente.Nombre').classList.add('is-invalid');
+    } else {
+      document.getElementById('Cliente.Nombre').classList.remove('is-invalid');
+    }
+  };
+
+  var validaProdSeleccionado = function validaProdSeleccionado(esValido) {
+    debugger;
+
+    if (!esValido) {
+      document.getElementById('Producto.Codigo').classList.add('is-invalid');
+    } else {
+      document.getElementById('Producto.Codigo').classList.remove('is-invalid');
+    }
+  };
+
+  var validaCantidadDetalle = function validaCantidadDetalle(esValido) {
+    if (!esValido) {
+      document.getElementById('Producto.Cantidad').classList.add('is-invalid');
+    } else {
+      document.getElementById('Producto.Cantidad').classList.remove('is-invalid');
+    }
+  };
+
+  var validaDetalle = function validaDetalle(esValido) {
+    if (!esValido) {
+      document.getElementById('msj-error').classList.remove('d-none');
+    } else {
+      document.getElementById('msj-error').classList.add('d-none');
+    }
+  };
+
   return {
     generarTabla: generarTabla,
     getFiltros: getFiltros,
@@ -128,11 +171,20 @@ var VentaUI = function VentaUI() {
     getTblDetalle: getTblDetalle,
     getFormVenta: getFormVenta,
     abreModalVenta: abreModalVenta,
-    setModalVentaData: setModalVentaData
+    setModalVentaData: setModalVentaData,
+    validaEnvioVenta: validaEnvioVenta,
+    validaCliSeleccionado: validaCliSeleccionado,
+    validaProdSeleccionado: validaProdSeleccionado,
+    validaCantidadDetalle: validaCantidadDetalle,
+    validaDetalle: validaDetalle
   };
 };
 
 window.addEventListener('load', function () {
-  Handlebars.registerPartial('tblDetVenta', document.getElementById('tempDetVentaTbl').innerHTML);
+  var tempDetVentaTbl = document.getElementById('tempDetVentaTbl');
+
+  if (tempDetVentaTbl) {
+    Handlebars.registerPartial('tblDetVenta', tempDetVentaTbl.innerHTML);
+  }
 });
 //# sourceMappingURL=ventaLstUI.js.map

@@ -121,14 +121,22 @@ var ProductoController = function ProductoController(service, ui, productoServic
   };
 
   var manejaEnvioProm = function manejaEnvioProm() {
-    Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
+    var formMantenedor = Mant.getFormMantenedor();
+    formMantenedor.addEventListener('submit', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(evt) {
-        var promocion, mensaje, titulo;
+        var promocion, tienePromociones, _tienePromociones, mensaje, titulo;
+
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 evt.preventDefault();
+
+                if (!formMantenedor.checkValidity()) {
+                  _context3.next = 49;
+                  break;
+                }
+
                 promocion = ui.getPromocion();
                 promocion = _objectSpread(_objectSpread({}, promocion), {}, {
                   Producto: {
@@ -136,52 +144,93 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   }
                 });
                 console.log(promocion);
-                _context3.prev = 4;
+                _context3.prev = 5;
 
                 if (!(promocion.accion === 'registrar')) {
-                  _context3.next = 12;
+                  _context3.next = 24;
                   break;
                 }
 
-                _context3.next = 8;
+                _context3.next = 9;
+                return service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin);
+
+              case 9:
+                tienePromociones = _context3.sent;
+                console.log(tienePromociones);
+
+                if (tienePromociones) {
+                  _context3.next = 21;
+                  break;
+                }
+
+                ui.muestraMsjTienePromo(false);
+                _context3.next = 15;
                 return service.crear(promocion);
 
-              case 8:
+              case 15:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La promoción se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context3.next = 17;
+                _context3.next = 19;
+                return muestraPromociones();
+
+              case 19:
+                _context3.next = 22;
                 break;
 
-              case 12:
+              case 21:
+                ui.muestraMsjTienePromo(true);
+
+              case 22:
+                _context3.next = 39;
+                break;
+
+              case 24:
                 if (!(promocion.accion === 'editar')) {
-                  _context3.next = 17;
+                  _context3.next = 39;
                   break;
                 }
 
-                _context3.next = 15;
+                _context3.next = 27;
+                return service.tienePromociones(promocion.Producto.Id, promocion.FechaInicio, promocion.FechaFin, promocion.Id);
+
+              case 27:
+                _tienePromociones = _context3.sent;
+
+                if (_tienePromociones) {
+                  _context3.next = 38;
+                  break;
+                }
+
+                ui.muestraMsjTienePromo(false);
+                _context3.next = 32;
                 return service.actualizar(promocion);
 
-              case 15:
+              case 32:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La promoción se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
-
-              case 17:
-                _context3.next = 19;
+                _context3.next = 36;
                 return muestraPromociones();
 
-              case 19:
-                _context3.next = 27;
+              case 36:
+                _context3.next = 39;
                 break;
 
-              case 21:
-                _context3.prev = 21;
-                _context3.t0 = _context3["catch"](4);
+              case 38:
+                ui.muestraMsjTienePromo(true);
+
+              case 39:
+                _context3.next = 47;
+                break;
+
+              case 41:
+                _context3.prev = 41;
+                _context3.t0 = _context3["catch"](5);
                 console.error(_context3.t0);
                 mensaje = promocion.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = promocion.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -191,12 +240,19 @@ var ProductoController = function ProductoController(service, ui, productoServic
                   titulo: titulo
                 });
 
-              case 27:
+              case 47:
+                _context3.next = 50;
+                break;
+
+              case 49:
+                Mant.esFormularioValido(false);
+
+              case 50:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[4, 21]]);
+        }, _callee3, null, [[5, 41]]);
       }));
 
       return function (_x2) {

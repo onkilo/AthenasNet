@@ -124,5 +124,34 @@ namespace Athenas.MVCUI.Controllers
             }
 
         }
+
+        [HttpGet]
+        public ActionResult Tienepromociones(int Producto = 0, string FechaInicio = "", string FechaFin = "", int Promocion = 0)
+        {
+
+            String url = $"{urlBase}/TienePromociones?";
+
+            NameValueCollection queryString = HttpUtility.ParseQueryString(String.Empty);
+            queryString.Add("Producto", Producto.ToString());
+            queryString.Add("FechaInicio", FechaInicio);
+            queryString.Add("FechaFin", FechaFin);
+            queryString.Add("Promocion", Promocion.ToString());
+           
+
+            url += queryString.ToString();
+
+            GenericResponseModel<Boolean> responseModel = ApiRequests
+                .Get<GenericResponseModel<Boolean>, GenericResponseModel<String>>(url, out errorResponse);
+
+            if (errorResponse == null)
+            {
+                return Json(responseModel, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(errorResponse, JsonRequestBehavior.AllowGet);
+            }
+
+        }
     }
 }

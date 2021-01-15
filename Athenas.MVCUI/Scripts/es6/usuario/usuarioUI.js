@@ -9,7 +9,7 @@ const UsuarioUI = () => {
     }
 
     const generarTabla = (lstUsuarios) => {
-
+        $(AthenasNet.Mant.SEL_TBL_MANT).DataTable().clear().destroy();
         const data = {
             filas: lstUsuarios,
             edita: true,

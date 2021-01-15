@@ -1,6 +1,6 @@
 "use strict";
 
-var ProductoUI = function ProductoUI() {
+var PromocionUI = function PromocionUI() {
   var getFiltros = function getFiltros() {
     var arrFiltros = ['Producto'];
     return AthenasNet.Mant.getFiltros(arrFiltros);
@@ -21,12 +21,21 @@ var ProductoUI = function ProductoUI() {
     return AthenasNet.Mant.getEntidad(['Producto', 'Id', 'accion', 'Tipo', 'Valor', 'FechaInicio', 'FechaFin']);
   };
 
+  var muestraMsjTienePromo = function muestraMsjTienePromo(tienePromociones) {
+    if (!tienePromociones) {
+      document.getElementById('msj-tiene-promo').classList.add('d-none');
+    } else {
+      document.getElementById('msj-tiene-promo').classList.remove('d-none');
+    }
+  };
+
   return {
     getPromocion: getPromocion,
     generarTabla: generarTabla,
     getFiltros: getFiltros,
     ID_TEMP_PROD: 'temp-lst-productos',
-    SEL_CBO_PROD: '#form-mantenedor #Producto'
+    SEL_CBO_PROD: '#form-mantenedor #Producto',
+    muestraMsjTienePromo: muestraMsjTienePromo
   };
 };
 //# sourceMappingURL=promocionUI.js.map

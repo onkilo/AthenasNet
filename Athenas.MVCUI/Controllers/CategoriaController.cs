@@ -19,34 +19,18 @@ namespace Athenas.MVCUI.Controllers
 
         // GET: Categoria
         [CustomAutenticacionFilter(TipoResultado = "View")]
-        [CustomAutorizacionFilter(TipoResultado = "View", RolesPermitidos = "Vendedor")]
+        [CustomAutorizacionFilter(TipoResultado = "View", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Index()
         {
             ViewBag.Title = "Categoría";
             return View();
         }
 
-  
 
-        // POST: Categoria/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        [CustomAutenticacionFilter(TipoResultado = "Json")]
-        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor")]
+        
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Listar(string Descripcion = "")
         {
 
@@ -72,6 +56,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Vendedor,Supervisor,Administrador")]
         public ActionResult Obtener(int Id)
         {
 
@@ -92,6 +78,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Supervisor,Administrador")]
         public ActionResult Crear(CategoriaViewModel categoria)
         {
 
@@ -112,6 +100,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpPost]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Supervisor,Administrador")]
         public ActionResult Actualizar(CategoriaViewModel categoria)
         {
 
@@ -132,6 +122,8 @@ namespace Athenas.MVCUI.Controllers
         }
 
         [HttpGet]
+        [CustomAutenticacionFilter(TipoResultado = "Json")]
+        [CustomAutorizacionFilter(TipoResultado = "Json", RolesPermitidos = "Supervisor,Administrador")]
         public ActionResult Eliminar(int Id)
         {
 
