@@ -21,7 +21,21 @@ var ClienteUI = function ClienteUI() {
 
   var getCliente = function getCliente() {
     return AthenasNet.Mant.getEntidad(['Nombre', 'Id', 'accion', 'Apellido', 'Telefono', 'Dni', 'Sexo']);
-  };
+  }; //const validaCliSeleccionado = (esValido) => {
+  //    if (!esValido) {
+  //        document.getElementById('Cliente.Nombre').classList.add('is-invalid')
+  //        document.getElementById('Cliente.Apellido').classList.add('is-invalid')
+  //        document.getElementById('Cliente.Telefono').classList.add('is-invalid')
+  //        document.getElementById('Cliente.Dni').classList.add('is-invalid')
+  //    }
+  //    else {
+  //        document.getElementById('Cliente.Nombre').classList.remove('is-invalid')
+  //        document.getElementById('Cliente.Apellido').classList.remove('is-invalid')
+  //        document.getElementById('Cliente.Telefono').classList.remove('is-invalid')
+  //        document.getElementById('Cliente.Dni').classList.remove('is-invalid')
+  //    }
+  //}
+
 
   return {
     getCliente: getCliente,

@@ -139,12 +139,14 @@ var VentaController = function VentaController(service, ui, clienteService, prod
             Descuento: AthenasNet.formatPrecio(prodSeleccionado.Descuento),
             Codigo: AthenasNet.formatCodigo(prodSeleccionado.Id, 'PRD', 4)
           }));
+          ui.validaProdSeleccionado(true);
           ui.getModalBuscar().modal('hide');
         } else {
           cliSeleccionado = lstClientes.find(function (cli) {
             return cli.Id === id;
           });
           ui.setCliente(cliSeleccionado);
+          ui.validaCliSeleccionado(true);
           ui.getModalBuscar().modal('hide');
         }
       }
@@ -154,29 +156,53 @@ var VentaController = function VentaController(service, ui, clienteService, prod
   var evtBtnAgregarDet = function evtBtnAgregarDet() {
     ui.getBtnAgregarDet().addEventListener('click', function () {
       var cantidad = ui.getInputCantidad().value;
-      var encontrado = false;
+      console.log(cantidad);
 
-      for (var i = 0; i < lstDetalles.length; i++) {
-        if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
-          lstDetalles[i].Cantidad = parseInt(cantidad);
-          encontrado = true;
-          break;
+      if (!cantidad || parseInt(cantidad) <= 0) {
+        ui.validaCantidadDetalle(false);
+      } else {
+        ui.validaCantidadDetalle(true);
+      }
+
+      if (!prodSeleccionado.Id) {
+        ui.validaProdSeleccionado(false);
+      }
+
+      if (prodSeleccionado.Id && cantidad && parseInt(cantidad) > 0) {
+        var encontrado = false;
+
+        for (var i = 0; i < lstDetalles.length; i++) {
+          if (prodSeleccionado.Id === lstDetalles[i].Producto.Id) {
+            lstDetalles[i].Cantidad = parseInt(cantidad);
+            encontrado = true;
+            break;
+          }
         }
-      }
 
-      if (!encontrado) {
-        lstDetalles.push({
-          Producto: {
-            Id: prodSeleccionado.Id,
-            Descripcion: prodSeleccionado.Descripcion
-          },
-          Cantidad: parseInt(cantidad),
-          Precio: prodSeleccionado.PrecioVenta,
-          DesctUni: prodSeleccionado.Descuento
+        if (!encontrado) {
+          lstDetalles.push({
+            Producto: {
+              Id: prodSeleccionado.Id,
+              Descripcion: prodSeleccionado.Descripcion
+            },
+            Cantidad: parseInt(cantidad),
+            Precio: prodSeleccionado.PrecioVenta,
+            DesctUni: prodSeleccionado.Descuento
+          });
+        }
+
+        muestraDetalle();
+        ui.validaDetalle(true);
+        ui.setProducto({
+          Codigo: '',
+          Descripcion: '',
+          PrecioVenta: '',
+          StockActual: '',
+          Descuento: ''
         });
+        prodSeleccionado = {};
+        ui.getInputCantidad().value = '';
       }
-
-      muestraDetalle();
     });
   };
 
@@ -220,7 +246,8 @@ var VentaController = function VentaController(service, ui, clienteService, prod
   };
 
   var evtFormVenta = function evtFormVenta() {
-    ui.getFormVenta().addEventListener('submit', /*#__PURE__*/function () {
+    var formVenta = ui.getFormVenta();
+    formVenta.addEventListener('submit', /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
         var venta, mensaje;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -235,32 +262,46 @@ var VentaController = function VentaController(service, ui, clienteService, prod
                   Detalles: lstDetalles,
                   Descuento: descuento
                 };
-                _context3.prev = 2;
-                _context3.next = 5;
+
+                if (!venta.Cliente.Id) {
+                  ui.validaCliSeleccionado(false);
+                }
+
+                if (lstDetalles.length <= 0) {
+                  ui.validaDetalle(false);
+                }
+
+                if (!(pedido.Cliente.Id && lstDetalles.length > 0)) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                _context3.prev = 5;
+                _context3.next = 8;
                 return service.crear(venta);
 
-              case 5:
+              case 8:
                 mensaje = {
                   color: 'bg-success',
                   titulo: 'Registro exitoso',
-                  texto: 'La venta fue registrado exitosamente'
+                  texto: 'La venta fue registrada exitosamente'
                 };
                 localStorage.setItem('mensaje', JSON.stringify(mensaje));
                 window.location.href = AthenasNet.MVC_URL_BASE + 'Venta';
-                _context3.next = 13;
+                _context3.next = 16;
                 break;
 
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](2);
+              case 13:
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](5);
                 console.error(_context3.t0);
 
-              case 13:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 10]]);
+        }, _callee3, null, [[5, 13]]);
       }));
 
       return function (_x) {

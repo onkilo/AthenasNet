@@ -124,7 +124,7 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
     const evtBtnAgregarDet = () => {
 
         ui.getBtnAgregarDet().addEventListener('click', () => {
-            debugger
+            
             const cantidad = ui.getInputCantidad().value;
             console.log(cantidad);
             if (!cantidad || parseInt(cantidad) <= 0) {
@@ -268,8 +268,7 @@ const PedidoController = (service, ui, proveedorService, productoService) => {
                     console.error(err);
                 }
             }
-            
-            
+                   
         })
 
     }

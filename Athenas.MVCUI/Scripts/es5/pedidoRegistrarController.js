@@ -160,7 +160,6 @@ var PedidoController = function PedidoController(service, ui, proveedorService, 
 
   var evtBtnAgregarDet = function evtBtnAgregarDet() {
     ui.getBtnAgregarDet().addEventListener('click', function () {
-      debugger;
       var cantidad = ui.getInputCantidad().value;
       console.log(cantidad);
 

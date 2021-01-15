@@ -48,6 +48,7 @@
             evt.preventDefault();
 
             const cliente = ui.getCliente();
+           
             try {
                 if (cliente.accion === 'registrar') {
                     await service.crearCliente(cliente);
