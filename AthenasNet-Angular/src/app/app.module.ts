@@ -10,6 +10,9 @@ import { SidebarComponent } from './components/main-layout/sidebar/sidebar.compo
 import { FooterComponent } from './components/main-layout/footer/footer.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { FormsModule } from '@angular/forms';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import { AuthInterceptor } from './interceptors/authInterceptor';
 
 @NgModule({
   declarations: [
@@ -24,9 +27,15 @@ import { InicioComponent } from './components/inicio/inicio.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+      {
+        provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+      }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
