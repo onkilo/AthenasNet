@@ -78,7 +78,8 @@ var ClienteController = function ClienteController(service, ui) {
   };
 
   var manejaEnvioCli = function manejaEnvioCli() {
-    Mant.getFormMantenedor().addEventListener('submit', /*#__PURE__*/function () {
+    var formMantenedor = Mant.getFormMantenedor();
+    formMantenedor.addEventListener('submit', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(evt) {
         var cliente, mensaje, titulo;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -86,53 +87,59 @@ var ClienteController = function ClienteController(service, ui) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 evt.preventDefault();
-                cliente = ui.getCliente();
-                _context2.prev = 2;
 
-                if (!(cliente.accion === 'registrar')) {
-                  _context2.next = 10;
+                if (!formMantenedor.checkValidity()) {
+                  _context2.next = 28;
                   break;
                 }
 
-                _context2.next = 6;
+                cliente = ui.getCliente();
+                _context2.prev = 3;
+
+                if (!(cliente.accion === 'registrar')) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                _context2.next = 7;
                 return service.crearCliente(cliente);
 
-              case 6:
+              case 7:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El cliente se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context2.next = 15;
+                _context2.next = 16;
                 break;
 
-              case 10:
+              case 11:
                 if (!(cliente.accion === 'editar')) {
-                  _context2.next = 15;
+                  _context2.next = 16;
                   break;
                 }
 
-                _context2.next = 13;
+                _context2.next = 14;
                 return service.actualizarCliente(cliente);
 
-              case 13:
+              case 14:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'El cliente se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 15:
-                _context2.next = 17;
+              case 16:
+                _context2.next = 18;
                 return muestraClientes();
 
-              case 17:
-                _context2.next = 25;
+              case 18:
+                _context2.next = 26;
                 break;
 
-              case 19:
-                _context2.prev = 19;
-                _context2.t0 = _context2["catch"](2);
+              case 20:
+                _context2.prev = 20;
+                _context2.t0 = _context2["catch"](3);
                 console.error(_context2.t0);
                 mensaje = cliente.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = cliente.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -142,12 +149,19 @@ var ClienteController = function ClienteController(service, ui) {
                   titulo: titulo
                 });
 
-              case 25:
+              case 26:
+                _context2.next = 29;
+                break;
+
+              case 28:
+                Mant.esFormularioValido(false);
+
+              case 29:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[2, 19]]);
+        }, _callee2, null, [[3, 20]]);
       }));
 
       return function (_x) {

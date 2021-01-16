@@ -83,60 +83,59 @@ var CategoriaController = function CategoriaController(service, ui) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 evt.preventDefault();
-                debugger;
 
                 if (!formMantenedor.checkValidity()) {
-                  _context2.next = 29;
+                  _context2.next = 28;
                   break;
                 }
 
                 categoria = ui.getCategoria();
-                _context2.prev = 4;
+                _context2.prev = 3;
 
                 if (!(categoria.accion === 'registrar')) {
-                  _context2.next = 12;
+                  _context2.next = 11;
                   break;
                 }
 
-                _context2.next = 8;
+                _context2.next = 7;
                 return service.crearCategoria(categoria);
 
-              case 8:
+              case 7:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La categoría se registró satisfactoriamente',
                   titulo: 'Registro exitoso'
                 });
-                _context2.next = 17;
+                _context2.next = 16;
                 break;
 
-              case 12:
+              case 11:
                 if (!(categoria.accion === 'editar')) {
-                  _context2.next = 17;
+                  _context2.next = 16;
                   break;
                 }
 
-                _context2.next = 15;
+                _context2.next = 14;
                 return service.actualizarCategoria(categoria);
 
-              case 15:
+              case 14:
                 Mant.cerrarModMant();
                 AthenasNet.muestraToast({
                   mensaje: 'La categoría se actualizó satisfactoriamente',
                   titulo: 'Actualización exitosa'
                 });
 
-              case 17:
-                _context2.next = 19;
+              case 16:
+                _context2.next = 18;
                 return muestraCategorias();
 
-              case 19:
-                _context2.next = 27;
+              case 18:
+                _context2.next = 26;
                 break;
 
-              case 21:
-                _context2.prev = 21;
-                _context2.t0 = _context2["catch"](4);
+              case 20:
+                _context2.prev = 20;
+                _context2.t0 = _context2["catch"](3);
                 console.error(_context2.t0);
                 mensaje = categoria.accion === 'registrar' ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
                 titulo = categoria.accion === 'registrar' ? 'Registro erróneo' : 'Actualización errónea';
@@ -146,19 +145,19 @@ var CategoriaController = function CategoriaController(service, ui) {
                   titulo: titulo
                 });
 
-              case 27:
-                _context2.next = 30;
+              case 26:
+                _context2.next = 29;
                 break;
 
-              case 29:
+              case 28:
                 Mant.esFormularioValido(false);
 
-              case 30:
+              case 29:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[4, 21]]);
+        }, _callee2, null, [[3, 20]]);
       }));
 
       return function (_x) {

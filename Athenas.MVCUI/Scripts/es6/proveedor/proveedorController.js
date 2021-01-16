@@ -46,10 +46,13 @@
 
     const manejaEnvioProve = () => {
 
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
+        const formMantenedor = Mant.getFormMantenedor();
+        formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
+            if (formMantenedor.checkValidity()) {
 
-            const proveedor = ui.getProveedor();
+                const proveedor = ui.getProveedor();
+
             try {
                 if (proveedor.accion === 'registrar') {
                     await service.crearProveedor(proveedor);
@@ -70,7 +73,10 @@
                 AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
             }
 
-
+            }
+            else {
+                Mant.esFormularioValido(false);
+            }
         })
 
     }
