@@ -42,7 +42,7 @@ const CategoriaController = (service, ui) => {
         const formMantenedor = Mant.getFormMantenedor();
         formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
-            debugger
+            
             if (formMantenedor.checkValidity()) {
                 const categoria = ui.getCategoria();
                 try {

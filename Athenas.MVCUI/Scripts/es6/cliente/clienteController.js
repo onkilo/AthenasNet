@@ -44,32 +44,38 @@
 
     const manejaEnvioCli = () => {
 
-        Mant.getFormMantenedor().addEventListener('submit', async (evt) => {
+        const formMantenedor = Mant.getFormMantenedor();
+            formMantenedor.addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const cliente = ui.getCliente();
+                if (formMantenedor.checkValidity()) {
+
+                const cliente = ui.getCliente();
            
-            try {
-                if (cliente.accion === 'registrar') {
-                    await service.crearCliente(cliente);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'El cliente se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                try {
+                    if (cliente.accion === 'registrar') {
+                        await service.crearCliente(cliente);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'El cliente se registró satisfactoriamente', titulo: 'Registro exitoso' })
+                    }
+                    else if (cliente.accion === 'editar') {
+                        await service.actualizarCliente(cliente);
+                        Mant.cerrarModMant();
+                        AthenasNet.muestraToast({ mensaje: 'El cliente se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+                    }
+                    await muestraClientes();
+                    }       
+                catch (err) {
+                    console.error(err);
+                    const mensaje = (cliente.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
+                    const titulo = (cliente.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
+                    AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
+                    }
                 }
-                else if (cliente.accion === 'editar') {
-                    await service.actualizarCliente(cliente);
-                    Mant.cerrarModMant();
-                    AthenasNet.muestraToast({ mensaje: 'El cliente se actualizó satisfactoriamente', titulo: 'Actualización exitosa' })
+
+                else {
+                    Mant.esFormularioValido(false);
                 }
-                await muestraClientes();
-            }
-            catch (err) {
-                console.error(err);
-                const mensaje = (cliente.accion === 'registrar') ? 'Hubo un error en el registro' : 'Hubo un error en la actualización';
-                const titulo = (cliente.accion === 'registrar') ? 'Registro erróneo' : 'Actualización errónea';
-                AthenasNet.muestraToast({ cssClass: 'bg-danger', mensaje: mensaje, titulo: titulo })
-            }
-
-
         })
 
     }
