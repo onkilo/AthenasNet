@@ -13,6 +13,13 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { AuthInterceptor } from './interceptors/authInterceptor';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { ProductoComponent } from './components/producto/producto.component';
+import { TrabajadorComponent } from './components/trabajador/trabajador.component';
+import { PromocionComponent } from './components/promocion/promocion.component';
+import { PedidoComponent } from './components/pedido/pedido.component';
+import { VentaComponent } from './components/venta/venta.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,14 @@ import { AuthInterceptor } from './interceptors/authInterceptor';
     SidebarComponent,
     FooterComponent,
     ClienteComponent,
-    InicioComponent
+    InicioComponent,
+    CategoriaComponent,
+    ProveedorComponent,
+    ProductoComponent,
+    TrabajadorComponent,
+    PromocionComponent,
+    PedidoComponent,
+    VentaComponent
   ],
   imports: [
     BrowserModule,
