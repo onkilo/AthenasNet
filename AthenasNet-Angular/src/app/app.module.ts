@@ -20,6 +20,7 @@ import { TrabajadorComponent } from './components/trabajador/trabajador.componen
 import { PromocionComponent } from './components/promocion/promocion.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { VentaComponent } from './components/venta/venta.component';
+import { AuthGuard } from './guard/authGuard';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { VentaComponent } from './components/venta/venta.component';
   providers: [
       {
         provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-      }
+      },
+      AuthGuard
   ],
   bootstrap: [AppComponent]
 })

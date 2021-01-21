@@ -3,18 +3,18 @@
         <div class="card card-outline card-primary mt-4">
             <div class="card-header no-after  d-flex justify-content-between align-items-center">
                 <h5>Clientes Registrados</h5>
-                <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" data-toggle="modal" data-target="#modal-mantenedor">
+                <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" (click)="muestraRegistrar()" >
                     <i class="fas fa-plus mr-1"></i> Nuevo
                 </button>
             </div>
             <div class="card-body">
                 <div class="col-12 mt-2">
-                    <form class="form frm-loader" id="form-filtrar">
+                    <form class="form frm-loader" id="form-filtrar" (submit)="listar()">
                         <input type="hidden" name="tipo" value="filtrar">
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <div class="input-group">
-                                    <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Ingrese el nombre del cliente">
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Ingrese el nombre del cliente" [(ngModel)]="buscarForm.Nombre">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
                                     </div>
@@ -37,7 +37,25 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                            <tr *ngFor="let cliente of clientes">
+                                <td>{{cliente.Id}}</td>
+                                <td>{{cliente.Nombre}}</td>
+                                <td>{{cliente.Apellido}}</td>
+                                <td>{{cliente.Telefono}}</td>
+                                <td>{{cliente.Dni}}</td>
+                                <td>
+                                    <span *ngIf="cliente.Sexo == 'M'">Masculino</span>
+                                    <span *ngIf="cliente.Sexo == 'F'">Femenino</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm btn-sin-click" (click)="muestraEditar(cliente)" >
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="ml-1 btn btn-success btn-sm btn-sin-click" (click)="muestraConfirmacion(cliente)" >
+                                        <i class="fas fa-trash-alt" data-del-action="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -58,34 +76,34 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form novalidate id="form-mantenedor">
+            <form novalidate id="form-mantenedor" (submit)="enviarCliente()">
                 <div class="modal-body">
                     <input type="hidden" name="Id" id="Id" value="0" />
                     <input type="hidden" name="accion" id="accion" value="registrar" />
                     <div class="form-group">
                         <label for="txt-nombre">Nombre</label>
-                        <input type="text" class="form-control" name="Nombre" id="txt-nombre" required minlength="2">                         
+                        <input type="text" class="form-control" name="Nombre" id="txt-nombre" required minlength="2" [(ngModel)]="clienteSeleccionado.Nombre" >                         
                         <div class="invalid-feedback">Por favor ingrese un nombre</div>
                     </div>
                     <div class="form-group">
                         <label>Apellido</label>
-                        <input type="text" class="form-control" name="Apellido" id="txt-apellido" required minlength="4">
+                        <input type="text" class="form-control" name="Apellido" id="txt-apellido" required minlength="4" [(ngModel)]="clienteSeleccionado.Apellido" >
                         <div class="invalid-feedback">Por favor ingrese un apellido</div>
                     </div>
                     <div class="form-group">
                         <label for="txt-telefono">Teléfono</label>
-                        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9">
+                        <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9" [(ngModel)]="clienteSeleccionado.Telefono" >
                         <div class="invalid-feedback">Por favor ingrese un número de teléfono entre 7 y 9 caracteres</div>
                     </div>
                     <div class="form-group">
                         <label for="txt-dni">DNI</label>
-                        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8">
+                        <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8" [(ngModel)]="clienteSeleccionado.Dni" >
                         <div class="invalid-feedback">Por favor ingrese un número de dni, debe tener 8 caracteres</div>
                     </div>
                     <div class="form-group">
                         <label for="cbo-sexo">Sexo</label>
-                        <select name="Sexo" class="form-control" id="cbo-sexo">
-                            <option value="M" selected="selected">Masculino</option>
+                        <select name="Sexo" class="form-control" id="cbo-sexo" [(ngModel)]="clienteSeleccionado.Sexo" >
+                            <option value="M" >Masculino</option>
                             <option value="F">Femenino</option>
                         </select>
                 
@@ -101,3 +119,30 @@
     </div>
 </div>
 <!-- Fin de Modal de Mantenedor -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form novalidate id="form-confirmar">
+                    <div class="modal-body">
+    
+                        <p>¿Está seguro de querer eliminar el registro seleccionado?</p>
+                    </div>
+                    <div class="modal-footer">
+    
+                        <button type="submit" class="btn btn-success" (click)="confEliminacion()"><i class="far fa-save mr-1"></i> Aceptar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    

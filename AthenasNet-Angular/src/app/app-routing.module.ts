@@ -11,6 +11,7 @@ import { PromocionComponent } from './components/promocion/promocion.component';
 import { TrabajadorComponent } from './components/trabajador/trabajador.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { VentaComponent } from './components/venta/venta.component';
+import { AuthGuard } from './guard/authGuard';
 
 const routes: Routes = [{
   path: 'login',
@@ -55,7 +56,8 @@ const routes: Routes = [{
       path: 'venta',
       component: VentaComponent
     }
-  ]
+  ],
+  canActivate: [AuthGuard]
 }];
 
 @NgModule({

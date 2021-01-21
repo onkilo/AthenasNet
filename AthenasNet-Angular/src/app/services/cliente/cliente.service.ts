@@ -13,4 +13,16 @@ export class ClienteService {
   getClientes(nombre: string = '') {
     return this.htpp.get(this.baseUrl + '?Nombre=' + nombre)
   }
+
+  postClientes(cliente: any) {
+    return this.htpp.post(this.baseUrl, cliente);
+  }
+
+  putClientes(id: number, cliente: any) {
+    return this.htpp.put(`${this.baseUrl}/${id}`, cliente);
+  }
+
+  deleteCliente(id: number) {
+    return this.htpp.delete(this.baseUrl + '/' + id);
+  }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as $ from 'jquery';
+import 'bootstrap'
 
 @Component({
   selector: 'app-navbar',
@@ -17,5 +19,9 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('usuarioActual');
     this.router.navigate(['/login']);
+  }
+
+  abreUsuario(){
+    $('#dropdownSesion').dropdown('toggle');
   }
 }
