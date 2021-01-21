@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <div class="card card-outline card-primary mt-4">
+            <div class="card-header no-after  d-flex justify-content-between align-items-center">
+                <h5> Usuarios Registrados</h5>
+                    <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" data-toggle="modal" data-target="#modal-mantenedor">
+                        <i class="fas fa-plus mr-1"></i> Nuevo
+                    </button>
+            </div>
+            <div class="card-body">
+                <div class="col-12 mt-2">
+                    <form class="form frm-loader" id="form-filtrar">
+                        <input type="hidden" name="tipo" value="filtrar">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Ingrese el nombre del usuario">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 table-responsive">
+                    <table class="table" id="tb-mantenedor">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>DNI</th>
+                                <th>Telefono</th>
+                                <th>Sexo</th>
+                                <th>Roles</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-mantenedor"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos del usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form novalidate id="form-mantenedor">
+                <div class="modal-body">
+                    <input type="hidden" name="Id" id="Id" value="0" />
+    <input type="hidden" name="accion" id="accion" value="registrar" />
+    <div class="form-group">
+        <label for="txt-nombre">Nombre</label>
+        <input type="text" class="form-control" name="Nombre" id="txt-nombre"required>
+        <div class="invalid-feedback">Por favor ingrese el nombre del usuario</div>
+    </div>
+        <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" class="form-control" name="Apellido" id="txt-apellido"  required>
+            <div class="invalid-feedback">Por favor ingrese el apellido del usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="txt-telefono">Teléfono</label>
+            <input type="text" class="form-control" name="Telefono" id="txt-telefono" required minlength="7" maxlength="9">
+            <div class="invalid-feedback">Por favor ingrese número de teléfono para el usuario, debe ser tener entre 7 y 9 caracteres</div>
+        </div>
+        <div class="form-group">
+            <label for="txt-direccion">Dirección</label>
+            <input type="text" class="form-control" name="Direccion" id="txt-direccion" required>
+            <div class="invalid-feedback">Por favor ingrese una dirección para el usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="txt-email">Email</label>
+            <input type="email" class="form-control" name="Email" id="txt-email" required>
+            <div class="invalid-feedback">Por favor ingrese email válido </div>
+        </div>
+        <div class="form-group">
+            <label for="txt-userName">Usuario</label>
+            <input type="text" class="form-control" name="Usuario" id="txt-userName" required>
+            <div class="invalid-feedback">Por favor ingrese un nombre de usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="txt-userPass">Contraseña</label>
+            <input type="password" class="form-control" name="Contrasenia" id="txt-userPass" >
+            <div class="invalid-feedback">Por favor ingrese una contraseña para el usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="txt-dni">DNI</label>
+            <input type="text" class="form-control" name="Dni" id="txt-dni" required minlength="8" maxlength="8">
+            <div class="invalid-feedback">Por favor ingrese un número de DNI para el usuario, debe tener 8 caracteres</div>
+        </div>
+        <div class="form-group">
+            <label for="cbo-sexo">Sexo</label>
+            <select name="Sexo" class="form-control" id="cbo-sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cbo-roles">Roles</label>
+            <select name="Roles" class="form-control select2 select2-danger" id="cbo-roles" multiple="multiple" required>
+            </select>
+            <div class="invalid-feedback">Por favor seleccion un rol para el usuario</div>
+        </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-success" id="btn-mant-guardar"><i class="far fa-save mr-1"></i> Guardar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

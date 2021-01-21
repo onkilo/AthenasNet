@@ -125,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "AthenasNet-Angular"
+    }
+  },
+  "defaultProject": "AthenasNet-Angular",
+  "cli": {
+    "analytics": "55fe4d84-85bb-4965-9c45-15cc009b23d1"
+  }
 }
