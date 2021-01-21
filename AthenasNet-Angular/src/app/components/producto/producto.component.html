@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <div class="card card-outline card-primary mt-4">
+            <div class="card-header no-after  d-flex justify-content-between align-items-center">
+                <h5> Productos Registrados</h5>
+                    <button type="button" class="btn btn-success btn-sm btn-sin-click" id="btn-nuevo" data-toggle="modal" data-target="#modal-mantenedor">
+                        <i class="fas fa-plus mr-1"></i> Nuevo
+                    </button>
+            </div>
+            <div class="card-body">
+                <div class="col-12 mt-2">
+                    <form class="form frm-loader" id="form-filtrar">
+                        <input type="hidden" name="tipo" value="filtrar">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" name="Descripcion" id="Descripcion" class="form-control" placeholder="Ingrese la descripcion del producto">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary form-control" style="min-width: 100px"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 table-responsive">
+                    <table class="table" id="tb-mantenedor">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Precio de Compra</th>
+                                <th>Precio de Venta</th>
+                                <th>Stock Actual</th>
+                                <th>Stock Mínimo</th>
+                                <th>Categoría</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-mantenedor"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Datos del producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form novalidate id="form-mantenedor">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" name="Id" id="Id" value="0" />
+                        <input type="hidden" name="accion" id="accion" value="registrar" />
+                        <div class="col-lg-6">
+                            <input type="hidden" name="id" >
+                            <input type="hidden" name="tipo" value="agregar">
+                
+                            <div class="form-group">
+                                <label for="Descripcion">Descripción</label>
+                                <input type="text" class="form-control" name="Descripcion" id="Descripcion" required>
+                                <div class="invalid-feedback">Por favor ingrese una descripción</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PrecioCompra">Precio de compra</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">S/.</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="PrecioCompra" min="0.1" step="0.01" required id="PrecioCompra">
+                                    <div class="invalid-feedback">Por favor ingrese una cantidad mayor a 0</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PrecioVenta">Precio de venta</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">S/. </span>
+                                    </div>
+                                    <input type="number" class="form-control" name="PrecioVenta" step="0.01" required id="PrecioVenta">
+                                    <div class="invalid-feedback">Por favor ingrese una cantidad mayor a 0</div>
+                                </div>
+                
+                            </div>
+                            <div class="form-group">
+                                <label for="StockActual">Stock actual</label>
+                                <input type="number" class="form-control" name="StockActual" id="StockActual" min="1" required>
+                                <div class="invalid-feedback">Por favor ingrese una cantidad mayor a 0</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="StockMin">Stock mínimo</label>
+                                <input type="number" class="form-control" name="StockMin" id="StockMin" required min="1">
+                                <div class="invalid-feedback">Por favor ingrese una cantidad mayor a 0</div>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="Categoria">Categoría</label>
+                                <input type="text" id="CategoriaText" class="form-control d-none" readonly />
+                                <select name="Categoria" id="Categoria" class="form-control" required>
+                                    <option value="">Seleccione</option>
+                                </select>
+                                <div class="invalid-feedback">Por favor seleccione una categoría</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group">
+                                <label class="d-block">Imagen</label>
+                                <input type="file" class="form-control-file mb-4" name="Imagen" id="Imagen" accept="image/*">
+                                <img src="" id="imgDisplay" class="img-fluid" style="max-height: 500px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-success" id="btn-mant-guardar"><i class="far fa-save mr-1"></i> Guardar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

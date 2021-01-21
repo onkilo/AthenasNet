@@ -9,12 +9,12 @@
                     <a href="#" class="text-center">Athenas</a>
                 </div>
             </div>
-            <div class="card-body login-card-body">
+            <div class="card-body login-card-body" >
                 <p class="login-box-msg">Login</p>
-                <form>
+                <form (submit)="inicioSesion()">
                     <div class="input-group mb-3">
                         
-                        <input class="form-control" name="Usuario" placeholder="Usuario" type="text" />
+                        <input class="form-control" name="Usuario" placeholder="Usuario" type="text" [(ngModel)]="usuarioForm.Usuario"  />
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="Contrasenia" placeholder="Contraseña" />
+                        <input type="password" class="form-control" name="Contrasenia" placeholder="Contraseña" [(ngModel)]="usuarioForm.Contrasenia"   />
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
